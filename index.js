@@ -1,0 +1,216 @@
+Vue.component('app-root', {
+  template: `
+    <div class="flex">
+      <!-- SIDE NAVIGATION -->
+      <nav class="min-h-screen w-24 bg-gray-300"></nav>
+
+      <!-- MAIN -->
+      <main class="flex-grow">
+        <!-- HEADER -->
+        <header class="mt-32 text-center flex flex-col items-center">
+          <h1 style="font-size: 12rem; line-height: 1;" class="border-8 border-solid border-black p-4">
+            PINT
+          </h1>
+          <p class="text-5xl mt-12">
+            Own Your Play
+          </p>
+        </header>
+
+        <!-- CARDS -->
+        <section class="mt-36 space-x-16 px-12 flex justify-between max-w-screen-2xl mx-auto">
+          <div v-for="x in [1, 2, 3]" class="px-8 py-6 bg-gray-200 rounded-lg shadow-xl">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
+            </div>
+            <h3 class="text-3xl font-bold mt-4">Stake PINT. Earn fees</h3>
+            <p class="mt-2 text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            <div class="mt-4 text-lg flex justify-end">
+              <div>Stake PINT</div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- TIRED OF LOSING -->
+        <section class="text-center max-w-screen-2xl mx-auto my-36">
+          <h2 class="font-bold text-7xl">Tired of Losing to the House?</h2>
+          <p class="mt-16 text-4xl leading-relaxed">
+            Tired of losing to the house?
+            With PINT you are the house.
+            Stake PINT tokens to receive userfees from When Rug
+            and future pub.finance ecosystem products.
+            Use your staking weight to govern the future of the product
+            and direct the use of the Community Governed Warchest.
+            Fair launch, fair owndership, fair play--Grab a pint.
+          </p>
+          <button class="mt-16 rounded-full bg-gray-200 text-3xl px-16 py-5">
+            Call to Action
+          </button>
+        </section>
+
+        <!-- ABOUT PINT -->
+        <section class="max-w-screen-2xl mx-auto my-36">
+          <div class="flex">
+            <div class="flex-grow mt-24">
+              <h2 class="font-bold text-7xl">About PINT</h2>
+              <p class="mt-16 text-4xl leading-relaxed">
+                PINT launched as a standard fair-launch farming coin
+                in September 2020. Through a small unstaking tax on our upwards
+                of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW)
+                which is being used to fund development of innovative and engaging products
+                for the pub.finance ecosystem.
+              </p>
+
+              <div class="flex space-x-8">
+                <button class="mt-16 rounded-full bg-gray-200 text-xl px-8 py-5 flex justify-between items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span class="ml-4 font-semibold">Learn More</span>
+                </button>
+
+                <button class="mt-16 rounded-full border-4 border-solid border-gray-200 text-xl px-8 py-5 flex justify-between items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  <span class="ml-4 font-semibold">Join Chat</span>
+                </button>
+              </div>
+            </div>
+            <div class="ml-24">
+              <div
+                style="font-size: 20rem; width: 30rem; height: 30rem; border-width: 4rem"
+                class="flex items-center justify-center pt-4 leading-1 font-bold rounded-full border-solid border-black">
+                P
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="max-w-screen-2xl mx-auto my-36">
+          <div class="text-center">
+            <h2 class="font-bold text-7xl">Frequently Asked Questions</h2>
+            <p class="text-4xl mt-12">
+              To learn more about PINT, check out the
+              <a href="#" class="text-gray-400">FAQ page</a>
+            </p>
+          </div>
+
+          <div class="max-w-screen-xl space-y-10 mx-auto mt-16">
+            <div class="flex justify-between">
+              <div>
+                <h3 class="text-5xl font-bold">What is PINT?</h3>
+                <p class="text-3xl mt-8">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                </p>
+              </div>
+              <div class="text-5xl font-bold ml-8">
+                -
+              </div>
+            </div>
+
+            <div class="flex justify-between">
+              <div>
+                <h3 class="text-5xl font-bold">How to stake?</h3>
+              </div>
+              <div class="text-5xl font-bold ml-8">
+                +
+              </div>
+            </div>
+
+            <div class="flex justify-between">
+              <div>
+                <h3 class="text-5xl font-bold">Is PINT a stable coin?</h3>
+              </div>
+              <div class="text-5xl font-bold ml-8">
+                +
+              </div>
+            </div>
+
+            <div class="flex justify-between">
+              <div>
+                <h3 class="text-5xl font-bold">Where can I purchase PINT?</h3>
+              </div>
+              <div class="text-5xl font-bold ml-8">
+                +
+              </div>
+            </div>
+
+            <div class="flex justify-between">
+              <div>
+                <h3 class="text-5xl font-bold">What is a coin?</h3>
+              </div>
+              <div class="text-5xl font-bold ml-8">
+                +
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BLOG -->
+        <section class="max-w-screen-2xl mx-auto my-36">
+          <div class="text-center">
+            <h2 class="font-bold text-7xl">Blog</h2>
+          </div>
+
+          <div class="space-x-16 flex justify-center mt-16">
+            <div v-for="x in [1, 2, 3]" class="w-1/4 px-8 py-6 bg-gray-200 rounded-lg shadow-xl">
+              <div class="flex justify-center items-center py-8">
+                <div class="text-5xl leading-none border-8 border-solid border-black p-4">
+                  PINT
+                </div>
+              </div>
+
+              <div>
+                <div>Article</div>
+                <div class="font-bold text-xl">Title of Article</div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="space-y-4 text-center text-xl h-96 bg-gray-200 flex flex-col items-center justify-center">
+          <div class="flex space-x-4">
+            <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+            </div>
+            <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+            </div>
+            <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            Terms | Privacy
+          </div>
+          <div>
+            &#169; 2021 Pub Finance. All rights reserved.
+          </div>
+        </footer>
+      </main>
+    </div>
+  `
+})
+
+new Vue({ el: '#app' })
