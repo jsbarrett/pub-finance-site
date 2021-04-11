@@ -1,4 +1,43 @@
+Vue.component('faq-list-item', {
+  props: ['item'],
+  data: () => {
+    return {
+      open: false
+    }
+  },
+  methods: {
+    toggle () {
+      this.open = !this.open
+    }
+  },
+  template: `
+    <div v-on:click="toggle" class="flex justify-between cursor-pointer">
+      <div>
+        <h3 class="text-5xl font-bold">{{ item.title }}</h3>
+        <p v-if="open" class="text-3xl mt-8">
+          {{ item.body }}
+        </p>
+      </div>
+      <div class="text-5xl font-bold ml-8">
+        <span v-if="!open">+</span>
+        <span v-if="open">-</span>
+      </div>
+    </div>
+  `
+})
+
 Vue.component('app-root', {
+  data: () => {
+    return {
+      faqlist: [
+        { title: 'What is PINT?', body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum' },
+        { title: 'How to stake?', body: '' },
+        { title: 'Is PINT a stable coin?', body: '' },
+        { title: 'Where can I purchase PINT?', body: '' },
+        { title: 'What is a coin?', body: '' },
+      ]
+    }
+  },
   template: `
     <div class="flex flex-col xl:flex-row">
       <!-- SIDE NAVIGATION -->
@@ -102,53 +141,11 @@ Vue.component('app-root', {
           </div>
 
           <div class="max-w-screen-xl space-y-10 mx-auto mt-16">
-            <div class="flex justify-between">
-              <div>
-                <h3 class="text-5xl font-bold">What is PINT?</h3>
-                <p class="text-3xl mt-8">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                </p>
-              </div>
-              <div class="text-5xl font-bold ml-8">
-                -
-              </div>
-            </div>
-
-            <div class="flex justify-between">
-              <div>
-                <h3 class="text-5xl font-bold">How to stake?</h3>
-              </div>
-              <div class="text-5xl font-bold ml-8">
-                +
-              </div>
-            </div>
-
-            <div class="flex justify-between">
-              <div>
-                <h3 class="text-5xl font-bold">Is PINT a stable coin?</h3>
-              </div>
-              <div class="text-5xl font-bold ml-8">
-                +
-              </div>
-            </div>
-
-            <div class="flex justify-between">
-              <div>
-                <h3 class="text-5xl font-bold">Where can I purchase PINT?</h3>
-              </div>
-              <div class="text-5xl font-bold ml-8">
-                +
-              </div>
-            </div>
-
-            <div class="flex justify-between">
-              <div>
-                <h3 class="text-5xl font-bold">What is a coin?</h3>
-              </div>
-              <div class="text-5xl font-bold ml-8">
-                +
-              </div>
-            </div>
+            <faq-list-item
+              v-for="item in faqlist"
+              v-bind:item="item"
+              v-bind:key="item.title">
+            </faq-list-item>
           </div>
         </section>
 
