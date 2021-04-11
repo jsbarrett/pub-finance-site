@@ -1,8 +1,8 @@
 Vue.component('app-root', {
   template: `
-    <div class="flex">
+    <div class="flex flex-col xl:flex-row">
       <!-- SIDE NAVIGATION -->
-      <nav class="min-h-screen w-24 bg-gray-300"></nav>
+      <nav class="h-20 xl:h-auto xl:min-h-screen xl:w-24 bg-gray-300"></nav>
 
       <!-- MAIN -->
       <main class="flex-grow">
@@ -17,7 +17,7 @@ Vue.component('app-root', {
         </header>
 
         <!-- CARDS -->
-        <section class="mt-36 space-x-16 px-12 flex justify-between max-w-screen-2xl mx-auto">
+        <section class="mt-36 space-y-16 xl:space-y-0 xl:space-x-16 px-12 flex flex-col xl:flex-row justify-between max-w-screen-2xl mx-auto">
           <div v-for="x in [1, 2, 3]" class="px-8 py-6 bg-gray-200 rounded-lg shadow-xl">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -36,9 +36,9 @@ Vue.component('app-root', {
         </section>
 
         <!-- TIRED OF LOSING -->
-        <section class="text-center max-w-screen-2xl mx-auto my-36">
+        <section class="text-center max-w-screen-2xl mx-auto my-36 px-12">
           <h2 class="font-bold text-7xl">Tired of Losing to the House?</h2>
-          <p class="mt-16 text-4xl leading-relaxed">
+          <p class="mt-16 text-3xl xl:text-4xl leading-relaxed">
             Tired of losing to the house?
             With PINT you are the house.
             Stake PINT tokens to receive userfees from When Rug
@@ -53,8 +53,8 @@ Vue.component('app-root', {
         </section>
 
         <!-- ABOUT PINT -->
-        <section class="max-w-screen-2xl mx-auto my-36">
-          <div class="flex">
+        <section class="max-w-screen-2xl mx-auto my-36 px-12">
+          <div class="flex flex-col-reverse xl:flex-row">
             <div class="flex-grow mt-24">
               <h2 class="font-bold text-7xl">About PINT</h2>
               <p class="mt-16 text-4xl leading-relaxed">
@@ -81,7 +81,7 @@ Vue.component('app-root', {
                 </button>
               </div>
             </div>
-            <div class="ml-24">
+            <div class="mx-auto xl:ml-24">
               <div
                 style="font-size: 20rem; width: 30rem; height: 30rem; border-width: 4rem"
                 class="flex items-center justify-center pt-4 leading-1 font-bold rounded-full border-solid border-black">
@@ -92,9 +92,9 @@ Vue.component('app-root', {
         </section>
 
         <!-- FAQ -->
-        <section class="max-w-screen-2xl mx-auto my-36">
+        <section class="max-w-screen-2xl mx-auto my-36 px-12">
           <div class="text-center">
-            <h2 class="font-bold text-7xl">Frequently Asked Questions</h2>
+            <h2 class="font-bold text-7xl leading-tight">Frequently Asked Questions</h2>
             <p class="text-4xl mt-12">
               To learn more about PINT, check out the
               <a href="#" class="text-gray-400">FAQ page</a>
@@ -153,23 +153,23 @@ Vue.component('app-root', {
         </section>
 
         <!-- BLOG -->
-        <section class="max-w-screen-2xl mx-auto my-36">
+        <section class="max-w-screen-2xl mx-auto my-36 px-12">
           <div class="text-center">
             <h2 class="font-bold text-7xl">Blog</h2>
           </div>
 
-          <div class="space-x-16 flex justify-center mt-16">
-            <div v-for="x in [1, 2, 3]" class="w-1/4 px-8 py-6 bg-gray-200 rounded-lg shadow-xl">
+          <div class="space-y-16 xl:space-y-0 xl:space-x-16 flex flex-col xl:flex-row justify-center mt-16 px-8 xl:px-0">
+            <div v-for="x in [1, 2, 3]" class="xl:w-1/4 px-8 py-6 bg-gray-200 rounded-lg shadow-xl flex xl:flex-col">
               <div class="flex justify-center items-center py-8">
                 <div class="text-5xl leading-none border-8 border-solid border-black p-4">
                   PINT
                 </div>
               </div>
 
-              <div>
-                <div>Article</div>
-                <div class="font-bold text-xl">Title of Article</div>
-                <p>
+              <div class="ml-8 xl:ml-0">
+                <div class="text-2xl xl:text-base">Article</div>
+                <div class="font-bold text-4xl xl:text-xl">Title of Article</div>
+                <p class="xl:text-base text-2xl">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>
               </div>
@@ -178,7 +178,7 @@ Vue.component('app-root', {
         </section>
 
         <!-- FOOTER -->
-        <footer class="space-y-4 text-center text-xl h-96 bg-gray-200 flex flex-col items-center justify-center">
+        <footer class="space-y-4 text-center text-xl h-96 bg-gray-200 flex flex-col items-center justify-center px-12">
           <div class="flex space-x-4">
             <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
