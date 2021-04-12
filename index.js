@@ -27,22 +27,11 @@ Vue.component('faq-list-item', {
 })
 
 const homePage = Vue.component('home-page', {
-  data: () => {
-    return {
-      faqlist: [
-        { title: 'What is PINT?', body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum' },
-        { title: 'How to stake?', body: '' },
-        { title: 'Is PINT a stable coin?', body: '' },
-        { title: 'Where can I purchase PINT?', body: '' },
-        { title: 'What is a coin?', body: '' },
-      ]
-    }
-  },
   template: `
     <div>
       <!-- HEADER -->
       <header class="mt-32 text-center flex flex-col items-center">
-        <h1 style="font-size: 12rem; line-height: 1;" class="border-8 border-solid border-black p-4">
+        <h1 style="font-size: 12rem;" class="leading-none border-8 border-solid border-black p-4">
           PINT
         </h1>
         <p class="text-5xl mt-12">
@@ -125,24 +114,7 @@ const homePage = Vue.component('home-page', {
         </div>
       </section>
 
-      <!-- FAQ -->
-      <section class="max-w-screen-2xl mx-auto my-36 px-12">
-        <div class="text-center">
-          <h2 class="font-bold text-7xl leading-tight">Frequently Asked Questions</h2>
-          <p class="text-4xl mt-12">
-            To learn more about PINT, check out the
-            <a href="#" class="text-gray-400">FAQ page</a>
-          </p>
-        </div>
-
-        <div class="max-w-screen-xl space-y-10 mx-auto mt-16">
-          <faq-list-item
-            v-for="item in faqlist"
-            v-bind:item="item"
-            v-bind:key="item.title">
-          </faq-list-item>
-        </div>
-      </section>
+      <faq-section></faq-section>
 
       <!-- BLOG -->
       <section class="max-w-screen-2xl mx-auto my-36 px-12">
@@ -169,45 +141,158 @@ const homePage = Vue.component('home-page', {
         </div>
       </section>
 
-      <!-- FOOTER -->
-      <footer class="space-y-4 text-center text-xl h-96 bg-gray-200 flex flex-col items-center justify-center px-12">
-        <div class="flex space-x-4">
-          <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-          </div>
-          <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-            </svg>
-          </div>
-          <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
-          </div>
-          <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-            </svg>
-          </div>
-        </div>
-        <div>
-          Terms | Privacy
-        </div>
-        <div>
-          &#169; 2021 Pub Finance. All rights reserved.
-        </div>
-      </footer>
+      <page-footer></page-footer>
     </div>
+  `
+})
+
+const faqSection = Vue.component('faq-section', {
+  data: () => {
+    return {
+      faqlist: [
+        { title: 'What is PINT?', body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum' },
+        { title: 'How to stake?', body: '' },
+        { title: 'Is PINT a stable coin?', body: '' },
+        { title: 'Where can I purchase PINT?', body: '' },
+        { title: 'What is a coin?', body: '' },
+      ]
+    }
+  },
+  template: `
+    <section class="max-w-screen-2xl mx-auto my-36 px-12">
+      <div class="text-center">
+        <h2 class="font-bold text-7xl leading-tight">Frequently Asked Questions</h2>
+        <p class="text-4xl mt-12">
+          To learn more about PINT, check out the
+          <a href="#" class="text-gray-400">FAQ page</a>
+        </p>
+      </div>
+
+      <div class="max-w-screen-xl space-y-10 mx-auto mt-16">
+        <faq-list-item
+          v-for="item in faqlist"
+          v-bind:item="item"
+          v-bind:key="item.title">
+        </faq-list-item>
+      </div>
+    </section>
+  `
+})
+
+const pageFooter = Vue.component('page-footer', {
+  template: `
+    <footer class="space-y-4 text-center text-xl h-96 bg-gray-200 flex flex-col items-center justify-center px-12">
+      <div class="flex space-x-4">
+        <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </div>
+        <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+          </svg>
+        </div>
+        <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
+        </div>
+        <div style="border-width: 3px;" class="border-solid border-black p-1 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+          </svg>
+        </div>
+      </div>
+      <div>
+        Terms | Privacy
+      </div>
+      <div>
+        &#169; 2021 Pub Finance. All rights reserved.
+      </div>
+    </footer>
   `
 })
 
 const aboutPage = Vue.component('about-page', {
   template: `
     <div>
-      about page
+      <!-- HEADER -->
+      <header class="mt-48 mb-96 text-center flex flex-col items-center">
+        <h1
+          class="font-bold text-9xl leading-none">
+          About
+        </h1>
+        <p class="text-5xl mt-16">
+          What we know about PINT
+        </p>
+      </header>
+
+      <!-- GRAB A PINT -->
+      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
+        <h2 class="font-bold text-7xl">Grab Yourself a PINT</h2>
+
+        <p class="mt-20 text-3xl leading-relaxed">
+          PINT launched as a standard fair-launch farming coin
+          in September 2020. Through a small unstaking tax on our upwards
+          of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW)
+          which is being used to fund development of innovative and engaging products
+          for the pub.finance ecosystem.
+          <br>
+          PINT's flagship product, "When Rug" is a re-envisioning of the popular crash game,
+          Moneypot; fleshed out and gamified with hot streaks, achievement badges, defi memes,
+          bonuses, and more. While most crash games pay 50% of revenue to investors in the house pool
+          and keep back 50% for the site owners, with PINT you are the "owners" of When Rug.
+          User fees from the game are paid out to PINT stakers. Stake your PINT to earn a voice
+          in the community's governance, and direct use of funds in the CGW towards PINT buybacks
+          or additional development-all the while earning revenue from When Rug and more.
+          Own your play.
+        </p>
+      </section>
+
+      <!-- ENGAGE ON SOCIAL -->
+      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
+        <h2 class="font-bold text-7xl text-center">
+          Engage on Social
+        </h2>
+
+        <div class="flex flex-wrap justify-center mt-8">
+          <div
+            v-for="x in [1, 2, 3, 4, 5, 6, 7, 8]"
+            class="bg-gray-300 w-full md:w-1/3 lg:w-1/5 h-48 rounded-lg shadow-xl my-4 mx-2 lg:mx-4">
+          </div>
+        </div>
+      </section>
+
+      <!-- PINT LITEPAPER -->
+      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
+        <h2 class="font-bold text-7xl text-center">
+          PINT Litepaper
+        </h2>
+
+        <div class="flex flex-wrap justify-center mt-12">
+          <p class="text-3xl text-center">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+
+        <div class="flex justify-center">
+          <button class="mt-16 rounded-full bg-gray-200 text-xl px-8 py-5 flex justify-between items-center">
+            <span class="font-semibold">DOWNLOAD NOW</span>
+          </button>
+
+          <button class="ml-8 mt-16 rounded-full border-4 border-solid border-gray-200 text-xl px-8 py-5 flex justify-between items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span class="ml-4 font-semibold">Join Chat</span>
+          </button>
+        </div>
+      </section>
+
+      <faq-section></faq-section>
+
+      <page-footer></page-footer>
     </div>
   `
 })
@@ -223,9 +308,140 @@ const vaultPage = Vue.component('vault-page', {
 const dashboardPage = Vue.component('dashboard-page', {
   template: `
     <div>
-      dashboard page
+      <!-- HEADER -->
+      <header class="mt-48 text-center flex flex-col items-center">
+        <h1 style="font-size: 12rem;" class="leading-none border-8 border-solid border-black p-4">
+          PINT
+        </h1>
+      </header>
+
+      <!-- CARDS -->
+      <section class="mt-32 flex flex-wrap justify-center mb-32">
+        <div class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl">
+          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
+            <div class="text-2xl ml-6">YOUR PINT BALANCE</div>
+          </div>
+          <div class="px-10 font-bold text-4xl py-8 border-b border-gray-900">
+            5,000,000 <span class="text-xl">PINT</span>
+          </div>
+          <div class="px-10 py-8 text-2xl flex justify-between">
+            <div class="">Pending Harvest</div>
+            <div>3,000 PUB</div>
+          </div>
+        </div>
+
+        <div class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl">
+          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
+            <div class="text-2xl ml-6">TOTAL PINT SUPPLY</div>
+          </div>
+          <div class="px-10 font-bold text-4xl py-8 border-b border-gray-900">
+            6,221,969 <span class="text-xl">PINT</span>
+          </div>
+          <div class="px-10 py-8 text-2xl flex justify-between">
+          </div>
+        </div>
+
+        <div class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl">
+          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
+            <div class="text-2xl ml-6">TOTAL VALUE LOCKED</div>
+          </div>
+          <div class="px-10 font-bold text-4xl py-8">
+            $50,581.07 <span class="text-xl">USD</span>
+          </div>
+        </div>
+
+        <div class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl">
+          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
+            <div class="text-2xl ml-6">MARKET CAP</div>
+          </div>
+          <div class="px-10 font-bold text-4xl py-8">
+            $278,532.84 <span class="text-xl">USD</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- GRAPH -->
+      <section class="bg-gray-300 shadow-lg rounded-lg w-11/12 lg:w-9/12 mx-auto px-8 mt-32 flex flex-wrap justify-center mb-32">
+        <div class="w-full ml-16 mt-16">
+          <div>
+            <button class="px-10 py-2 rounded bg-gray-500 mt-4 text-white font-bold text-lg">Liquidity</button>
+            <button class="px-10 py-2 rounded bg-gray-500 mt-4 text-white font-bold text-lg">Volume</button>
+            <button class="px-10 py-2 rounded bg-gray-500 mt-4 text-white font-bold text-lg">Price</button>
+          </div>
+          <div class="mt-12 text-6xl font-bold">
+            $2,560.50
+          </div>
+        </div>
+        <line-chart></line-chart>
+      </section>
+
+      <page-footer></page-footer>
     </div>
   `
+})
+
+Vue.component('line-chart', {
+  template: `
+    <canvas id="myChart"></canvas>
+  `,
+  mounted: () => {
+    const ctx = document.getElementById('myChart').getContext('2d')
+
+    const DATA_COUNT = 12
+    const labels = []
+    for (let i = 0; i < DATA_COUNT; ++i) {
+      labels.push(i.toString())
+    }
+    const datapoints = [0, 20, 20, 60, 60, 120, 150, 180, 120, 125, 105, 110, 170]
+
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          data: datapoints,
+          borderColor: 'blue',
+          fill: true,
+          // backgroundColor: 'lightblue',
+          tension: 0.4
+        }
+      ]
+    }
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: false,
+          },
+        },
+        interaction: {
+          intersect: false,
+        },
+        scales: {
+          x: {
+            display: false,
+          },
+          y: {
+            display: false,
+            suggestedMin: -10,
+            suggestedMax: 200
+          }
+        }
+      },
+    }
+
+    new Chart(ctx, config)
+  }
 })
 
 Vue.component('app-root', {
