@@ -503,7 +503,10 @@ const router = new VueRouter({
     { path: '/about', component: aboutPage },
     { path: '/vault', component: vaultPage },
     { path: '/dashboard', component: dashboardPage },
-  ]
+  ],
+  scrollBehavior () {
+    window.scrollTo(0, 0)
+  }
 })
 
 new Vue({ el: '#app', router })
