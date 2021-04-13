@@ -695,7 +695,7 @@ const router = new VueRouter({
     { path: '/dashboard', component: dashboardPage },
   ],
   scrollBehavior () {
-    // window.scrollTo(0, 0)
+    window.scrollTo(0, 0)
   }
 })
 
