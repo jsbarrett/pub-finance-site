@@ -300,7 +300,197 @@ const aboutPage = Vue.component('about-page', {
 const vaultPage = Vue.component('vault-page', {
   template: `
     <div>
-      vault page
+      <!-- HEADER -->
+      <header class="mt-48 mb-96 text-center flex flex-col items-center">
+        <h1
+          class="font-bold text-9xl leading-none">
+          Vault
+        </h1>
+        <p class="text-5xl mt-16">
+          Flexible Deposits, Higher Profits.
+        </p>
+      </header>
+
+      <!-- GRAB A PINT -->
+      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
+        <h2 class="font-bold text-7xl">Lock your PINT. Maximize returns</h2>
+
+        <p class="mt-20 text-3xl leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </section>
+
+      <!-- DATA CARDS -->
+      <section class="max-w-screen-2xl mt-24 mx-auto px-12 mb-48">
+        <div class="rounded-3xl bg-gray-300 py-4 px-12 shadow-xl">
+          <div class="text-3xl font-bold text-center">Fixed Lock - One sided staking</div>
+          <div>
+            <table class="w-full mt-8 mb-24">
+              <tr class="text-3xl text-left">
+                <th class="align-top">Assets</th>
+                <th class="align-top text-center">APY%</th>
+                <th class="align-top text-center">
+                  <div>Duration</div>
+                  <div class="mt-2 font-normal text-lg text-gray-500">choose lockup period</div>
+                </th>
+                <th class="align-top text-center">Interest</th>
+                <th class="align-top"><!-- Transfer --></th>
+              </tr>
+              <tr class="text-3xl">
+                <td class="py-8 w-1/6">
+                  PINT
+                </td>
+                <td class="py-8 w-1/6 text-center">
+                  6.24%
+                </td>
+                <td class="py-8 w-2/6">
+                  <div class="text-sm flex justify-center">
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1"></div>
+                        <div class="h-6 w-6 rounded-full border-4 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">1 week</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">1 month</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">3 months</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">6 months</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1"></div>
+                      </div>
+                      <div class="mt-2">1 year</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-8 w-1/6 text-center">
+                  .00456
+                </td>
+                <td class="text-xl py-8 text-center w-1/6">
+                  <button class="bg-gray-500 rounded-lg px-4 py-2">Transfer</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mt-16 rounded-3xl bg-gray-300 py-4 px-12 shadow-xl">
+          <div class="mt-8">
+            <table class="w-full mt-8 mb-24">
+              <tr class="text-3xl text-left">
+                <th class="align-top">Assets</th>
+                <th class="align-top text-center">APY%</th>
+                <th class="align-top text-center">
+                  <div>Duration</div>
+                  <div class="mt-2 font-normal text-lg text-gray-500">choose lockup period</div>
+                </th>
+                <th class="align-top text-center">Interest</th>
+                <th class="align-top"><!-- Transfer --></th>
+              </tr>
+              <tr class="text-3xl">
+                <td class="py-8 w-1/6">
+                  ETH PINT LP
+                </td>
+                <td class="py-8 w-1/6 text-center">
+                  6.24%
+                </td>
+                <td class="py-8 w-2/6">
+                  <div class="text-sm flex justify-center">
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1"></div>
+                        <div class="h-6 w-6 rounded-full border-4 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">Unlocked</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">1 week</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">1 month</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">3 months</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                      </div>
+                      <div class="mt-2">6 months</div>
+                    </div>
+                    <div class="flex items-center justify-center flex-col">
+                      <div class="flex items-center">
+                        <div class="w-6 h-1 bg-gray-500"></div>
+                        <div class="h-6 w-6 rounded-full border-4 bg-gray-500 border-gray-500 border-solid"></div>
+                        <div class="w-6 h-1"></div>
+                      </div>
+                      <div class="mt-2">1 year</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-8 w-1/6 text-center">
+                  .00456
+                </td>
+                <td class="text-xl py-8 text-center w-1/6">
+                  <button class="bg-gray-500 rounded-lg px-4 py-2">Add Liquidity</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADD LIQUIDITY -->
+      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
+        <h2 class="font-bold text-7xl">Add Liquidity</h2>
+
+        <p class="mt-20 text-3xl leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </section>
+      <page-footer></page-footer>
     </div>
   `
 })
@@ -505,7 +695,7 @@ const router = new VueRouter({
     { path: '/dashboard', component: dashboardPage },
   ],
   scrollBehavior () {
-    window.scrollTo(0, 0)
+    // window.scrollTo(0, 0)
   }
 })
 
