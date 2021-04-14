@@ -59,17 +59,17 @@ const homePage = Vue.component('home-page', {
       <section class="mt-36 space-y-16 xl:space-y-0 xl:space-x-16 px-12 flex flex-col xl:flex-row justify-between max-w-screen-2xl mx-auto">
         <div
           v-for="x in [1, 2, 3]"
-          class="px-8 py-6 rounded-lg shadow-xl"
+          class="px-8 py-6 rounded-3xl shadow-xl"
           style="background: rgb(12,12,97);">
           <div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="${ACCENT_GREEN}">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
             </svg>
           </div>
           <h3 class="text-3xl font-bold mt-4">Stake PINT. Earn fees</h3>
           <p class="mt-2 text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
           <div class="mt-4 text-lg flex justify-end">
-            <div>Stake PINT</div>
+            <div style="color: ${ACCENT_GREEN};">Stake PINT</div>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
