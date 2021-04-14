@@ -34,7 +34,7 @@ Vue.component('faq-list-item', {
 
 const homePage = Vue.component('home-page', {
   template: `
-    <div class="bg-gray-900 text-white">
+    <div style="background-color: rgb(11, 19, 43);" class="text-white">
       <!-- HEADER -->
       <header class="relative pt-32 text-center flex flex-col items-center">
         <div
@@ -256,7 +256,7 @@ const pageFooter = Vue.component('page-footer', {
 
 const aboutPage = Vue.component('about-page', {
   template: `
-    <div class="bg-gray-900 text-white">
+    <div style="background-color: rgb(11, 19, 43);" class="text-white">
       <!-- HEADER -->
       <header class="relative pt-48 pb-96 text-center flex flex-col items-center">
         <div
@@ -348,7 +348,7 @@ const aboutPage = Vue.component('about-page', {
 
 const vaultPage = Vue.component('vault-page', {
   template: `
-    <div class="bg-gray-900 text-white">
+    <div style="background-color: rgb(11, 19, 43);" class="text-white">
       <!-- HEADER -->
       <header class="relative pt-48 pb-96 text-center flex flex-col items-center">
         <div
@@ -562,7 +562,7 @@ const vaultPage = Vue.component('vault-page', {
 
 const dashboardPage = Vue.component('dashboard-page', {
   template: `
-    <div class="bg-gray-900 text-white">
+    <div style="background-color: rgb(11, 19, 43);" class="text-white">
       <!-- HEADER -->
       <header class="relative pt-48 pb-32 text-center flex flex-col items-center">
         <div
