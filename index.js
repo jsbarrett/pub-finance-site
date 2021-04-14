@@ -152,7 +152,7 @@ const homePage = Vue.component('home-page', {
         <div class="space-y-16 xl:space-y-0 xl:space-x-16 flex flex-col xl:flex-row justify-center mt-16 px-8 xl:px-0">
           <div
             v-for="x in [1, 2, 3]"
-            class="xl:w-1/4 px-8 py-6 bg-gray-200 rounded-lg shadow-xl flex xl:flex-col"
+            class="xl:w-1/4 px-8 py-6 bg-gray-200 rounded-3xl shadow-xl flex xl:flex-col"
             style="background: rgb(12,12,97);">
             <div class="flex justify-center items-center py-8">
               <svg class="relative z-10 w-1/2" viewBox="0 0 403 195" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -583,7 +583,7 @@ const dashboardPage = Vue.component('dashboard-page', {
       <!-- CARDS -->
       <section class="flex flex-wrap justify-center mb-32">
         <div
-          class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl"
+          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
           <div class="px-10 flex items-center py-2 border-b border-gray-900">
             <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
@@ -599,7 +599,7 @@ const dashboardPage = Vue.component('dashboard-page', {
         </div>
 
         <div
-          class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl"
+          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
           <div class="px-10 flex items-center py-2 border-b border-gray-900">
             <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
@@ -613,7 +613,7 @@ const dashboardPage = Vue.component('dashboard-page', {
         </div>
 
         <div
-          class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl"
+          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
           <div class="px-10 flex items-center py-2 border-b border-gray-900">
             <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
@@ -625,7 +625,7 @@ const dashboardPage = Vue.component('dashboard-page', {
         </div>
 
         <div
-          class="mx-8 my-8 w-full lg:w-1/3 rounded-lg bg-gray-300 shadow-xl"
+          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
           <div class="px-10 flex items-center py-2 border-b border-gray-900">
             <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
@@ -639,7 +639,7 @@ const dashboardPage = Vue.component('dashboard-page', {
 
       <!-- GRAPH -->
       <section
-        class="shadow-lg rounded-lg w-11/12 lg:w-9/12 mx-auto px-8 mt-32 flex flex-wrap justify-center mb-32"
+        class="shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-8 mt-32 flex flex-wrap justify-center mb-32"
         style="background: rgb(12,12,97);">
         <div class="w-full ml-16 mt-16">
           <div>
