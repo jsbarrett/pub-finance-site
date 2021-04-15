@@ -81,13 +81,7 @@ const homePage = Vue.component('home-page', {
       <section class="text-center max-w-screen-2xl mx-auto my-36 px-12">
         <h2 class="font-bold text-7xl">Tired of Losing to the House?</h2>
         <p class="mt-16 text-3xl xl:text-4xl leading-relaxed">
-          Tired of losing to the house?
-          With PINT you are the house.
-          Stake PINT tokens to receive userfees from When Rug
-          and future pub.finance ecosystem products.
-          Use your staking weight to govern the future of the product
-          and direct the use of the Community Governed Warchest.
-          Fair launch, fair owndership, fair play--Grab a pint.
+          Tired of losing to the house? With PINT you are the house. Stake PINT tokens to receive user fees from When Rug and future pub.finance ecosystem products. Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest. Fair launch, fair ownership, fair play--Grab a pint.
         </p>
         <button style="background-color: ${ACCENT_GREEN};" class="mt-16 rounded-full text-gray-900 font-bold text-3xl px-16 py-5">
           Call to Action
@@ -100,11 +94,7 @@ const homePage = Vue.component('home-page', {
           <div class="flex-grow mt-24">
             <h2 class="font-bold text-7xl">About PINT</h2>
             <p class="mt-16 text-4xl leading-relaxed">
-              PINT launched as a standard fair-launch farming coin
-              in September 2020. Through a small unstaking tax on our upwards
-              of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW)
-              which is being used to fund development of innovative and engaging products
-              for the pub.finance ecosystem.
+              PINT launched as a standard fair-launch farming coin in September 2020. Through a small unstaking tax on our upwards of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW) which is being used to fund development of innovative and engaging products for the pub.finance ecosystem.
             </p>
 
             <div class="flex space-x-8">
@@ -277,20 +267,11 @@ const aboutPage = Vue.component('about-page', {
         <h2 class="font-bold text-7xl">Grab Yourself a PINT</h2>
 
         <p class="mt-20 text-3xl leading-relaxed">
-          PINT launched as a standard fair-launch farming coin
-          in September 2020. Through a small unstaking tax on our upwards
-          of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW)
-          which is being used to fund development of innovative and engaging products
-          for the pub.finance ecosystem.
-          <br>
-          PINT's flagship product, "When Rug" is a re-envisioning of the popular crash game,
-          Moneypot; fleshed out and gamified with hot streaks, achievement badges, defi memes,
-          bonuses, and more. While most crash games pay 50% of revenue to investors in the house pool
-          and keep back 50% for the site owners, with PINT you are the "owners" of When Rug.
-          User fees from the game are paid out to PINT stakers. Stake your PINT to earn a voice
-          in the community's governance, and direct use of funds in the CGW towards PINT buybacks
-          or additional development-all the while earning revenue from When Rug and more.
-          Own your play.
+          PINT launched as a standard fair-launch farming coin in September 2020. Through a small unstaking tax on our upwards of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW) which is being used to fund development of innovative and engaging products for the pub.finance ecosystem.
+        </p>
+
+        <p class="mt-10 text-3xl leading-relaxed">
+          PINT’s flagship product, “When Rug” is a re-envisioning of the popular crash game, Moneypot; fleshed out and gamified with hot streaks, achievement badges, defi memes, bonuses, and more.
         </p>
       </section>
 
@@ -317,7 +298,7 @@ const aboutPage = Vue.component('about-page', {
 
         <div class="flex flex-wrap justify-center mt-12">
           <p class="text-3xl text-center">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            While most crash games pay 50% of revenue to investors in the house pool and keep back 50% for the site owners, with PINT you are the “owners” of When Rug. User fees from the game are paid out to PINT stakers. Stake your PINT to earn a voice in the community’s governance, and direct use of funds in the CGW towards PINT buybacks or additional development–all the while earning revenue from When Rug and more. Own your play.
           </p>
         </div>
 
