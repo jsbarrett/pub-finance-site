@@ -331,7 +331,7 @@ const vaultPage = Vue.component('vault-page', {
   template: `
     <div style="background-color: rgb(11, 19, 43);" class="text-white">
       <!-- HEADER -->
-      <header class="relative pt-48 pb-96 text-center flex flex-col items-center">
+      <header class="relative pt-48 pb-60 text-center flex flex-col items-center">
         <div
           class="w-full h-full absolute opacity-50 top-0"
           style="background: rgb(68,255,1); background: linear-gradient(0deg, rgba(11,19,43,1) 0%, rgba(68,255,1,1) 100%);">
@@ -345,19 +345,14 @@ const vaultPage = Vue.component('vault-page', {
         </p>
       </header>
 
-      <!-- GRAB A PINT -->
-      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
-        <h2 class="font-bold text-7xl">Lock your PINT. Maximize returns</h2>
-
-        <p class="mt-20 text-3xl leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </section>
 
       <!-- DATA CARDS -->
-      <section class="max-w-screen-2xl mt-24 mx-auto px-12 mb-48">
+      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
+        <!-- GRAB A PINT -->
+        <h2 class="font-bold text-7xl">Lock your PINT. Maximize returns</h2>
+
         <div
-          class="rounded-3xl py-4 px-12 shadow-xl"
+          class="rounded-3xl py-4 px-12 shadow-xl mt-12"
           style="background: rgb(12,12,97);">
           <div class="text-3xl font-bold text-center">Fixed Lock - One sided staking</div>
           <div>
@@ -438,8 +433,11 @@ const vaultPage = Vue.component('vault-page', {
           </div>
         </div>
 
+        <!-- ADD LIQUIDITY -->
+        <h2 class="font-bold text-7xl mt-24">Add Liquidity</h2>
+
         <div
-          class="mt-16 rounded-3xl py-4 px-12 shadow-xl"
+          class="mt-12 rounded-3xl py-4 px-12 shadow-xl"
           style="background: rgb(12,12,97);">
           <div class="mt-8">
             <table class="w-full mt-8 mb-24">
@@ -528,14 +526,6 @@ const vaultPage = Vue.component('vault-page', {
         </div>
       </section>
 
-      <!-- ADD LIQUIDITY -->
-      <section class="max-w-screen-2xl mx-auto px-12 mb-48">
-        <h2 class="font-bold text-7xl">Add Liquidity</h2>
-
-        <p class="mt-20 text-3xl leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </section>
       <page-footer></page-footer>
     </div>
   `
