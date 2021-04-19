@@ -348,187 +348,228 @@ const vaultPage = Vue.component('vault-page', {
 
       <!-- DATA CARDS -->
       <section class="max-w-screen-2xl mx-auto px-12 mb-48">
-        <!-- GRAB A PINT -->
-        <h2 class="font-bold text-7xl">Lock your PINT. Maximize returns</h2>
-
-        <div
-          class="rounded-3xl py-4 px-12 shadow-xl mt-12"
-          style="background: rgb(12,12,97);">
-          <div class="text-3xl font-bold text-center">Fixed Lock - One sided staking</div>
-          <div>
-            <table class="w-full mt-8 mb-24">
-              <tr class="text-3xl text-left">
-                <th class="align-top">Assets</th>
-                <th class="align-top text-center">APY%</th>
-                <th class="align-top text-center">
-                  <div>Duration</div>
-                  <div class="mt-2 font-normal text-lg">choose lockup period</div>
-                </th>
-                <th class="align-top text-center">Interest</th>
-                <th class="align-top"><!-- Transfer --></th>
-              </tr>
-              <tr class="text-3xl">
-                <td class="py-8 w-1/6">
-                  PINT
-                </td>
-                <td class="py-8 w-1/6 text-center">
-                  6.24%
-                </td>
-                <td class="py-8 w-2/6">
-                  <div class="text-sm flex justify-center">
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">1 week</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">1 month</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">3 months</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">6 months</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1"></div>
-                      </div>
-                      <div class="mt-2">1 year</div>
-                    </div>
-                  </div>
-                </td>
-                <td class="py-8 w-1/6 text-center">
-                  .00456
-                </td>
-                <td class="text-xl py-8 text-center w-1/6">
-                  <button
-                    class="text-gray-900 rounded-3xl px-8 py-2 font-bold"
-                    style="background-color: ${ACCENT_GREEN}">
-                    Transfer
-                  </button>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-
-        <!-- ADD LIQUIDITY -->
-        <h2 class="font-bold text-7xl mt-24">Add Liquidity</h2>
-
-        <div
-          class="mt-12 rounded-3xl py-4 px-12 shadow-xl"
-          style="background: rgb(12,12,97);">
-          <div class="mt-8">
-            <table class="w-full mt-8 mb-24">
-              <tr class="text-3xl text-left">
-                <th class="align-top">Assets</th>
-                <th class="align-top text-center">APY%</th>
-                <th class="align-top text-center">
-                  <div>Duration</div>
-                  <div class="mt-2 font-normal text-lg">choose lockup period</div>
-                </th>
-                <th class="align-top text-center">Interest</th>
-                <th class="align-top"><!-- Transfer --></th>
-              </tr>
-              <tr class="text-3xl">
-                <td class="py-8 w-1/6">
-                  ETH PINT LP
-                </td>
-                <td class="py-8 w-1/6 text-center">
-                  6.24%
-                </td>
-                <td class="py-8 w-2/6">
-                  <div class="text-sm flex justify-center">
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">Unlocked</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">1 week</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">1 month</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">3 months</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                      </div>
-                      <div class="mt-2">6 months</div>
-                    </div>
-                    <div class="flex items-center justify-center flex-col">
-                      <div class="flex items-center">
-                        <div class="w-6 h-1" style="background-color: ${ACCENT_GREEN};"></div>
-                        <div class="h-6 w-6 rounded-full border-4 border-solid" style="border-color: ${ACCENT_GREEN}; background-color: ${ACCENT_GREEN};"></div>
-                        <div class="w-6 h-1"></div>
-                      </div>
-                      <div class="mt-2">1 year</div>
-                    </div>
-                  </div>
-                </td>
-                <td class="py-8 w-1/6 text-center">
-                  .00456
-                </td>
-                <td class="text-xl py-8 text-center w-1/6">
-                  <button
-                    class="rounded-3xl px-8 py-2 text-gray-900 font-bold"
-                    style="background-color: ${ACCENT_GREEN};">
-                    Add Liquidity
-                  </button>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        <grab-pint></grab-pint>
+        <add-liquidity></add-liquidity>
       </section>
 
       <page-footer></page-footer>
     </div>
   `
+})
+
+const grabPint = Vue.component('grab-pint', {
+  data: () => {
+    return {
+      selectedDuration: '1 week',
+      durations: [
+        '1 week',
+        '1 month',
+        '3 months',
+        '6 months',
+        '1 year',
+      ]
+    }
+  },
+  template: `
+    <div>
+      <!-- GRAB A PINT -->
+      <h2 class="font-bold text-7xl">Lock your PINT. Maximize returns</h2>
+
+      <div
+        class="rounded-3xl py-4 px-12 shadow-xl mt-12"
+        style="background: rgb(12,12,97);">
+        <div class="text-3xl font-bold text-center">Fixed Lock - One sided staking</div>
+        <div>
+          <table class="w-full mt-8 mb-24">
+            <tr class="text-3xl text-left">
+              <th class="align-top">Assets</th>
+              <th class="align-top text-center">APY%</th>
+              <th class="align-top text-center">
+                <div>Duration</div>
+                <div class="mt-2 font-normal text-lg">choose lockup period</div>
+              </th>
+              <th class="align-top text-center">Interest</th>
+              <th class="align-top"><!-- Transfer --></th>
+            </tr>
+            <tr class="text-3xl">
+              <td class="py-8 w-1/6">
+                PINT
+              </td>
+              <td class="py-8 w-1/6 text-center">
+                6.24%
+              </td>
+              <td class="py-8 w-2/6">
+                <div class="text-sm flex justify-center">
+                  <div
+                    v-for="(duration, index) in durations"
+                    class="flex items-center justify-center flex-col">
+                    <div class="flex items-center">
+                      <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== 0 }"></div>
+                      <div
+                        v-on:click="() => chooseDuration(duration)"
+                        class="cursor-pointer h-6 w-6 rounded-full border-4 border-solid"
+                        v-bind:class="{ 'bg-accent-green': selectedDuration !== duration }"
+                        style="border-color: ${ACCENT_GREEN};">
+                      </div>
+                      <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== (durations.length - 1) }"></div>
+                    </div>
+                    <div class="mt-2">{{ duration }}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="py-8 w-1/6 text-center">
+                .00456
+              </td>
+              <td class="text-xl py-8 text-center w-1/6">
+                <button
+                  v-on:click="transfer"
+                  class="text-gray-900 rounded-3xl px-8 py-2 font-bold"
+                  style="background-color: ${ACCENT_GREEN}">
+                  Transfer
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  `,
+  methods: {
+    chooseDuration (timespan) {
+      this.selectedDuration = timespan
+
+      // TODO:
+      switch (timespan) {
+        case '1 week': {
+          break
+        }
+        case '1 month': {
+          break
+        }
+        case '3 months': {
+          break
+        }
+        case '6 months': {
+          break
+        }
+        case '1 year': {
+          break
+        }
+      }
+    },
+    transfer () {
+      // TODO:
+    }
+  }
+})
+
+const addLiquidity = Vue.component('add-liquidity', {
+  data: () => {
+    return {
+      selectedDuration: 'Unlocked',
+      durations: [
+        'Unlocked',
+        '1 week',
+        '1 month',
+        '3 months',
+        '6 months',
+        '1 year',
+      ]
+    }
+  },
+  template: `
+    <div>
+      <!-- ADD LIQUIDITY -->
+      <h2 class="font-bold text-7xl mt-24">Add Liquidity</h2>
+
+      <div
+        class="mt-12 rounded-3xl py-4 px-12 shadow-xl"
+        style="background: rgb(12,12,97);">
+        <div class="mt-8">
+          <table class="w-full mt-8 mb-24">
+            <tr class="text-3xl text-left">
+              <th class="align-top">Assets</th>
+              <th class="align-top text-center">APY%</th>
+              <th class="align-top text-center">
+                <div>Duration</div>
+                <div class="mt-2 font-normal text-lg">choose lockup period</div>
+              </th>
+              <th class="align-top text-center">Interest</th>
+              <th class="align-top"><!-- Transfer --></th>
+            </tr>
+            <tr class="text-3xl">
+              <td class="py-8 w-1/6">
+                ETH PINT LP
+              </td>
+              <td class="py-8 w-1/6 text-center">
+                6.24%
+              </td>
+              <td class="py-8 w-2/6">
+                <div class="text-sm flex justify-center">
+                  <div
+                    v-for="(duration, index) in durations"
+                    class="flex items-center justify-center flex-col">
+                    <div class="flex items-center">
+                      <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== 0 }"></div>
+                      <div
+                        v-on:click="() => chooseDuration(duration)"
+                        class="cursor-pointer h-6 w-6 rounded-full border-4 border-solid"
+                        v-bind:class="{ 'bg-accent-green': selectedDuration !== duration }"
+                        style="border-color: ${ACCENT_GREEN};">
+                      </div>
+                      <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== (durations.length - 1) }"></div>
+                    </div>
+                    <div class="mt-2">{{ duration }}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="py-8 w-1/6 text-center">
+                .00456
+              </td>
+              <td class="text-xl py-8 text-center w-1/6">
+                <button
+                  v-on:click="addLiquidity"
+                  class="rounded-3xl px-8 py-2 text-gray-900 font-bold"
+                  style="background-color: ${ACCENT_GREEN};">
+                  Add Liquidity
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  `,
+  methods: {
+    chooseDuration (timespan) {
+      this.selectedDuration = timespan
+
+      // TODO:
+      switch (timespan) {
+        case 'Unlocked': {
+          break
+        }
+        case '1 week': {
+          break
+        }
+        case '1 month': {
+          break
+        }
+        case '3 months': {
+          break
+        }
+        case '6 months': {
+          break
+        }
+        case '1 year': {
+          break
+        }
+      }
+    },
+    addLiquidity () {
+      // TODO:
+    }
+  }
 })
 
 const dashboardPage = Vue.component('dashboard-page', {
