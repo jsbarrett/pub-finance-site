@@ -594,6 +594,7 @@ const dashboardPage = Vue.component('dashboard-page', {
 
       <!-- CARDS -->
       <section class="flex flex-wrap justify-center mb-32">
+        <!--
         <div
           class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
@@ -623,16 +624,21 @@ const dashboardPage = Vue.component('dashboard-page', {
           <div class="px-10 py-8 text-2xl flex justify-between">
           </div>
         </div>
+        -->
 
         <div
           class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
           <div class="px-10 flex items-center py-2 border-b border-gray-900">
-            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
-            <div class="text-2xl ml-6">TOTAL VALUE LOCKED</div>
+            <div class="w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <div class="text-2xl ml-6">PRICE</div>
           </div>
           <div class="px-10 font-bold text-4xl py-8">
-            $50,581.07 <span class="text-xl">USD</span>
+            $ {{ currentPrice }} <span class="text-xl">USD</span>
           </div>
         </div>
 
@@ -640,11 +646,47 @@ const dashboardPage = Vue.component('dashboard-page', {
           class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
           <div class="px-10 flex items-center py-2 border-b border-gray-900">
-            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
+            <div class="w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+              </svg>
+            </div>
+            <div class="text-2xl ml-6">TOTAL PINT SUPPLY</div>
+          </div>
+          <div class="px-10 font-bold text-4xl py-8">
+            $ {{ totalSupply }} <span class="text-xl">USD</span>
+          </div>
+        </div>
+
+        <div
+          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
+          style="background: rgb(12,12,97);">
+          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+            <div class="w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <div class="text-2xl ml-6">TOTAL VALUE LOCKED</div>
+          </div>
+          <div class="px-10 font-bold text-4xl py-8">
+            $ {{ totalValueLocked }} <span class="text-xl">USD</span>
+          </div>
+        </div>
+
+        <div
+          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
+          style="background: rgb(12,12,97);">
+          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+            <div class="w-20 h-20 bg-gray-900 rounded-full flex justify-center items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+              </svg>
+            </div>
             <div class="text-2xl ml-6">MARKET CAP</div>
           </div>
           <div class="px-10 font-bold text-4xl py-8">
-            $278,532.84 <span class="text-xl">USD</span>
+            $ {{ marketCap }} <span class="text-xl">USD</span>
           </div>
         </div>
       </section>
@@ -670,23 +712,37 @@ const dashboardPage = Vue.component('dashboard-page', {
     </div>
   `,
   async mounted () {
-    this.totalSupply = await this.getTotalSupply()
+    // await this.getCoinDetails()
   },
   data () {
     return {
-      totalSupply: ''
+      totalValueLocked: '50,581.07', // TODO: get value from uniswap
+      totalSupply: '',
+      currentPrice: '',
+      marketCap: '',
     }
   },
   methods: {
+    async getCoinDetails () {
+      fetch('https://api.coingecko.com/api/v3/coins/pub-finance', {
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(x => x.json())
+        .then(x => {
+          this.currentPrice = x.market_data.current_price.usd.toLocaleString()
+          this.marketCap = x.market_data.market_cap.usd.toLocaleString()
+          this.totalSupply = Math.floor(x.market_data.total_supply).toLocaleString()
+        })
+        .catch(console.error)
+    },
     async getTotalSupply () {
       try {
         const url = `https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${CONTRACT_ADDRESS}&apikey=${API_KEY}`
-        // const url = 'https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462&apikey=8M6AXBKTI1VRXK7SNY9FGIYWX868CVNR6S'
         return await fetch(url)
           .then(x => x.json())
           .then(x => x.result)
           .then(x => Math.floor(x / 100000000 / 10000000000))
-          .then(x => `$${x.toLocaleString()}`)
+          .then(x => x.toLocaleString())
       } catch (err) {
         console.error(err)
         return '---'
@@ -699,18 +755,17 @@ Vue.component('line-chart', {
   template: `
     <canvas id="myChart"></canvas>
   `,
-  mounted: () => {
+  async mounted () {
+    // const historicalData = await this.getHistoricalData()
+    const historicalData = []
+
     const ctx = document.getElementById('myChart').getContext('2d')
 
-    const DATA_COUNT = 12
-    const labels = []
-    for (let i = 0; i < DATA_COUNT; ++i) {
-      labels.push(i.toString())
-    }
-    const datapoints = [0, 20, 20, 60, 60, 120, 150, 180, 120, 125, 105, 110, 170]
+    const labels = historicalData.map(x => x.date.toLocaleDateString())
+    const datapoints = historicalData.map(x => x.price)
 
     const data = {
-      labels: labels,
+      labels,
       datasets: [
         {
           data: datapoints,
@@ -744,14 +799,52 @@ Vue.component('line-chart', {
           },
           y: {
             display: false,
-            suggestedMin: -10,
-            suggestedMax: 200
+            suggestedMin: 0,
+            suggestedMax: 1
           }
         }
       },
     }
 
     new Chart(ctx, config)
+  },
+  methods: {
+    generateLastWeekDates () {
+      const dt = new Date()
+
+      const dates = []
+
+      for (let i = 0; i < 10; i +=1 ) {
+        dt.setDate(dt.getDate() - 1)
+        const day = dt.getDate()
+        const month = dt.getMonth() + 1
+        const year = dt.getFullYear()
+        dates.push(`${day}-${month}-${year}`)
+      }
+
+      return dates
+    },
+    async getDataPoint (date) {
+      const url = 'https://api.coingecko.com/api/v3/coins/pub-finance/history?date='
+      const config = { headers: { 'Content-Type': 'application/json' } }
+
+      const [day, month, year] = date.split('-')
+
+      return fetch(url + date, config)
+        .then(x => x.json())
+        .then(x => {
+          return {
+            date: new Date(`${month}-${day}-${year}`),
+            volume: x.market_data.total_volume.usd,
+            price: x.market_data.current_price.usd,
+          }
+        })
+    },
+    async getHistoricalData () {
+      const dates = this.generateLastWeekDates()
+
+      return await Promise.all(dates.map(this.getDataPoint))
+    }
   }
 })
 
@@ -760,7 +853,7 @@ Vue.component('app-root', {
     <div class="flex flex-col xl:flex-row">
       <!-- SIDE NAVIGATION -->
       <nav
-        class="h-20 w-full xl:h-auto xl:min-h-screen xl:w-24 bg-gradient-to-b from-blue-900 to-gray-900 text-white flex xl:flex-col items-center shadow-lg fixed top-0 left-0"
+        class="h-20 w-full xl:h-auto xl:min-h-screen xl:w-24 bg-gradient-to-b from-blue-900 to-gray-900 text-white flex xl:flex-col items-center shadow-lg fixed z-20 top-0 left-0"
         style="background: rgb(68,255,1); background: linear-gradient(0deg, #241D8C 0%, #02044F 100%);">
         <img style="filter: invert();" src="pint-gear-logo.svg">
 
