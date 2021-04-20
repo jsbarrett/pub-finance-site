@@ -712,7 +712,7 @@ const dashboardPage = Vue.component('dashboard-page', {
     </div>
   `,
   async mounted () {
-    // await this.getCoinDetails()
+    await this.getCoinDetails()
   },
   data () {
     return {
@@ -756,8 +756,7 @@ Vue.component('line-chart', {
     <canvas id="myChart"></canvas>
   `,
   async mounted () {
-    // const historicalData = await this.getHistoricalData()
-    const historicalData = []
+    const historicalData = await this.getHistoricalData()
 
     const ctx = document.getElementById('myChart').getContext('2d')
 
@@ -842,8 +841,18 @@ Vue.component('line-chart', {
     },
     async getHistoricalData () {
       const dates = this.generateLastWeekDates()
+      const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-      return await Promise.all(dates.map(this.getDataPoint))
+      const results = []
+
+      for (const date of dates) {
+        results.push(await this.getDataPoint(date))
+        await wait(50)
+      }
+
+      console.log(results)
+
+      return results
     }
   }
 })
