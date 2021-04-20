@@ -24,7 +24,7 @@ Vue.component('faq-list-item', {
           {{ item.body }}
         </p>
       </div>
-      <div style="color: ${ACCENT_GREEN};" class="text-5xl font-bold ml-8">
+      <div class="text-accent-green text-5xl font-bold ml-8">
         <span v-if="!open">+</span>
         <span v-if="open">-</span>
       </div>
@@ -72,7 +72,7 @@ const homePage = Vue.component('home-page', {
 
           <router-link to="/vault">
             <div class="mt-4 text-lg flex justify-end items-center">
-              <div style="color: ${ACCENT_GREEN};">Stake PINT</div>
+              <div class="text-accent-green">Stake PINT</div>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -95,7 +95,7 @@ const homePage = Vue.component('home-page', {
 
           <router-link to="/dashboard">
             <div class="mt-4 text-lg flex justify-end items-center">
-              <div style="color: ${ACCENT_GREEN};">Visit Dashboard</div>
+              <div class="text-accent-green">Visit Dashboard</div>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -118,7 +118,7 @@ const homePage = Vue.component('home-page', {
 
           <router-link to="/community">
             <div class="mt-4 text-lg flex justify-end items-center">
-              <div style="color: ${ACCENT_GREEN};">Join</div>
+              <div class="text-accent-green">Join</div>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -133,7 +133,7 @@ const homePage = Vue.component('home-page', {
         <p class="mt-16 text-3xl xl:text-4xl leading-relaxed">
           Tired of losing to the house? With PINT you are the house. Stake PINT tokens to receive user fees from When Rug and future pub.finance ecosystem products. Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest. Fair launch, fair ownership, fair play--Grab a pint.
         </p>
-        <button style="background-color: ${ACCENT_GREEN};" class="mt-16 rounded-full text-gray-900 font-bold text-3xl px-16 py-5">
+        <button class="bg-accent-green mt-16 rounded-full text-gray-900 font-bold text-3xl px-16 py-5">
           Call to Action
         </button>
       </section>
@@ -150,8 +150,7 @@ const homePage = Vue.component('home-page', {
             <div class="flex space-x-8">
               <router-link to="/about">
                 <button
-                  style="background-color: ${ACCENT_GREEN};"
-                  class="mt-16 rounded-full text-gray-900 text-xl px-8 py-5 flex justify-between items-center">
+                  class="bg-accent-green mt-16 rounded-full text-gray-900 text-xl px-8 py-5 flex justify-between items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -161,8 +160,7 @@ const homePage = Vue.component('home-page', {
 
               <router-link to="/community">
                 <button
-                  style="border-color: ${ACCENT_GREEN};"
-                  class="mt-16 rounded-full border-4 border-solid text-xl px-8 py-5 flex justify-between items-center">
+                  class="mt-16 rounded-full border-4 border-accent-green border-solid text-xl px-8 py-5 flex justify-between items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="${ACCENT_GREEN}">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
@@ -242,7 +240,7 @@ const faqSection = Vue.component('faq-section', {
         <h2 class="font-bold text-7xl leading-tight">Frequently Asked Questions</h2>
         <p class="text-4xl mt-12">
           To learn more about PINT, check out the
-          <a href="#" style="color: ${ACCENT_GREEN};">FAQ page</a>
+          <a href="#" class="text-accent-green">FAQ page</a>
         </p>
       </div>
 
@@ -356,18 +354,8 @@ const aboutPage = Vue.component('about-page', {
 
         <div class="flex justify-center">
           <button
-            class="mt-16 rounded-full text-xl px-8 py-5 text-gray-900 flex justify-between items-center"
-            style="background-color: ${ACCENT_GREEN};">
+            class="bg-accent-green mt-16 rounded-full text-xl px-8 py-5 text-gray-900 flex justify-between items-center bg-accent-green">
             <span class="font-semibold">DOWNLOAD NOW</span>
-          </button>
-
-          <button
-            style="border-color: ${ACCENT_GREEN};"
-            class="ml-8 mt-16 rounded-full border-4 border-solid text-xl px-8 py-5 flex justify-between items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="${ACCENT_GREEN}">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            <span class="ml-4 font-semibold">Join Chat</span>
           </button>
         </div>
       </section>
@@ -459,9 +447,8 @@ const grabPint = Vue.component('grab-pint', {
                       <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== 0 }"></div>
                       <div
                         v-on:click="() => chooseDuration(duration)"
-                        class="cursor-pointer h-6 w-6 rounded-full border-4 border-solid"
-                        v-bind:class="{ 'bg-accent-green': selectedDuration !== duration }"
-                        style="border-color: ${ACCENT_GREEN};">
+                        class="border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid"
+                        v-bind:class="{ 'bg-accent-green': selectedDuration !== duration }">
                       </div>
                       <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== (durations.length - 1) }"></div>
                     </div>
@@ -475,8 +462,7 @@ const grabPint = Vue.component('grab-pint', {
               <td class="text-xl py-8 text-center w-1/6">
                 <button
                   v-on:click="transfer"
-                  class="text-gray-900 rounded-3xl px-8 py-2 font-bold"
-                  style="background-color: ${ACCENT_GREEN}">
+                  class="text-gray-900 rounded-3xl px-8 py-2 font-bold bg-accent-green">
                   Transfer
                 </button>
               </td>
@@ -565,9 +551,8 @@ const addLiquidity = Vue.component('add-liquidity', {
                       <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== 0 }"></div>
                       <div
                         v-on:click="() => chooseDuration(duration)"
-                        class="cursor-pointer h-6 w-6 rounded-full border-4 border-solid"
-                        v-bind:class="{ 'bg-accent-green': selectedDuration !== duration }"
-                        style="border-color: ${ACCENT_GREEN};">
+                        class="border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid"
+                        v-bind:class="{ 'bg-accent-green': selectedDuration !== duration }">
                       </div>
                       <div class="w-6 h-1" v-bind:class="{ 'bg-accent-green': index !== (durations.length - 1) }"></div>
                     </div>
@@ -581,8 +566,7 @@ const addLiquidity = Vue.component('add-liquidity', {
               <td class="text-xl py-8 text-center w-1/6">
                 <button
                   v-on:click="addLiquidity"
-                  class="rounded-3xl px-8 py-2 text-gray-900 font-bold"
-                  style="background-color: ${ACCENT_GREEN};">
+                  class="rounded-3xl px-8 py-2 text-gray-900 font-bold bg-accent-green">
                   Add Liquidity
                 </button>
               </td>
@@ -646,42 +630,10 @@ const dashboardPage = Vue.component('dashboard-page', {
 
       <!-- CARDS -->
       <section class="flex flex-wrap justify-center mb-32">
-        <!--
         <div
           class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
-          <div class="px-10 flex items-center py-2 border-b border-gray-900">
-            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
-            <div class="text-2xl ml-6">YOUR PINT BALANCE</div>
-          </div>
-          <div class="px-10 font-bold text-4xl py-8 border-b border-gray-900">
-            5,000,000 <span class="text-xl">PINT</span>
-          </div>
-          <div class="px-10 py-8 text-2xl flex justify-between">
-            <div class="">Pending Harvest</div>
-            <div>3,000 PUB</div>
-          </div>
-        </div>
-
-        <div
-          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
-          style="background: rgb(12,12,97);">
-          <div class="px-10 flex items-center py-2 border-b border-gray-900">
-            <div class="w-20 h-20 bg-gray-600 rounded-full"></div>
-            <div class="text-2xl ml-6">TOTAL PINT SUPPLY</div>
-          </div>
-          <div class="px-10 font-bold text-4xl py-8 border-b border-gray-900">
-            {{ totalSupply }} <span class="text-xl">PINT</span>
-          </div>
-          <div class="px-10 py-8 text-2xl flex justify-between">
-          </div>
-        </div>
-        -->
-
-        <div
-          class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
-          style="background: rgb(12,12,97);">
-          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+          <div class="px-10 flex items-center py-2 border-b border-gray-600">
             <div class="w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -697,7 +649,7 @@ const dashboardPage = Vue.component('dashboard-page', {
         <div
           class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
-          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+          <div class="px-10 flex items-center py-2 border-b border-gray-600">
             <div class="w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
@@ -713,7 +665,7 @@ const dashboardPage = Vue.component('dashboard-page', {
         <div
           class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
-          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+          <div class="px-10 flex items-center py-2 border-b border-gray-600">
             <div class="w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -729,7 +681,7 @@ const dashboardPage = Vue.component('dashboard-page', {
         <div
           class="mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl"
           style="background: rgb(12,12,97);">
-          <div class="px-10 flex items-center py-2 border-b border-gray-900">
+          <div class="px-10 flex items-center py-2 border-b border-gray-600">
             <div class="w-20 h-20 bg-gray-900 rounded-full flex justify-center items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
@@ -749,15 +701,24 @@ const dashboardPage = Vue.component('dashboard-page', {
         style="background: rgb(12,12,97);">
         <div class="w-full ml-16 mt-16">
           <div>
-            <button style="background-color: ${ACCENT_GREEN}" class="px-10 py-2 rounded mt-4 text-gray-900 font-bold text-lg">Liquidity</button>
-            <button class="px-10 py-2 rounded bg-gray-500 mt-4 text-white font-bold text-lg">Volume</button>
-            <button class="px-10 py-2 rounded bg-gray-500 mt-4 text-white font-bold text-lg">Price</button>
+            <button
+              v-for="chartType in chartTypes"
+              v-bind:class="{
+                'bg-accent-green': chartType === selectedChart,
+                'text-gray-900': chartType === selectedChart,
+                'bg-gray-500': chartType !== selectedChart,
+                'text-white': chartType !== selectedChart,
+              }"
+              v-on:click="() => setChartType(chartType)"
+              class="mr-4 px-10 py-2 rounded mt-4 font-bold text-lg">
+              {{ chartType }}
+            </button>
           </div>
           <div class="mt-12 text-6xl font-bold">
             $2,560.50
           </div>
         </div>
-        <line-chart></line-chart>
+        <line-chart v-bind:charttype="selectedChart"></line-chart>
       </section>
 
       <page-footer></page-footer>
@@ -772,9 +733,18 @@ const dashboardPage = Vue.component('dashboard-page', {
       totalSupply: '',
       currentPrice: '',
       marketCap: '',
+      chartTypes: [
+        'Liquidity',
+        'Volume',
+        'Price'
+      ],
+      selectedChart: 'Price'
     }
   },
   methods: {
+    setChartType (chartType) {
+      this.selectedChart = chartType
+    },
     async getCoinDetails () {
       fetch('https://api.coingecko.com/api/v3/coins/pub-finance', {
         headers: { 'Content-Type': 'application/json' }
@@ -804,60 +774,26 @@ const dashboardPage = Vue.component('dashboard-page', {
 })
 
 Vue.component('line-chart', {
+  props: ['charttype'],
   template: `
-    <canvas id="myChart"></canvas>
+    <canvas id="chart"></canvas>
   `,
+  data: () => {
+    return {
+      historicalData: []
+    }
+  },
   async mounted () {
-    const historicalData = await this.getHistoricalData()
-
-    const ctx = document.getElementById('myChart').getContext('2d')
-
-    const labels = historicalData.map(x => x.date.toLocaleDateString())
-    const datapoints = historicalData.map(x => x.price)
-
-    const data = {
-      labels,
-      datasets: [
-        {
-          data: datapoints,
-          borderColor: 'blue',
-          fill: true,
-          backgroundColor: ACCENT_GREEN_RGBA,
-          tension: 0.4
-        }
-      ]
+    // this.historicalData = await this.getHistoricalData()
+    this.setupChart()
+  },
+  updated () {
+    this.updateChart(this.charttype)
+  },
+  watch: {
+    'charttype': function (newValue) {
+      this.updateChart(newValue)
     }
-
-    const config = {
-      type: 'line',
-      data: data,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false
-          },
-          title: {
-            display: false,
-          },
-        },
-        interaction: {
-          intersect: false,
-        },
-        scales: {
-          x: {
-            display: false,
-          },
-          y: {
-            display: false,
-            suggestedMin: 0,
-            suggestedMax: 1
-          }
-        }
-      },
-    }
-
-    new Chart(ctx, config)
   },
   methods: {
     generateLastWeekDates () {
@@ -886,8 +822,8 @@ Vue.component('line-chart', {
         .then(x => {
           return {
             date: new Date(`${month}-${day}-${year}`),
-            volume: x.market_data.total_volume.usd,
-            price: x.market_data.current_price.usd,
+            Volume: x.market_data.total_volume.usd,
+            Price: x.market_data.current_price.usd,
           }
         })
     },
@@ -899,12 +835,66 @@ Vue.component('line-chart', {
 
       for (const date of dates) {
         results.push(await this.getDataPoint(date))
-        await wait(50)
+        await wait(500)
       }
 
-      console.log(results)
-
       return results
+    },
+    async setupChart () {
+      const ctx = document.getElementById('chart').getContext('2d')
+
+      const generateConfig = chartType => {
+        return {
+          type: 'line',
+          data: this.generateChartData(chartType),
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false
+              },
+              title: {
+                display: false,
+              },
+            },
+            interaction: {
+              intersect: false,
+            },
+            scales: {
+              x: {
+                display: false,
+              },
+              y: {
+                display: false,
+                suggestedMin: 0,
+                suggestedMax: 1
+              }
+            }
+          },
+        }
+      }
+
+      this.chart = new Chart(ctx, generateConfig(this.charttype))
+    },
+    generateChartData (chartType) {
+      const labels = this.historicalData.map(x => x.date.toLocaleDateString())
+      const datapoints = this.historicalData.map(x => x[chartType])
+      return {
+        labels,
+        datasets: [
+          {
+            data: datapoints,
+            borderColor: 'blue',
+            fill: true,
+            backgroundColor: ACCENT_GREEN_RGBA,
+            tension: 0.4
+          }
+        ]
+      }
+    },
+    updateChart (chartType) {
+      this.chart.data = this.generateChartData(chartType)
+      this.chart.update()
     }
   }
 })
