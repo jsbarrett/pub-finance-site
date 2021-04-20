@@ -184,7 +184,7 @@ const homePage = Vue.component('home-page', {
       <faq-section></faq-section>
 
       <!-- BLOG -->
-      <section class="max-w-screen-2xl mx-auto my-36 px-12">
+      <!-- <section class="max-w-screen-2xl mx-auto my-36 px-12">
         <div class="text-center">
           <h2 class="font-bold text-7xl">Blog</h2>
         </div>
@@ -215,7 +215,7 @@ const homePage = Vue.component('home-page', {
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <page-footer></page-footer>
     </div>
