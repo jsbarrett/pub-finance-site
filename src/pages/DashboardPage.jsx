@@ -44,7 +44,7 @@ const getHistoricalData = async () => {
   const results = []
 
   for (const date of dates) {
-    results.push(await getDataPoint(date))
+    results.unshift(await getDataPoint(date))
     await wait(500)
   }
 
@@ -99,8 +99,7 @@ const generateConfig = (chartType, historicalData) => {
   }
 }
 
-const LineChart = ({ chartType }) => {
-  const [historicalData, setHistoricalData] = useState([])
+const LineChart = ({ chartType, historicalData }) => {
   const [chart, setChart] = useState()
 
   const setupChart = () => {
@@ -116,7 +115,7 @@ const LineChart = ({ chartType }) => {
 
     setChart(new Chart(ctx, generateConfig(chartType, historicalData)))
 
-    return () => chart.destroy()
+    return () => { if (chart) chart.destroy() }
   }
 
   useEffect(() => {
@@ -126,29 +125,31 @@ const LineChart = ({ chartType }) => {
     }
   }, [chartType, chart])
 
-  useEffect(() => {
-    async function main () {
-      // setHistoricalData(await getHistoricalData())
-      return setupChart()
-    }
-    return main()
-  }, [])
+  useEffect(() => { return setupChart() }, [])
+
   return (
     <div id='chart-container' className="w-full"></div>
   )
 }
 
 export const DashboardPage = () => {
-  const [totalValueLocked, setTotalValueLocked] = useState('50,581.07') // TODO: get value from uniswap
+  const [totalValueLocked, setTotalValueLocked] = useState('Unknown') // TODO: get value from uniswap
   const [totalSupply, setTotalSupply] = useState('')
   const [currentPrice, setCurrentPrice] = useState('')
   const [marketCap, setMarketCap] = useState('')
   const [selectedChart, setSelectedChart] = useState('Price')
+  const [historicalData, setHistoricalData] = useState([])
+  const [loadingCardData, setLoadingCardData] = useState(true)
+  const [loadingHistoricalData, setLoadingHistoricalData] = useState(true)
+  const [recentChartValue, setRecentChartValue] = useState('')
+
   const chartTypes = [
-    'Liquidity',
-    'Volume',
     'Price',
+    'Volume',
+    'Liquidity',
   ]
+
+  // LOAD CARDS
   useEffect(() => {
     fetch('https://api.coingecko.com/api/v3/coins/pub-finance', {
       headers: { 'Content-Type': 'application/json' }
@@ -158,9 +159,35 @@ export const DashboardPage = () => {
         setCurrentPrice(x.market_data.current_price.usd.toLocaleString())
         setMarketCap(x.market_data.market_cap.usd.toLocaleString())
         setTotalSupply(Math.floor(x.market_data.total_supply).toLocaleString())
+        setLoadingCardData(false)
       })
-      .catch(console.error)
+      .catch(err => {
+        console.error(err)
+      })
   }, [])
+
+  // LOAD HISTORICAL DATA
+  // useEffect(() => {
+  //   getHistoricalData()
+  //     .then(x => {
+  //       setHistoricalData(x)
+  //       updateChartType('Price')
+
+  //       setLoadingHistoricalData(false)
+  //     })
+  // }, [])
+
+  const updateChartType = (chartType) => {
+    if (historicalData && historicalData.length > 0) {
+      const recentValue = Math.round(historicalData[historicalData.length - 1][chartType] * 1000) / 1000
+      if (Number.isNaN(recentValue)) {
+        setRecentChartValue('Unknown')
+      } else {
+        setRecentChartValue(recentValue)
+      }
+    }
+    setSelectedChart(chartType)
+  }
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
@@ -180,9 +207,9 @@ export const DashboardPage = () => {
         </svg>
       </header>
 
-      <section className='flex flex-wrap justify-center mb-32'>
+      <section className='flex flex-wrap justify-between mb-32 w-9/12 mx-auto'>
         <div
-          className='mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl'
+          className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
             <div className='w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center'>
@@ -192,13 +219,19 @@ export const DashboardPage = () => {
             </div>
             <div className='text-2xl ml-6'>PRICE</div>
           </div>
+          { !loadingCardData
+          ?
           <div className='px-10 font-bold text-4xl py-8'>
             $ { currentPrice } <span className='text-xl'>USD</span>
           </div>
+          :
+          <div className='px-10 font-bold text-4xl py-8'>
+            Loading ...
+          </div> }
         </div>
 
         <div
-          className='mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl'
+          className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
             <div className='w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center'>
@@ -208,13 +241,19 @@ export const DashboardPage = () => {
             </div>
             <div className='text-2xl ml-6'>TOTAL PINT SUPPLY</div>
           </div>
+          { !loadingCardData
+          ?
           <div className='px-10 font-bold text-4xl py-8'>
             $ { totalSupply } <span className='text-xl'>USD</span>
           </div>
+          :
+          <div className='px-10 font-bold text-4xl py-8'>
+            Loading ...
+          </div> }
         </div>
 
         <div
-          className='mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl'
+          className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
             <div className='w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center'>
@@ -224,13 +263,19 @@ export const DashboardPage = () => {
             </div>
             <div className='text-2xl ml-6'>TOTAL VALUE LOCKED</div>
           </div>
+          { !loadingCardData
+          ?
           <div className='px-10 font-bold text-4xl py-8'>
             $ { totalValueLocked } <span className='text-xl'>USD</span>
           </div>
+          :
+          <div className='px-10 font-bold text-4xl py-8'>
+            Loading ...
+          </div> }
         </div>
 
         <div
-          className='mx-8 my-8 w-full lg:w-1/3 rounded-3xl bg-gray-300 shadow-xl'
+          className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
             <div className='w-20 h-20 bg-gray-900 rounded-full flex justify-center items-center'>
@@ -240,12 +285,20 @@ export const DashboardPage = () => {
             </div>
             <div className='text-2xl ml-6'>MARKET CAP</div>
           </div>
+          { !loadingCardData
+          ?
           <div className='px-10 font-bold text-4xl py-8'>
             $ { marketCap } <span className='text-xl'>USD</span>
           </div>
+          :
+          <div className='px-10 font-bold text-4xl py-8'>
+            Loading ...
+          </div> }
         </div>
       </section>
 
+      { !loadingHistoricalData
+      ?
       <section
         className='shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-8 mt-32 flex flex-wrap justify-center mb-32'
         style={{ background: 'rgb(12,12,97)' }}>
@@ -254,7 +307,7 @@ export const DashboardPage = () => {
             { chartTypes.map(chartType => (
             <button
               key={chartType}
-              onClick={() => setSelectedChart(chartType)}
+              onClick={() => updateChartType(chartType)}
               className={(chartType === selectedChart)
                 ? 'mr-4 px-10 py-2 rounded mt-4 font-bold text-lg bg-accent-green text-gray-900'
                 : 'mr-4 px-10 py-2 rounded mt-4 font-bold text-lg bg-gray-500 text-white'}>
@@ -263,12 +316,20 @@ export const DashboardPage = () => {
             )) }
           </div>
           <div className='mt-12 text-6xl font-bold'>
-            $2,560.50
+            { recentChartValue }
           </div>
         </div>
 
-        <LineChart chartType={selectedChart} />
+        <LineChart chartType={selectedChart} historicalData={historicalData} />
       </section>
+      :
+      <section
+        className='shadow-lg rounded-3xl w-9/12 mx-auto px-8 mt-32 flex flex-wrap justify-center mb-32'
+        style={{ background: 'rgb(12,12,97)' }}>
+        <div className='w-full ml-16 py-16'>
+          Loading historical data ...
+        </div>
+      </section>}
 
       <PageFooter />
     </div>
