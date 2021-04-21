@@ -39,16 +39,19 @@ const generateLastWeekDates = () => {
 
 const getHistoricalData = async () => {
   const dates = generateLastWeekDates()
-  const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-  const results = []
+  // const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-  for (const date of dates) {
-    results.unshift(await getDataPoint(date))
-    await wait(500)
-  }
+  // const results = []
 
-  return results
+  // for (const date of dates) {
+  //   results.unshift(await getDataPoint(date))
+  //   await wait(500)
+  // }
+
+  // return results
+
+  return await Promise.all(dates.map(getDataPoint))
 }
 
 const generateChartData = (chartType, historicalData) => {
