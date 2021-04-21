@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { FaqSection } from '../components/FaqSection'
 import { PageFooter } from '../components/PageFooter'
 
+import pintGearLogoUrl from '../pint-gear-logo.svg'
+
 import { ACCENT_GREEN } from '../styles'
 
 export const HomePage = () => {
@@ -144,7 +146,7 @@ export const HomePage = () => {
               className='flex items-center justify-center pt-4'>
               <img
                 style={{ filter: 'invert(52%) sepia(95%) saturate(1036%) hue-rotate(64deg) brightness(123%) contrast(109%)' }}
-                className='w-full' src='pint-gear-logo.svg' />
+                className='w-full' src={pintGearLogoUrl} />
             </div>
           </div>
         </div>

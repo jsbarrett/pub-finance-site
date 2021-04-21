@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import pintGearLogoUrl from '../pint-gear-logo.svg'
 
 export const SideNav = () => {
   return (
     <nav
       className='h-20 w-full xl:h-auto xl:min-h-screen xl:w-24 bg-gradient-to-b from-blue-900 to-gray-900 text-white flex xl:flex-col items-center shadow-lg fixed z-20 top-0 left-0'
       style={{ background: 'linear-gradient(0deg, #241D8C 0%, #02044F 100%)' }}>
-      <img style={{ filter: 'invert()' }} src='pint-gear-logo.svg' />
+      <img style={{ filter: 'invert()' }} src={pintGearLogoUrl} />
 
       <div className='xl:mt-8 flex flex-grow xl:flex-col xl:max-h-screen justify-around xl:justify-start mx-auto'>
         <Link to='/'>
