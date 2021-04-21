@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 const FaqListItem = ({ item }) => {
   const [open, setOpen] = useState(false)
@@ -32,9 +32,9 @@ export const FaqSection = () => {
     <section className='max-w-screen-2xl mx-auto my-36 px-12'>
       <div className='text-center'>
         <h2 className='font-bold text-7xl leading-tight'>Frequently Asked Questions</h2>
-        <p className='text-4xl mt-12'>
-          To learn more about PINT, check out the <Link to='/'><span className='text-accent-green'>FAQ page</span></Link>
-        </p>
+        {/* <p className='text-4xl mt-12'> */}
+        {/*   To learn more about PINT, check out the <Link to='/'><span className='text-accent-green'>FAQ page</span></Link> */}
+        {/* </p> */}
       </div>
 
       <div className='max-w-screen-xl space-y-10 mx-auto mt-16'>

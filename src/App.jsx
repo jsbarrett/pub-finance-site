@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom'
 import './App.css'
 
@@ -6,6 +6,7 @@ import { HomePage } from './pages/HomePage'
 import { AboutPage } from './pages/AboutPage'
 import { VaultPage } from './pages/VaultPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { CommunityPage } from './pages/CommunityPage'
 import { SideNav } from './components/SideNav'
 
 // const CONTRACT_ADDRESS = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
@@ -25,11 +26,12 @@ export const App = () => {
       <div className='flex flex-col xl:flex-row'>
         <SideNav />
 
-        <main className='flex-grow mt-20 xl:mt-0 xl:ml-24'>
+        <main className='flex-grow mt-20 xl:mt-0 xl:ml-64'>
           <Switch>
             <Route path='/about'><AboutPage /></Route>
             <Route path='/vault'><VaultPage /></Route>
             <Route path='/dashboard'><DashboardPage /></Route>
+            <Route path='/community'><CommunityPage /></Route>
             <Route path='/'><HomePage /></Route>
           </Switch>
         </main>

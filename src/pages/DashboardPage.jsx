@@ -167,15 +167,15 @@ export const DashboardPage = () => {
   }, [])
 
   // LOAD HISTORICAL DATA
-  // useEffect(() => {
-  //   getHistoricalData()
-  //     .then(x => {
-  //       setHistoricalData(x)
-  //       updateChartType('Price')
+  useEffect(() => {
+    getHistoricalData()
+      .then(x => {
+        setHistoricalData(x)
+        updateChartType('Price')
 
-  //       setLoadingHistoricalData(false)
-  //     })
-  // }, [])
+        setLoadingHistoricalData(false)
+      })
+  }, [])
 
   const updateChartType = (chartType) => {
     if (historicalData && historicalData.length > 0) {

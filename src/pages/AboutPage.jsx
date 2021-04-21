@@ -33,22 +33,6 @@ export const AboutPage = () => {
 
       <section className='max-w-screen-2xl mx-auto px-12 mb-48'>
         <h2 className='font-bold text-7xl text-center'>
-          Engage on Social
-        </h2>
-
-        <div className='flex flex-wrap justify-center mt-8'>
-          { [1, 2, 3, 4, 5, 6, 7, 8].map(x => (
-          <div
-            key={x}
-            className='w-full md:w-1/3 lg:w-1/5 h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4'
-            style={{ background: 'rgb(12,12,97)' }}>
-          </div>
-          ))}
-        </div>
-      </section>
-
-      <section className='max-w-screen-2xl mx-auto px-12 mb-48'>
-        <h2 className='font-bold text-7xl text-center'>
           PINT Litepaper
         </h2>
 

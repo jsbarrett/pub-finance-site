@@ -105,14 +105,11 @@ export const HomePage = () => {
         <p className='mt-16 text-3xl xl:text-4xl leading-relaxed'>
           Tired of losing to the house? With PINT you are the house. Stake PINT tokens to receive user fees from When Rug and future pub.finance ecosystem products. Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest. Fair launch, fair ownership, fair play--Grab a pint.
         </p>
-        <button className='bg-accent-green mt-16 rounded-full text-gray-900 font-bold text-3xl px-16 py-5'>
-          Call to Action
-        </button>
       </section>
 
       <section className='max-w-screen-2xl mx-auto my-36 px-12'>
         <div className='flex flex-col-reverse xl:flex-row'>
-          <div className='flex-grow mt-24'>
+          <div className='flex-grow mt-24 xl:mt-0'>
             <h2 className='font-bold text-7xl'>About PINT</h2>
             <p className='mt-16 text-4xl leading-relaxed'>
               PINT launched as a standard fair-launch farming coin in September 2020. Through a small unstaking tax on our upwards of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW) which is being used to fund development of innovative and engaging products for the pub.finance ecosystem.
@@ -135,15 +132,14 @@ export const HomePage = () => {
                   <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' />
                   </svg>
-                  <span className='ml-4 font-semibold'>Join Chat</span>
+                  <span className='ml-4 font-semibold'>Community</span>
                 </button>
               </Link>
             </div>
           </div>
           <div className='mx-auto xl:ml-24'>
             <div
-              style={{ width: '30rem', height: '30rem' }}
-              className='flex items-center justify-center pt-4'>
+              className='w-96 h-96 flex items-center justify-center pt-4'>
               <img
                 style={{ filter: 'invert(52%) sepia(95%) saturate(1036%) hue-rotate(64deg) brightness(123%) contrast(109%)' }}
                 className='w-full' src={pintGearLogoUrl} />
