@@ -38,7 +38,7 @@ const GrabPint = () => {
 
   return (
     <div>
-      <h2 className='font-bold texl-4xl xl:text-7xl'>Lock your PINT. Maximize returns</h2>
+      <h2 className='font-bold text-4xl xl:text-7xl'>Lock your PINT. Maximize returns</h2>
 
       <div
         className='rounded-3xl py-4 px-4 xl:px-12 shadow-xl mt-12'

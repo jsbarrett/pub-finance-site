@@ -5,7 +5,7 @@ import { PageFooter } from '../components/PageFooter'
 export const AboutPage = () => {
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
-      <header className='relative pt-48 pb-96 text-center flex flex-col items-center'>
+      <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-60 text-center flex flex-col items-center'>
         <div
           className='w-full h-full absolute opacity-50 top-0'
           style={{ background: 'linear-gradient(0deg, rgba(11,19,43,1) 0%, rgba(68,255,1,1) 100%)' }}>
@@ -20,7 +20,7 @@ export const AboutPage = () => {
           className='relative z-10 font-bold text-6xl xl:text-9xl leading-none'>
           About
         </h1>
-        <p className='relative z-10 text-2xl xl:text-5xl mt-16'>
+        <p className='relative z-10 text-2xl xl:text-5xl mt-10 xl:mt-16'>
           What we know about PINT
         </p>
       </header>

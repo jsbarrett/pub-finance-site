@@ -241,13 +241,13 @@ export const DashboardPage = () => {
     getHistoricalData()
       .then(x => {
         setHistoricalData(x)
-        updateChartType('Liquidity')
+        updateChartType('Liquidity', x)
 
         setLoadingHistoricalData(false)
       })
   }, [])
 
-  const updateChartType = (chartType) => {
+  const updateChartType = (chartType, historicalData) => {
     if (historicalData && historicalData.length > 0) {
       const recentValue = Math.round(historicalData[historicalData.length - 1][chartType] * 1000) / 1000
       if (Number.isNaN(recentValue)) {
@@ -261,7 +261,7 @@ export const DashboardPage = () => {
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
-      <header className='relative pt-48 pb-72 text-center flex flex-col items-center'>
+      <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-72 text-center flex flex-col items-center'>
         <div
           className='w-full h-full absolute opacity-50 top-0'
           style={{ background: 'linear-gradient(0deg, rgba(11,19,43,1) 0%, rgba(68,255,1,1) 100%)' }}>
@@ -383,7 +383,7 @@ export const DashboardPage = () => {
             { chartTypes.map(chartType => (
             <button
               key={chartType}
-              onClick={() => updateChartType(chartType)}
+              onClick={() => updateChartType(chartType, historicalData)}
               className={(chartType === selectedChart)
                 ? 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-accent-green text-gray-900'
                 : 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-gray-500 text-white'}>
