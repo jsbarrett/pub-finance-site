@@ -59,10 +59,12 @@ export const AboutPage = () => {
         </div>
 
         <div className='flex justify-center'>
-          <button
-            className='bg-accent-green mt-16 rounded-full text-xl px-8 py-5 text-gray-900 flex justify-between items-center bg-accent-green'>
-            <span className='font-semibold'>DOWNLOAD NOW</span>
-          </button>
+          <a href='https://pubfinance.medium.com/pint-litepaper-c0cb3525fb6a' target='_blank'>
+            <button
+              className='bg-accent-green mt-16 rounded-full text-xl px-8 py-5 text-gray-900 flex justify-between items-center bg-accent-green'>
+              <span className='font-semibold'>READ PAPER</span>
+            </button>
+          </a>
         </div>
       </section>
 
