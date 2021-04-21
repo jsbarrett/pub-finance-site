@@ -37,8 +37,24 @@ const generateLastWeekDates = () => {
   return dates
 }
 
+const getLiquidityData = async () => {
+  const query = `{
+    pairDayDatas (first: 10, orderBy: date, orderDirection: desc, where: { pairAddress: "0x8f3869c177090eace770396f9495424780c73537" }) {
+      date
+      reserveUSD
+    }
+  }`
+  return await fetch('https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query })
+  })
+    .then(x => x.json())
+    .then(x => x.data.pairDayDatas)
+}
+
 const getHistoricalData = async () => {
-  const dates = generateLastWeekDates()
+  // const dates = generateLastWeekDates()
 
   // const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -51,7 +67,23 @@ const getHistoricalData = async () => {
 
   // return results
 
-  return await Promise.all(dates.map(getDataPoint))
+  const liquidityData = await getLiquidityData()
+  liquidityData.reverse()
+
+  const dates = liquidityData
+    .map(x => new Date(x.date * 1000))
+    .map(x => {
+      const day = x.getDate()
+      const month = x.getMonth() + 1
+      const year = x.getFullYear()
+      return `${day}-${month}-${year}`
+    })
+
+  const data = await Promise.all(dates.map(getDataPoint))
+
+  data.forEach((x, i) => { x.Liquidity = Number(liquidityData[i].reserveUSD) })
+
+  return data
 }
 
 const generateChartData = (chartType, historicalData) => {
@@ -135,37 +167,72 @@ const LineChart = ({ chartType, historicalData }) => {
   )
 }
 
+const getTotalValueLockedCardData = async () => {
+  const query = `{
+    pairDayDatas (first: 1, orderBy: date, orderDirection: desc, where: { pairAddress: "0x8f3869c177090eace770396f9495424780c73537" }) {
+      date
+      reserveUSD
+    }
+  }`
+
+  return await fetch('https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query })
+  })
+    .then(x => x.json())
+    .then(x => x.data.pairDayDatas)
+    .then(x => {
+      if (x && x.length > 0) {
+        return Math.round(Number(x[0].reserveUSD)).toLocaleString()
+      }
+    })
+    .catch(err => {
+      console.error(err)
+      return 'Error'
+    })
+}
+
+const getOtherCardData = async () => {
+  return await fetch('https://api.coingecko.com/api/v3/coins/pub-finance', {
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then(x => x.json())
+    .catch(err => {
+      console.error(err)
+    })
+}
+
 export const DashboardPage = () => {
-  const [totalValueLocked, setTotalValueLocked] = useState('Unknown') // TODO: get value from uniswap
+  const [totalValueLocked, setTotalValueLocked] = useState('') // TODO: get value from uniswap
   const [totalSupply, setTotalSupply] = useState('')
   const [currentPrice, setCurrentPrice] = useState('')
   const [marketCap, setMarketCap] = useState('')
-  const [selectedChart, setSelectedChart] = useState('Price')
+  const [selectedChart, setSelectedChart] = useState('Liquidity')
   const [historicalData, setHistoricalData] = useState([])
   const [loadingCardData, setLoadingCardData] = useState(true)
   const [loadingHistoricalData, setLoadingHistoricalData] = useState(true)
   const [recentChartValue, setRecentChartValue] = useState('')
 
   const chartTypes = [
-    'Price',
-    'Volume',
     'Liquidity',
+    'Volume',
+    'Price',
   ]
 
   // LOAD CARDS
   useEffect(() => {
-    fetch('https://api.coingecko.com/api/v3/coins/pub-finance', {
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(x => x.json())
-      .then(x => {
-        setCurrentPrice(x.market_data.current_price.usd.toLocaleString())
-        setMarketCap(x.market_data.market_cap.usd.toLocaleString())
-        setTotalSupply(Math.floor(x.market_data.total_supply).toLocaleString())
+    Promise.all([getOtherCardData(), getTotalValueLockedCardData()])
+      .then(xs => {
+        setCurrentPrice(xs[0].market_data.current_price.usd.toLocaleString())
+        setMarketCap(xs[0].market_data.market_cap.usd.toLocaleString())
+        setTotalSupply(Math.floor(xs[0].market_data.total_supply).toLocaleString())
+        setTotalValueLocked(xs[1])
         setLoadingCardData(false)
       })
       .catch(err => {
         console.error(err)
+        setLoadingCardData(false)
       })
   }, [])
 
@@ -174,7 +241,7 @@ export const DashboardPage = () => {
     getHistoricalData()
       .then(x => {
         setHistoricalData(x)
-        updateChartType('Price')
+        updateChartType('Liquidity')
 
         setLoadingHistoricalData(false)
       })
@@ -186,7 +253,7 @@ export const DashboardPage = () => {
       if (Number.isNaN(recentValue)) {
         setRecentChartValue('Unknown')
       } else {
-        setRecentChartValue(recentValue)
+        setRecentChartValue(recentValue.toLocaleString())
       }
     }
     setSelectedChart(chartType)
