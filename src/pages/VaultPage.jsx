@@ -38,14 +38,14 @@ const GrabPint = () => {
 
   return (
     <div>
-      <h2 className='font-bold text-7xl'>Lock your PINT. Maximize returns</h2>
+      <h2 className='font-bold texl-4xl xl:text-7xl'>Lock your PINT. Maximize returns</h2>
 
       <div
-        className='rounded-3xl py-4 px-12 shadow-xl mt-12'
+        className='rounded-3xl py-4 px-4 xl:px-12 shadow-xl mt-12'
         style={{ background: 'rgb(12,12,97)' }}>
-        <div className='text-3xl font-bold text-center'>Fixed Lock - One sided staking</div>
+        <div className='text-xl xl:text-3xl font-bold text-center'>Fixed Lock - One sided staking</div>
         <div>
-          <table className='w-full mt-8 mb-24'>
+          <table className='hidden xl:block w-full mt-8 mb-24'>
             <tbody>
               <tr className='text-3xl text-left'>
                 <th className='align-top'>Assets</th>
@@ -96,6 +96,47 @@ const GrabPint = () => {
               </tr>
             </tbody>
           </table>
+
+          <div className='xl:hidden w-full mt-8 mb-12'>
+            <div className='flex justify-around items-center'>
+              <div className='text-lg w-full text-center'>Assets:</div>
+              <div className='text-3xl font-bold w-full text-center'>PINT</div>
+            </div>
+            <div className='mt-8 flex justify-around items-center'>
+              <div className='text-lg w-full text-center'>APY%:</div>
+              <div className='text-3xl font-bold w-full text-center'>6.24%</div>
+            </div>
+            <div className='mt-8 flex justify-around items-center'>
+              <div className='text-lg w-full text-center'>Interest</div>
+              <div className='text-3xl font-bold w-full text-center'>.00456</div>
+            </div>
+            <div className='mt-12 flex justify-around items-center'>
+              <div className='text-xs flex justify-center'>
+                {durations.map((duration, index) => (
+                <div
+                  key={duration}
+                  className='flex items-center justify-center flex-col'>
+                  <div className='flex items-center'>
+                    <div className={index !== 0 ? 'w-4 h-1 bg-accent-green' : 'w-4 h-1'}></div>
+                    <div
+                      onClick={() => setSelectedDuration(duration)}
+                      className={selectedDuration !== duration ? 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid bg-accent-green' : 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid'}>
+                    </div>
+                    <div className={index !== (durations.length - 1) ? 'w-4 h-1 bg-accent-green' : 'w-4 h-1'}></div>
+                  </div>
+                  <div className='mt-2'>{ duration }</div>
+                </div>
+                ))}
+              </div>
+            </div>
+            <div className='mt-8 flex justify-around items-center'>
+              <button
+                onClick={() => transfer()}
+                className='text-gray-900 rounded-3xl px-8 py-2 font-bold bg-accent-green'>
+                Transfer
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -140,15 +181,15 @@ const AddLiquidity = () => {
 
   return (
     <div>
-      <h2 className='font-bold text-7xl mt-24'>Add Liquidity</h2>
+      <h2 className='font-bold text-4xl xl:text-7xl mt-24'>Add Liquidity</h2>
 
       <div
         className='mt-12 rounded-3xl py-4 px-12 shadow-xl'
         style={{ background: 'rgb(12,12,97)' }}>
         <div className='mt-8'>
-          <table className='w-full mt-8 mb-24'>
+          <table className='hidden xl:block w-full mt-8 mb-24'>
             <tbody>
-              <tr className='text-3xl text-left'>
+              <tr className='text-xl xl:text-3xl text-left'>
                 <th className='align-top'>Assets</th>
                 <th className='align-top text-center'>APY%</th>
                 <th className='align-top text-center'>
@@ -158,7 +199,7 @@ const AddLiquidity = () => {
                 <th className='align-top text-center'>Interest</th>
                 <th className='align-top'>{/* Add Liquidity */}</th>
               </tr>
-              <tr className='text-3xl'>
+              <tr className='text-xl xl:text-3xl'>
                 <td className='py-8 w-1/6'>
                   ETH PINT LP
                 </td>
@@ -197,6 +238,47 @@ const AddLiquidity = () => {
               </tr>
             </tbody>
           </table>
+
+          <div className='xl:hidden w-full mt-8 mb-12'>
+            <div className='flex justify-around items-center'>
+              <div className='text-lg w-full text-center'>Assets:</div>
+              <div className='text-3xl font-bold w-full text-center'>ETH PINT LP</div>
+            </div>
+            <div className='mt-8 flex justify-around items-center'>
+              <div className='text-lg w-full text-center'>APY%:</div>
+              <div className='text-3xl font-bold w-full text-center'>6.24%</div>
+            </div>
+            <div className='mt-8 flex justify-around items-center'>
+              <div className='text-lg w-full text-center'>Interest</div>
+              <div className='text-3xl font-bold w-full text-center'>.00456</div>
+            </div>
+            <div className='mt-12 flex justify-around items-center'>
+              <div className='text-xs flex justify-center'>
+                {durations.map((duration, index) => (
+                <div
+                  key={duration}
+                  className='flex items-center justify-center flex-col'>
+                  <div className='flex items-center'>
+                    <div className={index !== 0 ? 'w-4 h-1 bg-accent-green' : 'w-4 h-1'}></div>
+                    <div
+                      onClick={() => setSelectedDuration(duration)}
+                      className={selectedDuration !== duration ? 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid bg-accent-green' : 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid'}>
+                    </div>
+                    <div className={index !== (durations.length - 1) ? 'w-4 h-1 bg-accent-green' : 'w-4 h-1'}></div>
+                  </div>
+                  <div className='mt-2'>{ duration }</div>
+                </div>
+                ))}
+              </div>
+            </div>
+            <div className='mt-8 flex justify-around items-center'>
+              <button
+                onClick={() => addLiquidity()}
+                className='text-gray-900 rounded-3xl px-8 py-2 font-bold bg-accent-green'>
+                Add Liquidity
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -206,7 +288,7 @@ const AddLiquidity = () => {
 export const VaultPage = () => {
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
-      <header className='relative pt-48 pb-60 text-center flex flex-col items-center'>
+      <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-60 text-center flex flex-col items-center'>
         <div
           className='w-full h-full absolute opacity-50 top-0'
           style={{ background: 'linear-gradient(0deg, rgba(11,19,43,1) 0%, rgba(68,255,1,1) 100%)' }}>
@@ -218,16 +300,15 @@ export const VaultPage = () => {
           </svg>
         </div>
         <h1
-          className='relative z-10 font-bold text-9xl leading-none'>
+          className='relative z-10 font-bold text-6xl xl:text-9xl leading-none'>
           Vault
         </h1>
-        <p className='relative z-10 text-5xl mt-16'>
+        <p className='relative z-10 text-2xl xl:text-5xl mt-10 xl:mt-16'>
           Flexible Deposits, Higher Profits.
         </p>
       </header>
 
-
-      <section className='max-w-screen-2xl mx-auto px-12 mb-48'>
+      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12 mb-24 xl:mb-48'>
         <GrabPint />
         <AddLiquidity />
       </section>

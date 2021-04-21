@@ -6,7 +6,7 @@ import { ACCENT_GREEN } from '../styles'
 export const CommunityPage = () => {
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
-      <header className='relative pt-48 pb-96 text-center flex flex-col items-center'>
+      <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-96 text-center flex flex-col items-center'>
         <div
           className='w-full h-full absolute opacity-50 top-0'
           style={{ background: 'linear-gradient(0deg, rgba(11,19,43,1) 0%, rgba(68,255,1,1) 100%)' }}>
@@ -18,21 +18,21 @@ export const CommunityPage = () => {
           </svg>
         </div>
         <h1
-          className='relative z-10 font-bold text-9xl leading-none'>
+          className='relative z-10 font-bold text-6xl xl:text-9xl leading-none'>
           Our Community
         </h1>
       </header>
 
-      <section className='max-w-screen-2xl mx-auto px-12 mb-48'>
-        <h2 className='font-bold text-7xl'>Decentralized</h2>
+      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12 mb-48'>
+        <h2 className='font-bold text-4xl xl:text-7xl'>Decentralized</h2>
 
-        <p className='mt-20 text-3xl leading-relaxed'>
+        <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
         </p>
       </section>
 
-      <section className='max-w-screen-2xl mx-auto px-12 mb-48'>
-        <h2 className='font-bold text-7xl text-center'>
+      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12'>
+        <h2 className='font-bold text-4xl xl:text-7xl text-center'>
           Come Check Us Out
         </h2>
 
@@ -40,7 +40,7 @@ export const CommunityPage = () => {
           <a
             href='https://snapshot.org/#/pub-finance.eth'
             target='_blank'
-            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
+            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
             style={{ background: 'rgb(12,12,97)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke={ACCENT_GREEN}>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
@@ -50,7 +50,7 @@ export const CommunityPage = () => {
           <a
             href='https://t.me/PubFin'
             target='_blank'
-            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
+            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
             style={{ background: 'rgb(12,12,97)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 128 128">
               <g fill="none" fillRule="evenodd">
@@ -63,7 +63,7 @@ export const CommunityPage = () => {
           <a
             href='https://twitter.com/Pub_Finance'
             target='_blank'
-            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
+            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
             style={{ background: 'rgb(12,12,97)' }}>
             <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke={ACCENT_GREEN}>
               <g>
@@ -75,13 +75,13 @@ export const CommunityPage = () => {
         </div>
       </section>
 
-      <section className='max-w-screen-2xl mx-auto px-12 mb-48'>
-        <h2 className='font-bold text-7xl text-center'>
+      <section className='max-w-screen-2xl mx-auto px-12 mb-24 mt-24 xl:mt-48 xl:mb-48'>
+        <h2 className='font-bold text-4xl xl:text-7xl text-center'>
           VIP
         </h2>
 
         <div className='flex flex-wrap justify-center mt-12'>
-          <p className='text-3xl text-center'>
+          <p className='text-xl xl:text-3xl text-center'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
           </p>
         </div>

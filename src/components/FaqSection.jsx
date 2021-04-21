@@ -7,12 +7,12 @@ const FaqListItem = ({ item }) => {
   return (
     <div onClick={() => setOpen(!open)} className='flex justify-between cursor-pointer'>
       <div>
-        <h3 className='text-5xl font-bold'>{ item.title }</h3>
-        <p className='text-3xl mt-8'>
+        <h3 className='text-2xl xl:text-5xl font-bold'>{ item.title }</h3>
+        <p className='text-lg xl:text-3xl mt-8'>
           { open && item.body }
         </p>
       </div>
-      <div className='text-accent-green text-5xl font-bold ml-8'>
+      <div className='text-accent-green text-2xl xl:text-5xl font-bold ml-8'>
         <span>{!open ? '+' : '-'}</span>
       </div>
     </div>
@@ -29,9 +29,9 @@ export const FaqSection = () => {
   ]
 
   return (
-    <section className='max-w-screen-2xl mx-auto my-36 px-12'>
+    <section className='max-w-screen-2xl mx-auto my-36 px-2 xl:px-12'>
       <div className='text-center'>
-        <h2 className='font-bold text-7xl leading-tight'>Frequently Asked Questions</h2>
+        <h2 className='font-bold text-4xl xl:text-7xl leading-tight'>Frequently Asked Questions</h2>
         {/* <p className='text-4xl mt-12'> */}
         {/*   To learn more about PINT, check out the <Link to='/'><span className='text-accent-green'>FAQ page</span></Link> */}
         {/* </p> */}

@@ -272,7 +272,7 @@ export const DashboardPage = () => {
             <path d="M0 160L16.7 139.8C33.3 119.7 66.7 79.3 100 75.2C133.3 71 166.7 103 200 111.7C233.3 120.3 266.7 105.7 300 104.8C333.3 104 366.7 117 400 111.3C433.3 105.7 466.7 81.3 500 67.2C533.3 53 566.7 49 600 65C633.3 81 666.7 117 700 121.7C733.3 126.3 766.7 99.7 800 88.7C833.3 77.7 866.7 82.3 883.3 84.7L900 87L900 201L883.3 201C866.7 201 833.3 201 800 201C766.7 201 733.3 201 700 201C666.7 201 633.3 201 600 201C566.7 201 533.3 201 500 201C466.7 201 433.3 201 400 201C366.7 201 333.3 201 300 201C266.7 201 233.3 201 200 201C166.7 201 133.3 201 100 201C66.7 201 33.3 201 16.7 201L0 201Z" fill="rgb(11, 19, 43)" strokeLinecap="round" strokeLinejoin="miter"></path>
           </svg>
         </div>
-        <svg className='relative z-10' width='403' height='195' viewBox='0 0 403 195' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <svg className='relative z-10 w-3/4 xl:w-1/4' viewBox='0 0 403 195' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path d='M121.197 164.557C118.402 161.532 117.358 157.505 118.125 152.912L118.694 149.728C119.17 147.126 119.615 144.666 119.984 142.199V142H30V167H124C122.994 166.278 122.055 165.46 121.197 164.557Z' fill='white'/>
           <path d='M182.012 142C182.3 143.751 182.588 145.502 182.876 147.253L183.71 152.164C183.818 152.809 183.895 153.453 183.964 154.098L184.018 154.607C184.247 156.494 184.043 158.409 183.421 160.198C182.799 161.987 181.777 163.6 180.438 164.907C179.682 165.672 178.867 166.372 178 167H373V142H182.012Z' fill='white'/>
           <path d='M30 28H86.1326C99.517 28 106 34.4735 106 48.3074V77.4537C106 91.2877 99.517 97.7611 86.1326 97.7611H53.9003V131H30V28ZM79.368 76.7223C81.3845 76.7223 82.0997 76.131 82.0997 73.9213V51.8399C82.0997 49.6379 81.3845 49.0466 79.368 49.0466H53.9003V76.7223H79.368Z' fill='white'/>
@@ -283,25 +283,25 @@ export const DashboardPage = () => {
         </svg>
       </header>
 
-      <section className='relative flex flex-wrap justify-between -mt-36 mb-32 w-9/12 mx-auto'>
+      <section className='relative flex flex-wrap justify-between -mt-36 px-2 xl:px-0 xl:w-9/12 mx-auto'>
         <div
           className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
-            <div className='w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-12 w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+            <div className='w-16 h-16 xl:w-20 xl:h-20 rounded-full bg-gray-900 flex items-center justify-center'>
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z' />
               </svg>
             </div>
-            <div className='text-2xl ml-6'>PRICE</div>
+            <div className='text-xl xl:text-2xl ml-6'>PRICE</div>
           </div>
           { !loadingCardData
           ?
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             $ { currentPrice } <span className='text-xl'>USD</span>
           </div>
           :
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             Loading ...
           </div> }
         </div>
@@ -310,20 +310,20 @@ export const DashboardPage = () => {
           className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
-            <div className='w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-12 w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+            <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex items-center justify-center'>
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z' />
               </svg>
             </div>
-            <div className='text-2xl ml-6'>TOTAL PINT SUPPLY</div>
+            <div className='text-xl xl:text-2xl ml-6'>TOTAL PINT SUPPLY</div>
           </div>
           { !loadingCardData
           ?
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             $ { totalSupply } <span className='text-xl'>USD</span>
           </div>
           :
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             Loading ...
           </div> }
         </div>
@@ -332,20 +332,20 @@ export const DashboardPage = () => {
           className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
-            <div className='w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-12 w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+            <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex items-center justify-center'>
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' />
               </svg>
             </div>
-            <div className='text-2xl ml-6'>TOTAL VALUE LOCKED</div>
+            <div className='text-xl xl:text-2xl ml-6'>TOTAL VALUE LOCKED</div>
           </div>
           { !loadingCardData
           ?
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             $ { totalValueLocked } <span className='text-xl'>USD</span>
           </div>
           :
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             Loading ...
           </div> }
         </div>
@@ -354,20 +354,20 @@ export const DashboardPage = () => {
           className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
-            <div className='w-20 h-20 bg-gray-900 rounded-full flex justify-center items-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-12 w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+            <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex justify-center items-center'>
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z' />
               </svg>
             </div>
-            <div className='text-2xl ml-6'>MARKET CAP</div>
+            <div className='text-xl xl:text-2xl ml-6'>MARKET CAP</div>
           </div>
           { !loadingCardData
           ?
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             $ { marketCap } <span className='text-xl'>USD</span>
           </div>
           :
-          <div className='px-10 font-bold text-4xl py-8'>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
             Loading ...
           </div> }
         </div>
@@ -376,22 +376,22 @@ export const DashboardPage = () => {
       { !loadingHistoricalData
       ?
       <section
-        className='shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-8 mt-32 flex flex-wrap justify-center mb-32'
+        className='shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
         style={{ background: 'rgb(12,12,97)' }}>
-        <div className='w-full ml-16 mt-16'>
-          <div>
+        <div className='w-full xl:ml-16 xl:mt-16'>
+          <div className=''>
             { chartTypes.map(chartType => (
             <button
               key={chartType}
               onClick={() => updateChartType(chartType)}
               className={(chartType === selectedChart)
-                ? 'mr-4 px-10 py-2 rounded mt-4 font-bold text-lg bg-accent-green text-gray-900'
-                : 'mr-4 px-10 py-2 rounded mt-4 font-bold text-lg bg-gray-500 text-white'}>
+                ? 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-accent-green text-gray-900'
+                : 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-gray-500 text-white'}>
               { chartType }
             </button>
             )) }
           </div>
-          <div className='mt-12 text-6xl font-bold'>
+          <div className='mt-6 xl:mt-12 text-3xl xl:text-6xl font-bold'>
             { recentChartValue }
           </div>
         </div>
@@ -400,7 +400,7 @@ export const DashboardPage = () => {
       </section>
       :
       <section
-        className='shadow-lg rounded-3xl w-9/12 mx-auto px-8 mt-32 flex flex-wrap justify-center mb-32'
+        className='shadow-lg rounded-3xl w-9/12 mx-auto px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
         style={{ background: 'rgb(12,12,97)' }}>
         <div className='w-full ml-16 py-16'>
           Loading historical data ...
