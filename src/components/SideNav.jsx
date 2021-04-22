@@ -7,7 +7,7 @@ export const SideNav = () => {
     <nav
       className='h-20 w-full xl:h-auto xl:min-h-screen xl:w-64 bg-gradient-to-b from-blue-900 to-gray-900 text-white flex xl:flex-col items-center shadow-lg fixed z-20 top-0 left-0'
       style={{ background: 'linear-gradient(0deg, #241D8C 0%, #02044F 100%)' }}>
-      <img className='hidden xl:block' style={{ filter: 'invert()' }} src={pintGearLogoUrl} />
+      <img alt='Pints logo of a gear' className='hidden xl:block' style={{ filter: 'invert()' }} src={pintGearLogoUrl} />
 
       <div className='xl:mt-8 flex flex-grow xl:flex-col xl:max-h-screen justify-around xl:justify-start mx-auto'>
         <Link to='/'>

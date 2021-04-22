@@ -25,7 +25,7 @@ export const AboutPage = () => {
         </p>
       </header>
 
-      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12 mb-48'>
+      <section className='max-w-screen-2xl mx-auto px-2 md:px-24 lg:px-64 xl:px-12 mb-48'>
         <h2 className='font-bold text-4xl xl:text-7xl'>Grab Yourself a PINT</h2>
 
         <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
@@ -37,7 +37,7 @@ export const AboutPage = () => {
         </p>
       </section>
 
-      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12 mb-48'>
+      <section className='max-w-screen-2xl mx-auto px-2 md:px-24 lg:px-64 xl:px-12 mb-48'>
         <h2 className='font-bold text-4xl xl:text-7xl text-center'>
           PINT Litepaper
         </h2>
@@ -49,7 +49,7 @@ export const AboutPage = () => {
         </div>
 
         <div className='flex justify-center'>
-          <a href='https://pubfinance.medium.com/pint-litepaper-c0cb3525fb6a' target='_blank'>
+          <a href='https://pubfinance.medium.com/pint-litepaper-c0cb3525fb6a' target='_blank' rel='noreferrer'>
             <button
               className='bg-accent-green mt-16 rounded-full text-xl px-8 py-5 text-gray-900 flex justify-between items-center bg-accent-green'>
               <span className='font-semibold'>READ PAPER</span>

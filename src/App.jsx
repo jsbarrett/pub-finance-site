@@ -9,9 +9,6 @@ import { DashboardPage } from './pages/DashboardPage'
 import { CommunityPage } from './pages/CommunityPage'
 import { SideNav } from './components/SideNav'
 
-// const CONTRACT_ADDRESS = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
-// const API_KEY = '8M6AXBKTI1VRXK7SNY9FGIYWX868CVNR6S'
-
 const ScrollToTop = () => {
   const { pathname } = useLocation()
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
@@ -21,7 +18,7 @@ const ScrollToTop = () => {
 export const App = () => {
   return (
     <Router>
-      {/* <ScrollToTop /> */}
+      <ScrollToTop />
 
       <div className='flex flex-col xl:flex-row'>
         <SideNav />

@@ -30,6 +30,8 @@ const GrabPint = () => {
       case '1 year': {
         break
       }
+      default: {
+      }
     }
   }, [selectedDuration])
 
@@ -44,13 +46,18 @@ const GrabPint = () => {
         className='rounded-3xl py-4 px-4 xl:px-12 shadow-xl mt-12'
         style={{ background: 'rgb(12,12,97)' }}>
         <div className='text-xl xl:text-3xl font-bold text-center'>Fixed Lock - One sided staking</div>
-        <div>
+
+        <div className='h-36 text-center flex justify-center items-center text-3xl'>
+          Coming soon ...
+        </div>
+
+        <div className='hidden'>
           <table className='hidden xl:block w-full mt-8 mb-24'>
             <tbody>
               <tr className='text-3xl text-left'>
                 <th className='align-top'>Assets</th>
                 <th className='align-top text-center'>APY%</th>
-                <th className='align-top text-center'>
+                <th className='w-5/12 align-top text-center'>
                   <div>Duration</div>
                   <div className='mt-2 font-normal text-lg'>choose lockup period</div>
                 </th>
@@ -173,6 +180,8 @@ const AddLiquidity = () => {
       case '1 year': {
         break
       }
+      default: {
+      }
     }
   }, [selectedDuration])
 
@@ -192,7 +201,7 @@ const AddLiquidity = () => {
               <tr className='text-xl xl:text-3xl text-left'>
                 <th className='align-top'>Assets</th>
                 <th className='align-top text-center'>APY%</th>
-                <th className='align-top text-center'>
+                <th className='w-4/12 align-top text-center'>
                   <div>Duration</div>
                   <div className='mt-2 font-normal text-lg'>choose lockup period</div>
                 </th>
@@ -240,19 +249,19 @@ const AddLiquidity = () => {
           </table>
 
           <div className='xl:hidden w-full mt-8 mb-12'>
-            <div className='flex justify-around items-center'>
-              <div className='text-lg w-full text-center'>Assets:</div>
-              <div className='text-3xl font-bold w-full text-center'>ETH PINT LP</div>
+            <div className='flex justify-center items-center'>
+              <div className='text-xl w-full text-right'>Assets:</div>
+              <div className='ml-2 text-xl font-bold w-full text-left'>ETH PINT LP</div>
             </div>
-            <div className='mt-8 flex justify-around items-center'>
-              <div className='text-lg w-full text-center'>APY%:</div>
-              <div className='text-3xl font-bold w-full text-center'>6.24%</div>
+            <div className='mt-8 flex justify-center items-center'>
+              <div className='text-xl w-full text-right'>APY%:</div>
+              <div className='ml-2 text-xl font-bold w-full text-left'>6.24%</div>
             </div>
-            <div className='mt-8 flex justify-around items-center'>
-              <div className='text-lg w-full text-center'>Interest</div>
-              <div className='text-3xl font-bold w-full text-center'>.00456</div>
+            <div className='mt-8 flex justify-center items-center'>
+              <div className='text-xl w-full text-right'>Interest</div>
+              <div className='ml-2 text-xl font-bold w-full text-left'>.00456</div>
             </div>
-            <div className='mt-12 flex justify-around items-center'>
+            <div className='mt-12 flex justify-center items-center'>
               <div className='text-xs flex justify-center'>
                 {durations.map((duration, index) => (
                 <div
@@ -308,7 +317,7 @@ export const VaultPage = () => {
         </p>
       </header>
 
-      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12 mb-24 xl:mb-48'>
+      <section className='max-w-screen-2xl mx-auto px-2 md:px-64 xl:px-12 mb-24 xl:mb-48'>
         <GrabPint />
         <AddLiquidity />
       </section>

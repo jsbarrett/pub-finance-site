@@ -16,6 +16,7 @@ export const PageFooter = () => {
           <a
             href='https://t.me/PubFin'
             target='_blank'
+            rel='noreferrer'
             style={{ borderWidth: '2px' }}
             className='border-solid border-white p-2 rounded-full flex items-center justify-center'>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 128 128">
@@ -28,6 +29,7 @@ export const PageFooter = () => {
           <a
             href='https://twitter.com/Pub_Finance'
             target='_blank'
+            rel='noreferrer'
             style={{ borderWidth: '2px' }}
             className='border-solid border-white p-2 rounded-full flex items-center justify-center'>
             <svg viewBox="0 0 36 36" className="h-8 w-8" fill="currentColor" stroke='currentColor' style={{ transform: 'translate(15%, 20%)' }}>

@@ -21,21 +21,21 @@ const getDataPoint = async (date) => {
     })
 }
 
-const generateLastWeekDates = () => {
-  const dt = new Date()
+// const generateLastWeekDates = () => {
+//   const dt = new Date()
 
-  const dates = []
+//   const dates = []
 
-  for (let i = 0; i < 10; i +=1 ) {
-    dt.setDate(dt.getDate() - 1)
-    const day = dt.getDate()
-    const month = dt.getMonth() + 1
-    const year = dt.getFullYear()
-    dates.push(`${day}-${month}-${year}`)
-  }
+//   for (let i = 0; i < 10; i +=1 ) {
+//     dt.setDate(dt.getDate() - 1)
+//     const day = dt.getDate()
+//     const month = dt.getMonth() + 1
+//     const year = dt.getFullYear()
+//     dates.push(`${day}-${month}-${year}`)
+//   }
 
-  return dates
-}
+//   return dates
+// }
 
 const getLiquidityData = async () => {
   const query = `{
@@ -158,8 +158,9 @@ const LineChart = ({ chartType, historicalData }) => {
       chart.data = generateChartData(chartType, historicalData)
       chart.update()
     }
-  }, [chartType, chart])
+  }, [chartType, chart, historicalData])
 
+  // eslint-disable-next-line
   useEffect(() => { return setupChart() }, [])
 
   return (
@@ -272,7 +273,7 @@ export const DashboardPage = () => {
             <path d="M0 160L16.7 139.8C33.3 119.7 66.7 79.3 100 75.2C133.3 71 166.7 103 200 111.7C233.3 120.3 266.7 105.7 300 104.8C333.3 104 366.7 117 400 111.3C433.3 105.7 466.7 81.3 500 67.2C533.3 53 566.7 49 600 65C633.3 81 666.7 117 700 121.7C733.3 126.3 766.7 99.7 800 88.7C833.3 77.7 866.7 82.3 883.3 84.7L900 87L900 201L883.3 201C866.7 201 833.3 201 800 201C766.7 201 733.3 201 700 201C666.7 201 633.3 201 600 201C566.7 201 533.3 201 500 201C466.7 201 433.3 201 400 201C366.7 201 333.3 201 300 201C266.7 201 233.3 201 200 201C166.7 201 133.3 201 100 201C66.7 201 33.3 201 16.7 201L0 201Z" fill="rgb(11, 19, 43)" strokeLinecap="round" strokeLinejoin="miter"></path>
           </svg>
         </div>
-        <svg className='relative z-10 w-3/4 xl:w-1/4' viewBox='0 0 403 195' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <svg className='relative z-10 w-3/4 md:w-1/2 xl:w-1/4' viewBox='0 0 403 195' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path d='M121.197 164.557C118.402 161.532 117.358 157.505 118.125 152.912L118.694 149.728C119.17 147.126 119.615 144.666 119.984 142.199V142H30V167H124C122.994 166.278 122.055 165.46 121.197 164.557Z' fill='white'/>
           <path d='M182.012 142C182.3 143.751 182.588 145.502 182.876 147.253L183.71 152.164C183.818 152.809 183.895 153.453 183.964 154.098L184.018 154.607C184.247 156.494 184.043 158.409 183.421 160.198C182.799 161.987 181.777 163.6 180.438 164.907C179.682 165.672 178.867 166.372 178 167H373V142H182.012Z' fill='white'/>
           <path d='M30 28H86.1326C99.517 28 106 34.4735 106 48.3074V77.4537C106 91.2877 99.517 97.7611 86.1326 97.7611H53.9003V131H30V28ZM79.368 76.7223C81.3845 76.7223 82.0997 76.131 82.0997 73.9213V51.8399C82.0997 49.6379 81.3845 49.0466 79.368 49.0466H53.9003V76.7223H79.368Z' fill='white'/>
@@ -283,7 +284,7 @@ export const DashboardPage = () => {
         </svg>
       </header>
 
-      <section className='relative flex flex-wrap justify-between -mt-36 px-2 xl:px-0 xl:w-9/12 mx-auto'>
+      <section className='relative flex flex-wrap justify-between -mt-36 px-2 md:px-24 xl:px-0 xl:w-9/12 mx-auto'>
         <div
           className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>

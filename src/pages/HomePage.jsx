@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
 import { FaqSection } from '../components/FaqSection'
 import { PageFooter } from '../components/PageFooter'
-
 import pintGearLogoUrl from '../pint-gear-logo.svg'
-
 import { ACCENT_GREEN } from '../styles'
+
+const doThing = async () => {
+  alert('hi')
+}
 
 export const HomePage = () => {
   return (
@@ -33,9 +36,14 @@ export const HomePage = () => {
         <p className='text-3xl xl:text-5xl mt-12 relative z-10'>
           Own Your Play
         </p>
+        <button
+          className='bg-red-500 px-8 py-4 rounded-2xl text-3xl mt-12 relative z-10'
+          onClick={doThing}>
+          do things
+        </button>
       </header>
 
-      <section className='-mt-60 relative space-y-16 xl:space-y-0 xl:space-x-16 px-2 xl:px-12 flex flex-col xl:flex-row justify-between max-w-screen-2xl mx-auto'>
+      <section className='-mt-60 relative space-y-16 xl:space-y-0 xl:space-x-16 px-2 md:px-24 lg:px-64 xl:px-12 flex flex-col xl:flex-row justify-between max-w-screen-2xl mx-auto'>
         <div
           className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
           style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
@@ -106,14 +114,14 @@ export const HomePage = () => {
         </div>
       </section>
 
-      <section className='text-center max-w-screen-2xl mx-auto my-36 px-2 xl:px-12'>
+      <section className='text-center max-w-screen-2xl mx-auto my-36 px-2 md:px-24 lg:px-64 xl:px-12'>
         <h2 className='font-bold text-4xl xl:text-7xl'>Tired of Losing to the House?</h2>
         <p className='mt-16 text-xl xl:text-4xl leading-relaxed'>
           Tired of losing to the house? With PINT you are the house. Stake PINT tokens to receive user fees from When Rug and future pub.finance ecosystem products. Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest. Fair launch, fair ownership, fair play--Grab a pint.
         </p>
       </section>
 
-      <section className='max-w-screen-2xl mx-auto my-36 px-2 xl:px-12'>
+      <section className='max-w-screen-2xl mx-auto my-36 px-2 md:px-24 lg:px-64 xl:px-12'>
         <div className='flex flex-col-reverse xl:flex-row'>
           <div className='flex-grow mt-24 xl:mt-0'>
             <h2 className='font-bold text-4xl xl:text-7xl'>About PINT</h2>
@@ -147,6 +155,7 @@ export const HomePage = () => {
             <div
               className='w-64 h-64 xl:w-96 xl:h-96 flex items-center justify-center pt-4'>
               <img
+                alt='Pints logo of a gear'
                 style={{ filter: 'invert(52%) sepia(95%) saturate(1036%) hue-rotate(64deg) brightness(123%) contrast(109%)' }}
                 className='w-full' src={pintGearLogoUrl} />
             </div>

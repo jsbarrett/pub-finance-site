@@ -29,7 +29,7 @@ export const FaqSection = () => {
   ]
 
   return (
-    <section className='max-w-screen-2xl mx-auto my-36 px-2 xl:px-12'>
+    <section className='max-w-screen-2xl mx-auto my-36 px-2 md:px-24 lg:px-64 xl:px-12'>
       <div className='text-center'>
         <h2 className='font-bold text-4xl xl:text-7xl leading-tight'>Frequently Asked Questions</h2>
         {/* <p className='text-4xl mt-12'> */}

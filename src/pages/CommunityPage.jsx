@@ -23,7 +23,7 @@ export const CommunityPage = () => {
         </h1>
       </header>
 
-      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12 mb-48'>
+      <section className='max-w-screen-2xl mx-auto px-2 md:px-24 lg:px-64 xl:px-12 mb-48'>
         <h2 className='font-bold text-4xl xl:text-7xl'>Decentralized</h2>
 
         <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
@@ -40,7 +40,8 @@ export const CommunityPage = () => {
           <a
             href='https://snapshot.org/#/pub-finance.eth'
             target='_blank'
-            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
+            rel='noreferrer'
+            className='w-full text-2xl font-bold md:w-1/3 xl:w-3/12 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
             style={{ background: 'rgb(12,12,97)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke={ACCENT_GREEN}>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
@@ -50,7 +51,8 @@ export const CommunityPage = () => {
           <a
             href='https://t.me/PubFin'
             target='_blank'
-            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
+            rel='noreferrer'
+            className='w-full text-2xl font-bold md:w-1/3 xl:w-3/12 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
             style={{ background: 'rgb(12,12,97)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 128 128">
               <g fill="none" fillRule="evenodd">
@@ -63,7 +65,8 @@ export const CommunityPage = () => {
           <a
             href='https://twitter.com/Pub_Finance'
             target='_blank'
-            className='w-full text-2xl font-bold md:w-1/3 lg:w-1/5 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
+            rel='noreferrer'
+            className='w-full text-2xl font-bold md:w-1/3 xl:w-3/12 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
             style={{ background: 'rgb(12,12,97)' }}>
             <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke={ACCENT_GREEN}>
               <g>
@@ -75,7 +78,7 @@ export const CommunityPage = () => {
         </div>
       </section>
 
-      <section className='max-w-screen-2xl mx-auto px-12 mb-24 mt-24 xl:mt-48 xl:mb-48'>
+      <section className='max-w-screen-2xl mx-auto px-2 md:px-24 lg:px-64 xl:px-12 mb-24 mt-24 xl:mt-48 xl:mb-48'>
         <h2 className='font-bold text-4xl xl:text-7xl text-center'>
           VIP
         </h2>
