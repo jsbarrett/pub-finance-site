@@ -2,7 +2,23 @@
   background-color: #44FF01;
 }
 
-.text-accent-green {
+.bg-gradient-darker-blue {
+  background-color: #02044F;
+}
+
+.bg-gradient-dark-blue {
+  background-color: #241D8C;
+}
+
+.hover\:bg-gradient-darker-blue:hover {
+  background-color: #02044F;
+}
+
+.hover\:bg-gradient-dark-blue:hover {
+  background-color: #241D8C;
+}
+
+.text-accent-green:hover {
   color: #44FF01;
 }
 

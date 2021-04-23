@@ -348,7 +348,7 @@ export const DashboardPage = () => {
               )) }
             </div>
             <div className='mt-6 xl:mt-12 text-3xl xl:text-6xl font-bold'>
-              { recentChartValue }
+              ${ recentChartValue }
             </div>
           </div>
 
