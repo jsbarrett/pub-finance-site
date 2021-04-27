@@ -22,9 +22,9 @@ export const HomePage = () => {
 
       <SectionPadding>
         <section className='-mt-60 relative space-y-16 xl:space-y-0 xl:space-x-16 flex flex-col xl:flex-row justify-between max-w-screen-2xl mx-auto'>
-          <Link to='/vault'>
+          <Link to='/vault' className='w-full'>
             <div
-              className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
+              className='px-8 py-6 rounded-3xl shadow-xl w-full h-full flex flex-col justify-between'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
               <div>
                 <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
@@ -45,9 +45,9 @@ export const HomePage = () => {
             </div>
           </Link>
 
-          <a href='http://wenrug.com' target='_blank' rel='noreferrer'>
+          <a href='http://wenrug.com' target='_blank' rel='noreferrer' className='w-full'>
             <div
-              className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
+              className='px-8 py-6 rounded-3xl shadow-xl w-full h-full flex flex-col justify-between'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
               <div>
                 <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
@@ -68,9 +68,9 @@ export const HomePage = () => {
             </div>
           </a>
 
-          <Link to='/community'>
+          <Link to='/community' className='w-full'>
             <div
-              className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
+              className='px-8 py-6 rounded-3xl shadow-xl w-full h-full flex flex-col justify-between'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
               <div>
                 <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
