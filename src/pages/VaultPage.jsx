@@ -151,9 +151,34 @@ import pintGearLogoUrl from '../pint-gear-logo.svg'
 //   )
 // }
 
+const ethereum = window.ethereum
+
+const unlockWallet = async () => {
+  try {
+    if (!ethereum.selectedAddress) {
+      await ethereum.request({ method: 'eth_requestAccounts' })
+    }
+
+    const [address] = await ethereum.request({ method: 'eth_accounts' })
+    const balance = await ethereum.request({ method: 'eth_getBalance', params: [address, 'latest'] })
+    console.log(balance)
+
+    // const transactionParameters = {
+    //   to: '0x0000000000000000000000000000000000000000',
+    //   from: ethereum.selectedAddress,
+    //   value: '0x1000000000',
+    // }
+
+    // const txHash = await ethereum.request({ method: 'eth_sendTransaction', params: [transactionParameters] })
+    // console.log(txHash)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const VaultPage = () => {
   return (
-    <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
+    <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white relative'>
       <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-60 text-center flex flex-col items-center'>
         <HeaderBackground />
         <h1
@@ -173,7 +198,16 @@ export const VaultPage = () => {
                 Add Liquidity
               </button>
             </a>
+
+            <button
+              onClick={unlockWallet}
+              className='ml-4 rounded-full px-12 py-6 font-bold border border-solid border-accent-green'>
+              Unlock Wallet
+            </button>
           </div>
+          <p className='mt-8 text-center'>
+            (One-sided PINT staking. Coming soon!)
+          </p>
           <div className='flex flex-col xl:flex-row justify-center mt-16 max-w-screen-lg mx-auto items-center'>
             <div
               className='px-8 py-6 m-2 text-center rounded-3xl shadow-xl w-full md:w-3/4 flex flex-col items-center justify-between'
@@ -190,12 +224,12 @@ export const VaultPage = () => {
               <div className='text-center leading-none text-gray-100 text-3xl mt-6'>PINT</div>
 
               <div className='mt-12'>
-                <p className='text-5xl font-bold text-white'>0.000</p>
+                <p className='text-5xl font-bold text-white'>---</p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>PINT Earned</div>
               </div>
 
               <div className='mt-8'>
-                <p className='text-5xl font-bold text-white'>0.000</p>
+                <p className='text-5xl font-bold text-white'>---</p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked PINT Earned</div>
               </div>
 
@@ -224,12 +258,12 @@ export const VaultPage = () => {
               <div className='text-center leading-none text-gray-100 text-3xl mt-6'>ETH_PINT UNI-V2 LP</div>
 
               <div className='mt-12'>
-                <p className='text-5xl font-bold text-white'>0.000</p>
+                <p className='text-5xl font-bold text-white'>---</p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Tokens Staked</div>
               </div>
 
               <div className='mt-8'>
-                <p className='text-5xl font-bold text-white'>0.000</p>
+                <p className='text-5xl font-bold text-white'>---</p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked Tokens Staked</div>
               </div>
 

@@ -31,17 +31,17 @@ export const CommunityPage = () => {
 
       <SectionPadding>
         <section className='max-w-screen-2xl mx-auto mb-48'>
-          <h2 className='font-bold text-4xl xl:text-7xl'>Decentralized</h2>
+          <h2 className='font-bold text-4xl xl:text-7xl'>Governance</h2>
 
           <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+            Take an active role in the community by directing future PINT development and the deployment of PINT’s Community Governed Warchest through our governance portal at Snapshot.org Through this non-custodial decentralized governance system, voting power is derived from held PINT tokens. Publish and vote on proposals to initiate PINT buybacks, hire additional developers, or to build more partnerships for PINT within the defi industry.
           </p>
         </section>
       </SectionPadding>
 
       <section className='max-w-screen-2xl mx-auto px-2 xl:px-12'>
         <h2 className='font-bold text-4xl xl:text-7xl text-center'>
-          Come Check Us Out
+          Join the Community
         </h2>
 
         <div className='flex flex-wrap justify-center mt-8'>
@@ -61,6 +61,7 @@ export const CommunityPage = () => {
             </svg>
             <div className='ml-2'>TELEGRAM</div>
           </LinkOut>
+
           <LinkOut href='https://twitter.com/Pub_Finance'>
             <svg viewBox='0 0 24 24' className='h-8 w-8' fill='none' stroke={ACCENT_GREEN}>
               <g>
@@ -69,18 +70,41 @@ export const CommunityPage = () => {
             </svg>
             <div className='ml-2'>TWITTER</div>
           </LinkOut>
+
+          <LinkOut href='https://twitter.com/Pub_Finance'>
+            <div className='py-1 px-2 flex justify-center items-center text-accent-green border border-solid border-accent-green rounded-lg'>M</div>
+            <div className='ml-4'>MEDIUM</div>
+          </LinkOut>
         </div>
       </section>
 
       <SectionPadding>
         <section className='max-w-screen-2xl mx-auto mb-24 mt-24 xl:mt-48 xl:mb-48'>
           <h2 className='font-bold text-4xl xl:text-7xl text-center'>
-            VIP
+            VIP Channel
           </h2>
 
           <div className='flex flex-wrap justify-center mt-12'>
             <p className='text-xl xl:text-3xl text-center'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+              The Champagne Room is open to PINT’s strongest supporters who wish to engage on a more intimate level with the development team. Get first look at new developments for PINT and Wen Rug! Access is currently limited to individuals who hold a minimum of 5500 PINT tokens.
+            </p>
+          </div>
+        </section>
+      </SectionPadding>
+
+      <SectionPadding>
+        <section className='max-w-screen-2xl mx-auto mb-24 mt-24 xl:mt-48 xl:mb-48'>
+          <h2 className='font-bold text-4xl xl:text-7xl text-center'>
+            Resources
+          </h2>
+
+          <div className='flex flex-wrap justify-center mt-12'>
+            <p className='text-xl xl:text-3xl text-center'>
+              <a className='text-accent-green' href='https://app.uniswap.org/#/swap?outputCurrency=0xfecba472b2540c5a2d3700b2c9e06f0aa7dc6462' target='_blank' rel='noreferrer'>Uniswap</a><span className='mx-2'>&bull;</span>
+              <a className='text-accent-green' href='https://etherscan.io/token/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>Etherscan</a><span className='mx-2'>&bull;</span>
+              <a className='text-accent-green' href='https://www.dextools.io/app/uniswap/pair-explorer/0x8f3869c177090eace770396f9495424780c73537' target='_blank' rel='noreferrer'>Dextools</a><span className='mx-2'>&bull;</span>
+              <a className='text-accent-green' href='https://www.coingecko.com/en/coins/pub-finance' target='_blank' rel='noreferrer'>Coingecko</a><span className='mx-2'>&bull;</span>
+              <a className='text-accent-green' href='https://coinmarketcap.com/currencies/pub-finance/' target='_blank' rel='noreferrer'>Coinmarketcap</a>
             </p>
           </div>
         </section>

@@ -10,14 +10,6 @@
   background-color: #241D8C;
 }
 
-.hover\:bg-gradient-darker-blue:hover {
-  background-color: #02044F;
-}
-
-.hover\:bg-gradient-dark-blue:hover {
-  background-color: #241D8C;
-}
-
 .text-accent-green:hover {
   color: #44FF01;
 }
@@ -25,3 +17,8 @@
 .border-accent-green {
   border-color: #44FF01;
 }
+
+.text-accent-green {
+  color: #44FF01;
+}
+

@@ -31,7 +31,7 @@ export const HomePage = () => {
               </svg>
             </div>
 
-            <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Stake PINT. Earn fees</h3>
+            <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Stake PINT. Earn Yield.</h3>
 
             <p className='mt-2 text-xl'></p>
 
@@ -54,18 +54,17 @@ export const HomePage = () => {
               </svg>
             </div>
 
-            <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Statistics</h3>
+            <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Wen Rug</h3>
 
             <p className='mt-2 text-xl'></p>
 
-            <Link to='/dashboard'>
+            <a href='https://wenrug.com' target='_blank' rel='noreferrer'>
               <div className='mt-4 text-lg flex justify-end items-center text-accent-green'>
-                <div>Visit Dashboard</div>
                 <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                   <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' />
                 </svg>
               </div>
-            </Link>
+            </a>
           </div>
 
           <div
@@ -108,7 +107,7 @@ export const HomePage = () => {
             <div className='flex-grow mt-24 xl:mt-0'>
               <h2 className='font-bold text-4xl xl:text-7xl'>About PINT</h2>
               <p className='mt-16 text-xl xl:text-4xl leading-relaxed'>
-                PINT launched as a standard fair-launch farming coin in September 2020. Through a small unstaking tax on our upwards of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest (CGW) which is being used to fund development of innovative and engaging products for the pub.finance ecosystem.
+                PINT launched as a standard fair-launch farming coin in September 2020. Through a small unstaking tax on our upwards of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest which is being used to fund development of innovative and engaging products for the pub.finance ecosystem.
               </p>
 
               <div className='flex flex-col items-center xl:flex-row space-y-2 xl:space-y-0 xl:space-x-8'>

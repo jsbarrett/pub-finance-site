@@ -288,7 +288,7 @@ export const DashboardPage = () => {
           </div>
           <Loading isLoading={loadingCardData} loadingView={CardLoading}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
-              $ { totalSupply } <span className='text-xl'>USD</span>
+              { totalSupply } <span className='text-xl'>PINT</span>
             </div>
           </Loading>
         </div>
@@ -327,6 +327,37 @@ export const DashboardPage = () => {
               $ { marketCap } <span className='text-xl'>USD</span>
             </div>
           </Loading>
+        </div>
+
+        <div
+          className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
+          style={{ background: 'rgb(12,12,97)' }}>
+          <div className='px-10 flex items-center py-2 border-b border-gray-600'>
+            <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex justify-center items-center'>
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3' />
+              </svg>
+            </div>
+            <div className='text-xl xl:text-2xl ml-6'>YOUR PINT BALANCE</div>
+          </div>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
+          </div>
+        </div>
+
+        <div
+          className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
+          style={{ background: 'rgb(12,12,97)' }}>
+          <div className='px-10 flex items-center py-2 border-b border-gray-600'>
+            <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex justify-center items-center'>
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />
+              </svg>
+            </div>
+            <div className='text-xl xl:text-2xl ml-6'>WEN RUG USER METRICS</div>
+          </div>
+          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
+            Coming Soon
+          </div>
         </div>
       </section>
 
