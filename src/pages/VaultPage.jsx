@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { PageFooter } from '../components/PageFooter'
 import { SectionPadding } from '../components/SectionPadding'
 import { HeaderBackground } from '../components/HeaderBackground'
