@@ -22,73 +22,74 @@ export const HomePage = () => {
 
       <SectionPadding>
         <section className='-mt-60 relative space-y-16 xl:space-y-0 xl:space-x-16 flex flex-col xl:flex-row justify-between max-w-screen-2xl mx-auto'>
-          <div
-            className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
-            style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
-            <div>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
-                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4' />
-              </svg>
-            </div>
+          <Link to='/vault'>
+            <div
+              className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
+              style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
+              <div>
+                <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4' />
+                </svg>
+              </div>
 
-            <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Stake PINT. Earn Yield.</h3>
+              <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Stake PINT. Earn Yield.</h3>
 
-            <p className='mt-2 text-xl'></p>
+              <p className='mt-2 text-xl'></p>
 
-            <Link to='/vault'>
               <div className='mt-4 text-lg flex justify-end items-center text-accent-green'>
                 <div>Stake PINT</div>
                 <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                   <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' />
                 </svg>
               </div>
-            </Link>
-          </div>
-
-          <div
-            className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
-            style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
-            <div>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
-                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' />
-              </svg>
             </div>
+          </Link>
 
-            <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Wen Rug</h3>
-
-            <p className='mt-2 text-xl'></p>
-
-            <a href='https://wenrug.com' target='_blank' rel='noreferrer'>
-              <div className='mt-4 text-lg flex justify-end items-center text-accent-green'>
-                <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' />
+          <a href='http://wenrug.com' target='_blank' rel='noreferrer'>
+            <div
+              className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
+              style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
+              <div>
+                <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' />
                 </svg>
               </div>
-            </a>
-          </div>
 
-          <div
-            className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
-            style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
-            <div>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
-                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z' />
-              </svg>
+              <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Wen Rug</h3>
+
+              <p className='mt-2 text-xl'></p>
+
+                <div className='mt-4 text-lg flex justify-end items-center text-accent-green'>
+                  <div>wenrug.com</div>
+                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' />
+                  </svg>
+                </div>
             </div>
+          </a>
 
-            <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Check out the Community</h3>
+          <Link to='/community'>
+            <div
+              className='px-8 py-6 rounded-3xl shadow-xl w-full flex flex-col justify-between'
+              style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
+              <div>
+                <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke={ACCENT_GREEN}>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z' />
+                </svg>
+              </div>
 
-            <p className='mt-2 text-xl'></p>
+              <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Check out the Community</h3>
 
-            <Link to='/community'>
+              <p className='mt-2 text-xl'></p>
+
               <div className='mt-4 text-lg flex justify-end items-center text-accent-green'>
                 <div>Join</div>
                 <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                   <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' />
                 </svg>
               </div>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </section>
       </SectionPadding>
 
