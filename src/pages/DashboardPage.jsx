@@ -121,8 +121,6 @@ const LineChart = ({ chartType, historicalData }) => {
     const ctx = canvasElement.getContext('2d')
 
     setChart(new Chart(ctx, generateConfig(chartType, historicalData)))
-
-    return () => { if (chart) chart.destroy() }
   }
 
   useEffect(() => {
@@ -130,7 +128,6 @@ const LineChart = ({ chartType, historicalData }) => {
       chart.data = generateChartData(chartType, historicalData)
       chart.update()
     }
-    return () => { if (chart) chart.destroy() }
   }, [chartType, chart, historicalData])
 
   // eslint-disable-next-line
