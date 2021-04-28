@@ -11,7 +11,7 @@ const LinkOut = ({ href, children }) => {
       href={href}
       target='_blank'
       rel='noreferrer'
-      className='w-full text-2xl font-bold md:w-1/3 xl:w-3/12 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
+      className='w-full text-2xl font-bold md:w-1/3 xl:w-4/12 h-24 xl:h-48 rounded-3xl shadow-xl my-4 mx-2 lg:mx-4 flex justify-center items-center'
       style={{ background: 'rgb(12,12,97)' }}>
       { children }
     </a>
@@ -28,16 +28,6 @@ export const CommunityPage = () => {
           Our Community
         </h1>
       </header>
-
-      <SectionPadding>
-        <section className='max-w-screen-2xl mx-auto mb-48'>
-          <h2 className='font-bold text-4xl xl:text-7xl'>Governance</h2>
-
-          <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
-            Take an active role in the community by directing future PINT development and the deployment of PINT’s Community Governed Warchest through our governance portal at Snapshot.org Through this non-custodial decentralized governance system, voting power is derived from held PINT tokens. Publish and vote on proposals to initiate PINT buybacks, hire additional developers, or to build more partnerships for PINT within the defi industry.
-          </p>
-        </section>
-      </SectionPadding>
 
       <section className='max-w-screen-2xl mx-auto px-2 xl:px-12'>
         <h2 className='font-bold text-4xl xl:text-7xl text-center'>
@@ -77,6 +67,16 @@ export const CommunityPage = () => {
           </LinkOut>
         </div>
       </section>
+
+      <SectionPadding>
+        <section className='max-w-screen-2xl mx-auto mb-24 mt-24'>
+          <h2 className='font-bold text-4xl xl:text-7xl text-center'>Governance</h2>
+
+          <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
+            Take an active role in the community by directing future PINT development and the deployment of PINT’s Community Governed Warchest through our governance portal at Snapshot.org Through this non-custodial decentralized governance system, voting power is derived from held PINT tokens. Publish and vote on proposals to initiate PINT buybacks, hire additional developers, or to build more partnerships for PINT within the defi industry.
+          </p>
+        </section>
+      </SectionPadding>
 
       <SectionPadding>
         <section className='max-w-screen-2xl mx-auto mb-24 mt-24 xl:mt-48 xl:mb-48'>
