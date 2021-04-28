@@ -275,7 +275,7 @@ export const VaultPage = () => {
             </div>
           </div>
           <p className='mt-8 text-center'>
-            Every time you stake and unstake LP tokens, the contract will automatically harvest PINT rewards for you
+            Every time you stake and unstake LP tokens, the contract will automagically harvest PINT rewards for you
           </p>
         </section>
       </SectionPadding>

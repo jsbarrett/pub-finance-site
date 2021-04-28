@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Chart from 'chart.js/auto'
 import { PageFooter } from '../components/PageFooter'
 import { HeaderBackground } from '../components/HeaderBackground'
@@ -124,6 +124,7 @@ const LineChart = ({ chartType, historicalData }) => {
       chart.data = generateChartData(chartType, historicalData)
       chart.update()
     }
+    return () => { if (chart) chart.destroy() }
   }, [chartType, chart, historicalData])
 
   // eslint-disable-next-line
@@ -207,6 +208,7 @@ export const DashboardPage = () => {
   const [loadingCardData, setLoadingCardData] = useState(true)
   const [loadingHistoricalData, setLoadingHistoricalData] = useState(true)
   const [recentChartValue, setRecentChartValue] = useState('')
+  const ref = useRef(true)
 
   const chartTypes = [ 'Liquidity', 'Volume', 'Price' ]
 
@@ -214,6 +216,7 @@ export const DashboardPage = () => {
   useEffect(() => {
     Promise.all([getOtherCardData(), getTotalValueLockedCardData()])
       .then(xs => {
+        if (!ref.current) return
         setCurrentPrice(xs[0].market_data.current_price.usd.toLocaleString())
         setMarketCap(xs[0].market_data.market_cap.usd.toLocaleString())
         setTotalSupply(Math.floor(xs[0].market_data.total_supply).toLocaleString())
@@ -222,19 +225,26 @@ export const DashboardPage = () => {
       })
       .catch(err => {
         console.error(err)
+
+        if (!ref.current) return
         setLoadingCardData(false)
       })
+
+    return () => { ref.current = false }
   }, [])
 
   // LOAD HISTORICAL DATA
   useEffect(() => {
     getHistoricalData()
       .then(x => {
+        if (!ref.current) return
         setHistoricalData(x)
         updateChartType('Liquidity', x)
 
         setLoadingHistoricalData(false)
       })
+
+    return () => { ref.current = false }
   }, [])
 
   const updateChartType = (chartType, historicalData) => {
@@ -268,7 +278,7 @@ export const DashboardPage = () => {
             </div>
             <div className='text-xl xl:text-2xl ml-6'>PRICE</div>
           </div>
-          <Loading isLoading={loadingCardData} loadingView={CardLoading}>
+          <Loading isLoading={loadingCardData} loadingView={<CardLoading />}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
               $ { currentPrice } <span className='text-xl'>USD</span>
             </div>
@@ -286,7 +296,7 @@ export const DashboardPage = () => {
             </div>
             <div className='text-xl xl:text-2xl ml-6'>TOTAL PINT SUPPLY</div>
           </div>
-          <Loading isLoading={loadingCardData} loadingView={CardLoading}>
+          <Loading isLoading={loadingCardData} loadingView={<CardLoading />}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
               { totalSupply } <span className='text-xl'>PINT</span>
             </div>
@@ -304,7 +314,7 @@ export const DashboardPage = () => {
             </div>
             <div className='text-xl xl:text-2xl ml-6'>TOTAL VALUE LOCKED</div>
           </div>
-          <Loading isLoading={loadingCardData} loadingView={CardLoading}>
+          <Loading isLoading={loadingCardData} loadingView={<CardLoading />}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
               $ { totalValueLocked } <span className='text-xl'>USD</span>
             </div>
@@ -322,7 +332,7 @@ export const DashboardPage = () => {
             </div>
             <div className='text-xl xl:text-2xl ml-6'>MARKET CAP</div>
           </div>
-          <Loading isLoading={loadingCardData} loadingView={CardLoading}>
+          <Loading isLoading={loadingCardData} loadingView={<CardLoading />}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
               $ { marketCap } <span className='text-xl'>USD</span>
             </div>
@@ -341,6 +351,7 @@ export const DashboardPage = () => {
             <div className='text-xl xl:text-2xl ml-6'>YOUR PINT BALANCE</div>
           </div>
           <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
+            Locked
           </div>
         </div>
       </section>
@@ -365,7 +376,7 @@ export const DashboardPage = () => {
         </div>
       </section>
 
-      <Loading isLoading={loadingHistoricalData} loadingView={HistoricalLoading}>
+      <Loading isLoading={loadingHistoricalData} loadingView={<HistoricalLoading />}>
         <section
           className='shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
           style={{ background: 'rgb(12,12,97)' }}>

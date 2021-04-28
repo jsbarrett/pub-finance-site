@@ -15,15 +15,27 @@ const ScrollToTop = () => {
   return null
 }
 
+const Wallet = () => {
+  return (
+    <div
+      style={{ background: 'rgb(12,12,97)' }}
+      className='cursor-pointer text-lg absolute right-4 top-24 xl:top-8 z-30 text-white py-2 rounded-xl px-8 font-bold'>
+      Wallet
+    </div>
+  )
+}
+
 export const App = () => {
   return (
     <Router>
       <ScrollToTop />
 
       <div className='flex flex-col xl:flex-row'>
+        <Wallet />
+
         <SideNav />
 
-        <main className='flex-grow mt-20 xl:mt-0 xl:ml-64'>
+        <main className='flex-grow mt-20 xl:mt-0 xl:ml-16 relative'>
           <Switch>
             <Route path='/about'><AboutPage /></Route>
             <Route path='/vaults'><VaultPage /></Route>

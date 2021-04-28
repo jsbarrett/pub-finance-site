@@ -10,6 +10,14 @@
   background-color: #241D8C;
 }
 
+.border-gradient-dark-blue {
+  border-color: #241D8C;
+}
+
+.border-gradient-darker-blue {
+  border-color: #02044F;
+}
+
 .text-accent-green:hover {
   color: #44FF01;
 }

@@ -25,13 +25,12 @@ export const CommunityPage = () => {
         <HeaderBackground />
         <h1
           className='relative z-10 font-bold text-6xl xl:text-9xl leading-none'>
-          Our Community
+          Join the Community
         </h1>
       </header>
 
-      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12'>
+      <section className='max-w-screen-2xl mx-auto px-2 xl:px-12 -mt-36 xl:-mt-64 z-20 relative'>
         <h2 className='font-bold text-4xl xl:text-7xl text-center'>
-          Join the Community
         </h2>
 
         <div className='flex flex-wrap justify-center mt-8'>
@@ -61,7 +60,7 @@ export const CommunityPage = () => {
             <div className='ml-2'>TWITTER</div>
           </LinkOut>
 
-          <LinkOut href='https://twitter.com/Pub_Finance'>
+          <LinkOut href='https://pubfinance.medium.com/'>
             <div className='py-1 px-2 flex justify-center items-center text-accent-green border border-solid border-accent-green rounded-lg'>M</div>
             <div className='ml-4'>MEDIUM</div>
           </LinkOut>
@@ -69,17 +68,17 @@ export const CommunityPage = () => {
       </section>
 
       <SectionPadding>
-        <section className='max-w-screen-2xl mx-auto mb-24 mt-48'>
+        <section className='max-w-screen-2xl mx-auto mb-24 mt-36'>
           <h2 className='font-bold text-4xl xl:text-7xl text-center'>Governance</h2>
 
-          <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
-            Take an active role in the community by directing future PINT development and the deployment of PINT’s Community Governed Warchest through our governance portal at Snapshot.org Through this non-custodial decentralized governance system, voting power is derived from held PINT tokens. Publish and vote on proposals to initiate PINT buybacks, hire additional developers, or to build more partnerships for PINT within the defi industry.
+          <p className='mt-10 xl:mt-12 text-xl xl:text-3xl leading-relaxed text-center'>
+            Take an active role in the community by directing future PINT development and the deployment of PINT’s Community Governed Warchest through our governance portal at Snapshot.org Through this non-custodial decentralized governance system, voting power is derived from held PINT tokens. Publish and vote on proposals to initiate PINT buybacks, hire additional developers, or to build more partnerships for PINT within the DeFi industry.
           </p>
         </section>
       </SectionPadding>
 
       <SectionPadding>
-        <section className='max-w-screen-2xl mx-auto mb-24 mt-24 xl:mt-48 xl:mb-48'>
+        <section className='max-w-screen-2xl mx-auto mb-24 mt-24 xl:mt-36 xl:mb-48'>
           <h2 className='font-bold text-4xl xl:text-7xl text-center'>
             VIP Channel
           </h2>
@@ -98,8 +97,8 @@ export const CommunityPage = () => {
             Resources
           </h2>
 
-          <div className='flex flex-wrap justify-center mt-12'>
-            <p className='text-xl xl:text-3xl text-center'>
+          <div className='mt-12'>
+            <p className='flex flex-wrap justify-center text-xl xl:text-3xl text-center'>
               <a className='text-accent-green' href='https://app.uniswap.org/#/swap?outputCurrency=0xfecba472b2540c5a2d3700b2c9e06f0aa7dc6462' target='_blank' rel='noreferrer'>Uniswap</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://etherscan.io/token/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>Etherscan</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://www.dextools.io/app/uniswap/pair-explorer/0x8f3869c177090eace770396f9495424780c73537' target='_blank' rel='noreferrer'>Dextools</a><span className='mx-2'>&bull;</span>
