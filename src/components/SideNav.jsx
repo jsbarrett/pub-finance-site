@@ -29,12 +29,12 @@ export const SideNav = () => {
           </div>
         </Link>
 
-        <Link to='/vault'>
+        <Link to='/vaults'>
           <div className='py-8 flex items-center flex-col xl:flex-row'>
             <svg xmlns='http://www.w3.org/2000/svg' className='xl:ml-4 xl:ml-0 h-4 w-4 xl:h-8 xl:w-8' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
               <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' />
             </svg>
-            <div className='xl:ml-4 text-xs xl:text-2xl'>Vault</div>
+            <div className='xl:ml-4 text-xs xl:text-2xl'>Vaults</div>
           </div>
         </Link>
 

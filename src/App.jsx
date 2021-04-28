@@ -26,7 +26,7 @@ export const App = () => {
         <main className='flex-grow mt-20 xl:mt-0 xl:ml-64'>
           <Switch>
             <Route path='/about'><AboutPage /></Route>
-            <Route path='/vault'><VaultPage /></Route>
+            <Route path='/vaults'><VaultPage /></Route>
             <Route path='/dashboard'><DashboardPage /></Route>
             <Route path='/community'><CommunityPage /></Route>
             <Route path='/'><HomePage /></Route>

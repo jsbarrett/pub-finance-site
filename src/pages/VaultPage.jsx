@@ -183,7 +183,7 @@ export const VaultPage = () => {
         <HeaderBackground />
         <h1
           className='relative z-10 font-bold text-6xl xl:text-9xl leading-none'>
-          Vault
+          Vaults
         </h1>
         <p className='relative z-10 text-2xl xl:text-5xl mt-10 xl:mt-16'>
           Flexible Deposits, Higher Profits.
