@@ -343,9 +343,13 @@ export const DashboardPage = () => {
           <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
           </div>
         </div>
+      </section>
 
+      <section
+        className='shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
+        style={{ background: 'rgb(12,12,97)' }}>
         <div
-          className='my-8 w-full lg:w-5/12 rounded-3xl bg-gray-300 shadow-xl'
+          className='py-8 w-full rounded-3xl bg-gray-300 shadow-xl'
           style={{ background: 'rgb(12,12,97)' }}>
           <div className='px-10 flex items-center py-2 border-b border-gray-600'>
             <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex justify-center items-center'>
