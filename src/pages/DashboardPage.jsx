@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import Chart from 'chart.js/auto'
 import { PageFooter } from '../components/PageFooter'
 import { HeaderBackground } from '../components/HeaderBackground'
@@ -44,7 +44,11 @@ const getLiquidityData = async () => {
     .then(x => x.data.pairDayDatas)
 }
 
+let HISTORICAL_DATA = []
+
 const getHistoricalData = async () => {
+  if (HISTORICAL_DATA.length > 0) return HISTORICAL_DATA
+
   const liquidityData = await getLiquidityData()
   liquidityData.reverse()
 
@@ -61,7 +65,9 @@ const getHistoricalData = async () => {
 
   data.forEach((x, i) => { x.Liquidity = Number(liquidityData[i].reserveUSD) })
 
-  return data
+  HISTORICAL_DATA = data
+
+  return HISTORICAL_DATA
 }
 
 const generateChartData = (chartType, historicalData) => {
@@ -135,7 +141,11 @@ const LineChart = ({ chartType, historicalData }) => {
   )
 }
 
+let TOTAL_VALUE_LOCKED_CARD_DATA
+
 const getTotalValueLockedCardData = async () => {
+  if (TOTAL_VALUE_LOCKED_CARD_DATA) return TOTAL_VALUE_LOCKED_CARD_DATA
+
   const query = `{
     pairDayDatas (
       first: 1,
@@ -158,7 +168,9 @@ const getTotalValueLockedCardData = async () => {
     .then(x => {
       if (!x || x.length <= 0) return ''
 
-      return Math.round(Number(x[0].reserveUSD)).toLocaleString()
+      TOTAL_VALUE_LOCKED_CARD_DATA = Math.round(Number(x[0].reserveUSD)).toLocaleString()
+
+      return TOTAL_VALUE_LOCKED_CARD_DATA
     })
     .catch(err => {
       console.error(err)
@@ -166,11 +178,19 @@ const getTotalValueLockedCardData = async () => {
     })
 }
 
+let OTHER_CARD_DATA
+
 const getOtherCardData = async () => {
+  if (OTHER_CARD_DATA) return OTHER_CARD_DATA
+
   return await fetch('https://api.coingecko.com/api/v3/coins/pub-finance', {
     headers: { 'Content-Type': 'application/json' }
   })
     .then(x => x.json())
+    .then(x => {
+      OTHER_CARD_DATA = x
+      return OTHER_CARD_DATA
+    })
     .catch(err => {
       console.error(err)
     })
@@ -234,7 +254,7 @@ export const DashboardPage = () => {
   }, [])
 
   // LOAD HISTORICAL DATA
-  useEffect(() => {
+  useMemo(() => {
     getHistoricalData()
       .then(x => {
         if (!ref.current) return
