@@ -34,7 +34,7 @@ export const AboutPage = () => {
 
       <SectionPadding>
         <section className='max-w-screen-2xl mx-auto mb-48'>
-          <h2 className='font-bold text-4xl xl:text-7xl text-center'>
+          <h2 className='font-bold text-4xl xl:text-5xl text-center'>
             Check out PINT’s whitepaper for more details
           </h2>
 

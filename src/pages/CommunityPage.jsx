@@ -69,7 +69,7 @@ export const CommunityPage = () => {
       </section>
 
       <SectionPadding>
-        <section className='max-w-screen-2xl mx-auto mb-24 mt-24'>
+        <section className='max-w-screen-2xl mx-auto mb-24 mt-48'>
           <h2 className='font-bold text-4xl xl:text-7xl text-center'>Governance</h2>
 
           <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
