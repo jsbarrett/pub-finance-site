@@ -154,18 +154,16 @@ const BartenderAbi = require('../Bartender.json')
 //   )
 // }
 
-const ethereum = window.ethereum
-
 const unlockWallet = async (setAddress) => {
-  // check if connected to mainnet
+  // TODO: check if connected to mainnet
   try {
-    if (!ethereum) return alert('Please install metamask, and try again')
+    if (!window.ethereum) return alert('Please install metamask, and try again')
 
-    if (!ethereum.selectedAddress) {
-      await ethereum.request({ method: 'eth_requestAccounts' })
-    }
+    const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
+    if (accountAddress) return setAddress(accountAddress)
 
-    const [address] = await ethereum.request({ method: 'eth_accounts' })
+    await window.ethereum.request({ method: 'eth_requestAccounts' })
+    const [address] = await window.ethereum.request({ method: 'eth_accounts' })
     setAddress(address)
   } catch (err) {
     console.error(err)
@@ -179,10 +177,6 @@ export const VaultPage = () => {
   const [lockedPintEarned, setLockedPintEarned] = useState()
   const [tokensStaked, setTokensStaked] = useState()
   const [lockedTokensStaked, setLockkedTokensStaked] = useState()
-
-  if (!address && ethereum && ethereum.selectedAddress) {
-    setAddress(ethereum.selectedAddress)
-  }
 
   useEffect(() => {
     if (!address) return

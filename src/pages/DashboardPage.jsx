@@ -224,14 +224,16 @@ const getMarketCap = async () => {
 }
 
 const getYourPINTBalance = async () => {
-  if (!window.ethereum || !window.ethereum.selectedAddress) return
+  if (!window.ethereum) return
 
-  const yourAddress = window.ethereum.selectedAddress
+  const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
+  if (!accountAddress) return
+
   const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
   const w3 = new Web3(window.ethereum)
   const pubContract = new w3.eth.Contract(PubTokenArtifact.abi, PubAddress)
 
-  const balance = await pubContract.methods.balanceOf(yourAddress).call()
+  const balance = await pubContract.methods.balanceOf(accountAddress).call()
   return balance
 }
 
