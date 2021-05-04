@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
+import BigNumber from 'bignumber.js'
 import Chart from 'chart.js/auto'
 import { PageFooter } from '../components/PageFooter'
 import { HeaderBackground } from '../components/HeaderBackground'
 import { PintLogoSvg } from '../components/PintLogoSvg'
 
 import { ACCENT_GREEN_RGBA } from '../styles'
+
+const Web3 = require('web3')
+const PubTokenArtifact = require('../PubToken.json')
+const wethAbi = require('../weth.json')
 
 const getDataPoint = async (date) => {
   const url = 'https://api.coingecko.com/api/v3/coins/pub-finance/history?date='
@@ -193,6 +198,43 @@ const getOtherCardData = async () => {
     })
 }
 
+const getMarketCap = async () => {
+  if (!window.ethereum) return '0'
+
+  const WethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+  const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
+  const PubUniswapAddress = '0x8f3869c177090eace770396f9495424780c73537'
+
+  const w3 = new Web3(window.ethereum)
+  const pubContract = new w3.eth.Contract(PubTokenArtifact.abi, PubAddress)
+  const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
+
+  const totalSupply = new BigNumber(await pubContract.methods.totalSupply().call())
+
+  const wethBalance = await wethContract.methods.balanceOf(PubUniswapAddress).call()
+  const pubBalance = await pubContract.methods.balanceOf(PubUniswapAddress).call()
+  const pubPrice = new BigNumber(wethBalance).div(new BigNumber(pubBalance))
+  const marketCap = "$" + totalSupply
+    .dividedBy(new BigNumber(10).pow(18))
+    .times(pubPrice)
+    .times(new BigNumber(1247))
+    .toFormat(2)
+
+  return marketCap
+}
+
+const getYourPINTBalance = async () => {
+  if (!window.ethereum || !window.ethereum.selectedAddress) return
+
+  const yourAddress = window.ethereum.selectedAddress
+  const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
+  const w3 = new Web3(window.ethereum)
+  const pubContract = new w3.eth.Contract(PubTokenArtifact.abi, PubAddress)
+
+  const balance = await pubContract.methods.balanceOf(yourAddress).call()
+  return balance
+}
+
 const Loading = ({ isLoading, children, loadingView }) => {
   if (!isLoading) return children
 
@@ -225,17 +267,25 @@ export const DashboardPage = () => {
   const [loadingCardData, setLoadingCardData] = useState(true)
   const [loadingHistoricalData, setLoadingHistoricalData] = useState(true)
   const [recentChartValue, setRecentChartValue] = useState('')
+  const [yourPINTBalance, setYourPINTBalance] = useState()
   const ref = useRef(true)
 
   const chartTypes = [ 'Liquidity', 'Volume', 'Price' ]
 
   // LOAD CARDS
   useEffect(() => {
-    Promise.all([getOtherCardData(), getTotalValueLockedCardData()])
+    Promise.all([
+      getOtherCardData(),
+      getTotalValueLockedCardData(),
+      getMarketCap(),
+      getYourPINTBalance(),
+    ])
       .then(xs => {
         if (!ref.current) return
         setCurrentPrice(xs[0].market_data.current_price.usd.toLocaleString())
-        setMarketCap(xs[0].market_data.market_cap.usd.toLocaleString())
+        // setMarketCap(xs[0].market_data.market_cap.usd.toLocaleString())
+        setMarketCap(xs[2])
+        setYourPINTBalance(xs[3])
         setTotalSupply(Math.floor(xs[0].market_data.total_supply).toLocaleString())
         setTotalValueLocked(xs[1])
         setLoadingCardData(false)
@@ -351,7 +401,7 @@ export const DashboardPage = () => {
           </div>
           <Loading isLoading={loadingCardData} loadingView={<CardLoading />}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
-              $ { marketCap } <span className='text-xl'>USD</span>
+              { marketCap } <span className='text-xl'>USD</span>
             </div>
           </Loading>
         </div>
@@ -368,7 +418,7 @@ export const DashboardPage = () => {
             <div className='text-xl xl:text-2xl ml-6'>YOUR PINT BALANCE</div>
           </div>
           <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
-            Locked
+            { (yourPINTBalance || yourPINTBalance === 0) ? yourPINTBalance.toLocaleString() + ' PINT' : 'Locked' }
           </div>
         </div>
       </section>

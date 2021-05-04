@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { PageFooter } from '../components/PageFooter'
 import { SectionPadding } from '../components/SectionPadding'
 import { HeaderBackground } from '../components/HeaderBackground'
 import { EthereumLogoSvg } from '../components/EthereumLogoSvg'
 import pintGearLogoUrl from '../pint-gear-logo.svg'
+
+const Web3 = require('web3')
+const BartenderAbi = require('../Bartender.json')
 
 // const GrabPint = () => {
 //   return (
@@ -153,30 +156,59 @@ import pintGearLogoUrl from '../pint-gear-logo.svg'
 
 const ethereum = window.ethereum
 
-const unlockWallet = async () => {
+const unlockWallet = async (setAddress) => {
+  // check if connected to mainnet
   try {
+    if (!ethereum) return alert('Please install metamask, and try again')
+
     if (!ethereum.selectedAddress) {
       await ethereum.request({ method: 'eth_requestAccounts' })
     }
 
     const [address] = await ethereum.request({ method: 'eth_accounts' })
-    const balance = await ethereum.request({ method: 'eth_getBalance', params: [address, 'latest'] })
-    console.log(balance)
-
-    // const transactionParameters = {
-    //   to: '0x0000000000000000000000000000000000000000',
-    //   from: ethereum.selectedAddress,
-    //   value: '0x1000000000',
-    // }
-
-    // const txHash = await ethereum.request({ method: 'eth_sendTransaction', params: [transactionParameters] })
-    // console.log(txHash)
+    setAddress(address)
   } catch (err) {
     console.error(err)
+    alert('Sorry there was a problem unlocking your wallet, please try refreshing and trying again')
   }
 }
 
 export const VaultPage = () => {
+  const [address, setAddress] = useState()
+  const [pintEarned, setPintEarned] = useState()
+  const [lockedPintEarned, setLockedPintEarned] = useState()
+  const [tokensStaked, setTokensStaked] = useState()
+  const [lockedTokensStaked, setLockkedTokensStaked] = useState()
+
+  if (!address && ethereum && ethereum.selectedAddress) {
+    setAddress(ethereum.selectedAddress)
+  }
+
+  useEffect(() => {
+    if (!address) return
+
+    async function effect () {
+      const BartenderAddress = '0x3ad4e2F9574b5dA2d054505a94FC31ee141C6338'
+
+      const w3 = new Web3(window.ethereum)
+      const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+      const pendingPubs = await bartenderContract.methods.pendingPubs(1, address).call()
+      setPintEarned(pendingPubs)
+
+      const pendingLockedPubs = await bartenderContract.methods.pendingLockedPubs(1, address).call()
+      setLockedPintEarned(pendingLockedPubs)
+
+      const userInfo = await bartenderContract.methods.getUserInfo(1, address).call()
+      setTokensStaked(userInfo)
+
+      const userInfoLocked = await bartenderContract.methods.getUserInfoLocked(1, address).call()
+      setLockkedTokensStaked(userInfoLocked)
+    }
+
+    effect()
+  }, [address])
+
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white relative'>
       <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-60 text-center flex flex-col items-center'>
@@ -200,7 +232,7 @@ export const VaultPage = () => {
             </a>
 
             <button
-              onClick={unlockWallet}
+              onClick={() => unlockWallet(setAddress)}
               className='ml-4 rounded-full px-12 py-6 font-bold border border-solid border-accent-green'>
               Unlock Wallet
             </button>
@@ -224,12 +256,16 @@ export const VaultPage = () => {
               <div className='text-center leading-none text-gray-100 text-3xl mt-6'>PINT</div>
 
               <div className='mt-12'>
-                <p className='text-5xl font-bold text-white'>---</p>
+                <p className='text-5xl font-bold text-white'>
+                  { (pintEarned || pintEarned === 0) ? pintEarned : '---' }
+                </p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>PINT Earned</div>
               </div>
 
               <div className='mt-8'>
-                <p className='text-5xl font-bold text-white'>---</p>
+                <p className='text-5xl font-bold text-white'>
+                  { (lockedPintEarned || lockedPintEarned === 0) ? lockedPintEarned : '---' }
+                </p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked PINT Earned</div>
               </div>
 
@@ -258,12 +294,16 @@ export const VaultPage = () => {
               <div className='text-center leading-none text-gray-100 text-3xl mt-6'>ETH_PINT UNI-V2 LP</div>
 
               <div className='mt-12'>
-                <p className='text-5xl font-bold text-white'>---</p>
+                <p className='text-5xl font-bold text-white'>
+                  { (tokensStaked || tokensStaked === 0) ? tokensStaked : '---' }
+                </p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Tokens Staked</div>
               </div>
 
               <div className='mt-8'>
-                <p className='text-5xl font-bold text-white'>---</p>
+                <p className='text-5xl font-bold text-white'>
+                  { (lockedTokensStaked || lockedTokensStaked === 0) ? lockedTokensStaked : '---' }
+                </p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked Tokens Staked</div>
               </div>
 
