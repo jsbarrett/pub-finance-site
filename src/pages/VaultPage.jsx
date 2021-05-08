@@ -4,155 +4,10 @@ import { SectionPadding } from '../components/SectionPadding'
 import { HeaderBackground } from '../components/HeaderBackground'
 import { EthereumLogoSvg } from '../components/EthereumLogoSvg'
 import pintGearLogoUrl from '../pint-gear-logo.svg'
+// import BigNumber from 'bignumber.js'
 
 const Web3 = require('web3')
 const BartenderAbi = require('../Bartender.json')
-
-// const GrabPint = () => {
-//   return (
-//     <div>
-//       <h2 className='font-bold text-4xl xl:text-7xl'>Lock your PINT. Maximize returns</h2>
-
-//       <div
-//         className='rounded-3xl py-4 px-4 xl:px-12 shadow-xl mt-12'
-//         style={{ background: 'rgb(12,12,97)' }}>
-//         <div className='text-xl xl:text-3xl font-bold text-center'>Fixed Lock - One sided staking</div>
-
-//         <div className='h-36 text-center flex justify-center items-center text-3xl'>
-//           Coming soon ...
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// const Table = ({ assets, apy, interest, durations, selectedDuration, setSelectedDuration, action, actionLabel }) => {
-//   return (
-//     <div>
-//       <table className='hidden xl:block w-full mt-8 mb-24'>
-//         <tbody>
-//           <tr className='text-xl xl:text-3xl text-left'>
-//             <th className='align-top'>Assets</th>
-//             <th className='align-top text-center'>APY%</th>
-//             <th className='w-4/12 align-top text-center'>
-//               <div>Duration</div>
-//               <div className='mt-2 font-normal text-lg'>choose lockup period</div>
-//             </th>
-//             <th className='align-top text-center'>Interest</th>
-//             <th className='align-top'>{/* Add Liquidity */}</th>
-//           </tr>
-//           <tr className='text-xl xl:text-3xl'>
-//             <td className='py-8 w-1/6'>
-//               { assets }
-//             </td>
-//             <td className='py-8 w-1/6 text-center'>
-//               { apy }
-//             </td>
-//             <td className='py-8 w-2/6'>
-//               <div className='text-sm flex justify-center'>
-//                 {durations.map((duration, index) => (
-//                 <div
-//                   key={duration}
-//                   className='flex items-center justify-center flex-col'>
-//                   <div className='flex items-center'>
-//                     <div className={index !== 0 ? 'w-6 h-1 bg-accent-green' : 'w-6 h-1'}></div>
-//                     <div
-//                       onClick={() => setSelectedDuration(duration)}
-//                       className={selectedDuration !== duration ? 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid bg-accent-green' : 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid'}>
-//                     </div>
-//                     <div className={index !== (durations.length - 1) ? 'w-6 h-1 bg-accent-green' : 'w-6 h-1'}></div>
-//                   </div>
-//                   <div className='mt-2'>{ duration }</div>
-//                 </div>
-//                 ))}
-//               </div>
-//             </td>
-//             <td className='py-8 w-1/6 text-center'>
-//               { interest }
-//             </td>
-//             <td className='text-xl py-8 text-center w-1/6'>
-//               <button
-//                 onClick={() => action()}
-//                 className='text-gray-900 rounded-3xl px-8 py-2 font-bold bg-accent-green'>
-//                 { actionLabel }
-//               </button>
-//             </td>
-//           </tr>
-//         </tbody>
-//       </table>
-
-//       <div className='xl:hidden w-full mt-8 mb-12'>
-//         <div className='flex justify-center items-center'>
-//           <div className='text-xl w-full text-right'>Assets:</div>
-//           <div className='ml-2 text-xl font-bold w-full text-left'>{ assets }</div>
-//         </div>
-//         <div className='mt-8 flex justify-center items-center'>
-//           <div className='text-xl w-full text-right'>APY%:</div>
-//           <div className='ml-2 text-xl font-bold w-full text-left'>{ apy }</div>
-//         </div>
-//         <div className='mt-8 flex justify-center items-center'>
-//           <div className='text-xl w-full text-right'>Interest</div>
-//           <div className='ml-2 text-xl font-bold w-full text-left'>{ interest }</div>
-//         </div>
-//         <div className='mt-12 flex justify-center items-center'>
-//           <div className='text-xs flex justify-center'>
-//             {durations.map((duration, index) => (
-//             <div
-//               key={duration}
-//               className='flex items-center justify-center flex-col'>
-//               <div className='flex items-center'>
-//                 <div className={index !== 0 ? 'w-4 h-1 bg-accent-green' : 'w-4 h-1'}></div>
-//                 <div
-//                   onClick={() => setSelectedDuration(duration)}
-//                   className={selectedDuration !== duration ? 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid bg-accent-green' : 'border-accent-green cursor-pointer h-6 w-6 rounded-full border-4 border-solid'}>
-//                 </div>
-//                 <div className={index !== (durations.length - 1) ? 'w-4 h-1 bg-accent-green' : 'w-4 h-1'}></div>
-//               </div>
-//               <div className='mt-2'>{ duration }</div>
-//             </div>
-//             ))}
-//           </div>
-//         </div>
-//         <div className='mt-8 flex justify-around items-center'>
-//           <button
-//             onClick={() => action()}
-//             className='text-gray-900 rounded-3xl px-8 py-2 font-bold bg-accent-green'>
-//             { actionLabel }
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// const AddLiquidity = () => {
-//   const [selectedDuration, setSelectedDuration] = useState('Unlocked')
-
-//   const durations = [ 'Unlocked', '1 week', '1 month', '3 months', '6 months', '1 year' ]
-
-//   const addLiquidity = () => {}
-
-//   return (
-//     <div>
-//       <h2 className='font-bold text-4xl xl:text-7xl mt-24'>Add Liquidity</h2>
-
-//       <div
-//         className='mt-12 rounded-3xl py-4 px-12 shadow-xl'
-//         style={{ background: 'rgb(12,12,97)' }}>
-//         <Table
-//           assets='ETH PINT LP'
-//           apy='6.24%'
-//           interest='.00456'
-//           durations={durations}
-//           selectedDuration={selectedDuration}
-//           setSelectedDuration={setSelectedDuration}
-//           action={addLiquidity}
-//           actionLabel='Add Liquidity'
-//         />
-//       </div>
-//     </div>
-//   )
-// }
 
 const unlockWallet = async (setAddress) => {
   // TODO: check if connected to mainnet
@@ -171,33 +26,107 @@ const unlockWallet = async (setAddress) => {
   }
 }
 
+// TODO: make "harvest" button disabled when nothing to harvest
+// TODO: make wallet lock/unlock state global
+
+// const stake = async ({ address, amount, pid }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+//   return await bartenderContract.methods
+//     .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
+
+// const unStake = async ({ address, amount, pid }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+//   return await bartenderContract.methods
+//     .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
+
+// const harvest = async ({ pid, address }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+//   return await bartenderContract.methods
+//     .deposit(pid, '0')
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
+
+// const approve = async ({ lpContract, address }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+//   const maxUInt256 = 0
+
+//   return lpContract.methods
+//     .approve(bartenderContract.options.address, maxUInt256)
+//     .send({ from: address })
+// }
+
+// const redeem = async ({ address }) => {
+//   const now = new Date().getTime() / 1000
+//   if (now < 1597172400) return alert('pool not active')
+
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+//   return await bartenderContract.methods
+//     .exit()
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
+
 export const VaultPage = () => {
   const [address, setAddress] = useState()
   const [pintEarned, setPintEarned] = useState()
   const [lockedPintEarned, setLockedPintEarned] = useState()
   const [tokensStaked, setTokensStaked] = useState()
-  const [lockedTokensStaked, setLockkedTokensStaked] = useState()
+  const [lockedTokensStaked, setLockedTokensStaked] = useState()
 
   useEffect(() => {
     if (!address) return
 
     async function effect () {
-      const BartenderAddress = '0x3ad4e2F9574b5dA2d054505a94FC31ee141C6338'
+      const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
       const w3 = new Web3(window.ethereum)
       const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
+      console.log('address', address)
+      console.log('bartenderContract', bartenderContract)
+
       const pendingPubs = await bartenderContract.methods.pendingPubs(1, address).call()
       setPintEarned(pendingPubs)
+      console.log('pendingPubs', pendingPubs)
 
       const pendingLockedPubs = await bartenderContract.methods.pendingLockedPubs(1, address).call()
       setLockedPintEarned(pendingLockedPubs)
+      console.log('pendingLockedPubs', pendingLockedPubs)
 
       const userInfo = await bartenderContract.methods.getUserInfo(1, address).call()
       setTokensStaked(userInfo)
+      console.log('userInfo', userInfo)
 
       const userInfoLocked = await bartenderContract.methods.getUserInfoLocked(1, address).call()
-      setLockkedTokensStaked(userInfoLocked)
+      setLockedTokensStaked(userInfoLocked)
+      console.log('userInfoLocked', userInfoLocked)
     }
 
     effect()
@@ -219,7 +148,7 @@ export const VaultPage = () => {
       <SectionPadding>
         <section className='max-w-screen-2xl mx-auto mb-24 xl:mb-48'>
           <div className='flex justify-center mt-4'>
-            <a href='https://app.uniswap.org/#/add/ETH/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>
+            <a href='https://app.uniswap.org/#/add/v2/ETH/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>
               <button className='text-gray-900 rounded-full px-12 py-6 font-bold bg-accent-green'>
                 Add Liquidity
               </button>
@@ -263,6 +192,15 @@ export const VaultPage = () => {
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked PINT Earned</div>
               </div>
 
+              {/* <Button */}
+              {/*   disabled={!earnings.toNumber() || pendingTx} */}
+              {/*   text={pendingTx ? 'Collecting PUB' : 'Harvest'} */}
+              {/*   onClick={async () => { */}
+              {/*     setPendingTx(true) */}
+              {/*     await onReward() */}
+              {/*     setPendingTx(false) */}
+              {/*   }} */}
+              {/* /> */}
               <div className='mt-12'>
                 <button className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
                   Harvest

@@ -2,7 +2,7 @@ import React from 'react'
 
 export const SectionPadding = ({ children }) => {
   return (
-    <div className='px-2 md:px-24 lg:px-64 xl:px-48'>
+    <div className='px-2 mx-auto md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg'>
       { children }
     </div>
   )

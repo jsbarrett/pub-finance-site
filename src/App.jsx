@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom'
+import BigNumber from 'bignumber.js'
 import './App.css'
 
 import { HomePage } from './pages/HomePage'
@@ -48,12 +49,15 @@ const WalletDetails = ({ address, setModalIsOpen, setAddress }) => {
     if (!address) return
 
     async function effect () {
-      const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
+      const PubAddress = process.env.REACT_APP_PUB_ADDRESS
 
       const w3 = new Web3(window.ethereum)
       const PubContract = new w3.eth.Contract(PubAbi, PubAddress)
 
-      const balance = await PubContract.methods.balanceOf(address).call()
+      const balance = (new BigNumber(await PubContract.methods.balanceOf(address).call()))
+        .dividedBy(new BigNumber(10).pow(18))
+        .toFormat(2)
+
       setBalance(balance)
     }
 

@@ -98,6 +98,7 @@ const generateConfig = (chartType, historicalData) => {
     data: generateChartData(chartType, historicalData),
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
         title: { display: false, },
@@ -106,7 +107,7 @@ const generateConfig = (chartType, historicalData) => {
       scales: {
         x: { display: false, },
         y: { display: false, suggestedMin: 0, suggestedMax: 1 }
-      }
+      },
     },
   }
 }
@@ -139,7 +140,7 @@ const LineChart = ({ chartType, historicalData }) => {
   useEffect(() => { return setupChart() }, [])
 
   return (
-    <div id='chart-container' className="w-full"></div>
+    <div id='chart-container' className='w-full relative h-64'></div>
   )
 }
 
@@ -201,9 +202,9 @@ const getOtherCardData = async () => {
 const getMarketCap = async () => {
   if (!window.ethereum) return '0'
 
-  const WethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-  const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
-  const PubUniswapAddress = '0x8f3869c177090eace770396f9495424780c73537'
+  const WethAddress = process.env.REACT_APP_WETH_ADDRESS
+  const PubAddress = process.env.REACT_APP_PUB_ADDRESS
+  const PubUniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
 
   const w3 = new Web3(window.ethereum)
   const pubContract = new w3.eth.Contract(PubTokenArtifact.abi, PubAddress)
@@ -214,7 +215,7 @@ const getMarketCap = async () => {
   const wethBalance = await wethContract.methods.balanceOf(PubUniswapAddress).call()
   const pubBalance = await pubContract.methods.balanceOf(PubUniswapAddress).call()
   const pubPrice = new BigNumber(wethBalance).div(new BigNumber(pubBalance))
-  const marketCap = "$" + totalSupply
+  const marketCap = '$' + totalSupply
     .dividedBy(new BigNumber(10).pow(18))
     .times(pubPrice)
     .times(new BigNumber(1247))
@@ -229,12 +230,14 @@ const getYourPINTBalance = async () => {
   const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
   if (!accountAddress) return
 
-  const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
+  const PubAddress = process.env.REACT_APP_PUB_ADDRESS
   const w3 = new Web3(window.ethereum)
   const pubContract = new w3.eth.Contract(PubTokenArtifact.abi, PubAddress)
 
-  const balance = await pubContract.methods.balanceOf(accountAddress).call()
+  const balance = new BigNumber(await pubContract.methods.balanceOf(accountAddress).call())
   return balance
+    .dividedBy(new BigNumber(10).pow(18))
+    .toFormat(2)
 }
 
 const Loading = ({ isLoading, children, loadingView }) => {
@@ -285,8 +288,8 @@ export const DashboardPage = () => {
       .then(xs => {
         if (!ref.current) return
         setCurrentPrice(xs[0].market_data.current_price.usd.toLocaleString())
-        // setMarketCap(xs[0].market_data.market_cap.usd.toLocaleString())
         setMarketCap(xs[2])
+        // setMarketCap(xs[0].market_data.market_cap.usd.toLocaleString())
         setYourPINTBalance(xs[3])
         setTotalSupply(Math.floor(xs[0].market_data.total_supply).toLocaleString())
         setTotalValueLocked(xs[1])
@@ -425,51 +428,55 @@ export const DashboardPage = () => {
         </div>
       </section>
 
-      <section
-        className='shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
-        style={{ background: 'rgb(12,12,97)' }}>
-        <div
-          className='py-8 w-full rounded-3xl bg-gray-300 shadow-xl'
-          style={{ background: 'rgb(12,12,97)' }}>
-          <div className='px-10 flex items-center py-2 border-b border-gray-600'>
-            <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex justify-center items-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />
-              </svg>
-            </div>
-            <div className='text-xl xl:text-2xl ml-6'>WEN RUG USER METRICS</div>
-          </div>
-          <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
-            Coming Soon
-          </div>
-        </div>
-      </section>
-
-      <Loading isLoading={loadingHistoricalData} loadingView={<HistoricalLoading />}>
+      <div className='px-2 mx-auto md:w-10/12'>
         <section
-          className='shadow-lg rounded-3xl w-11/12 lg:w-9/12 mx-auto px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
+          className='shadow-lg rounded-3xl px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
           style={{ background: 'rgb(12,12,97)' }}>
-          <div className='w-full xl:ml-16 xl:mt-16'>
-            <div className=''>
-              { chartTypes.map(chartType => (
-              <button
-                key={chartType}
-                onClick={() => updateChartType(chartType, historicalData)}
-                className={(chartType === selectedChart)
-                  ? 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-accent-green text-gray-900'
-                  : 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-gray-500 text-white'}>
-                { chartType }
-              </button>
-              )) }
+          <div
+            className='py-8 w-full rounded-3xl bg-gray-300 shadow-xl'
+            style={{ background: 'rgb(12,12,97)' }}>
+            <div className='px-10 flex items-center py-2 border-b border-gray-600'>
+              <div className='w-16 h-16 xl:w-20 xl:h-20 bg-gray-900 rounded-full flex justify-center items-center'>
+                <svg xmlns='http://www.w3.org/2000/svg' className='h-8 xl:h-12 w-8 xl:w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />
+                </svg>
+              </div>
+              <div className='text-xl xl:text-2xl ml-6'>WEN RUG USER METRICS</div>
             </div>
-            <div className='mt-6 xl:mt-12 text-3xl xl:text-6xl font-bold'>
-              ${ recentChartValue }
+            <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
+              Coming Soon
             </div>
           </div>
-
-          <LineChart chartType={selectedChart} historicalData={historicalData} />
         </section>
-      </Loading>
+      </div>
+
+      <div className='px-2 mx-auto md:w-10/12'>
+        <Loading isLoading={loadingHistoricalData} loadingView={<HistoricalLoading />}>
+          <section
+            className='shadow-lg rounded-3xl px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
+            style={{ background: 'rgb(12,12,97)' }}>
+            <div className='xl:ml-16 w-full xl:mt-16'>
+              <div className=''>
+                { chartTypes.map(chartType => (
+                <button
+                  key={chartType}
+                  onClick={() => updateChartType(chartType, historicalData)}
+                  className={(chartType === selectedChart)
+                    ? 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-accent-green text-gray-900'
+                    : 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-gray-500 text-white'}>
+                  { chartType }
+                </button>
+                )) }
+              </div>
+              <div className='mt-6 xl:mt-12 text-3xl xl:text-6xl font-bold'>
+                ${ recentChartValue }
+              </div>
+            </div>
+
+            <LineChart chartType={selectedChart} historicalData={historicalData} />
+          </section>
+        </Loading>
+      </div>
 
       <PageFooter />
     </div>

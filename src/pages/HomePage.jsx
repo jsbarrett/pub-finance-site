@@ -96,7 +96,7 @@ export const HomePage = () => {
       <SectionPadding>
         <section className='text-center max-w-screen-2xl mx-auto my-36'>
           <h2 className='font-bold text-4xl xl:text-7xl'>Tired of Losing to the House?</h2>
-          <p className='mt-16 text-xl xl:text-4xl leading-relaxed'>
+          <p className='mt-8 text-xl xl:text-xl leading-relaxed opacity-75'>
             Tired of losing to the house? With PINT you are the house. Stake PINT tokens to receive user fees from When Rug and future pub.finance ecosystem products. Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest. Fair launch, fair ownership, fair play--Grab a pint.
           </p>
         </section>
@@ -107,7 +107,7 @@ export const HomePage = () => {
           <div className='flex flex-col-reverse xl:flex-row'>
             <div className='flex-grow mt-24 xl:mt-0'>
               <h2 className='font-bold text-4xl xl:text-7xl'>About PINT</h2>
-              <p className='mt-16 text-xl xl:text-4xl leading-relaxed'>
+              <p className='mt-8 text-xl xl:text-xl leading-relaxed opacity-75'>
                 PINT launched as a standard fair-launch farming coin in September 2020. Through a small unstaking tax on our upwards of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest which is being used to fund development of innovative and engaging products for the pub.finance ecosystem.
               </p>
 
@@ -146,7 +146,9 @@ export const HomePage = () => {
         </section>
       </SectionPadding>
 
-      <FaqSection />
+      <SectionPadding>
+        <FaqSection />
+      </SectionPadding>
 
       <PageFooter />
     </div>

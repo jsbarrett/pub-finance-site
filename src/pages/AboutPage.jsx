@@ -22,11 +22,11 @@ export const AboutPage = () => {
         <section className='max-w-screen-2xl mx-auto mb-48'>
           <h2 className='font-bold text-4xl xl:text-7xl'>Grab Yourself a PINT</h2>
 
-          <p className='mt-10 xl:mt-20 text-xl xl:text-3xl leading-relaxed'>
+          <p className='mt-8 xl:mt-20 text-xl leading-relaxed opacity-75'>
             PINT launched as a standard fair-launch farming coin in September 2020. Through a small unstaking tax on our upwards of $5,000,000 farming TVL, PINT raised a modest Community-Governed Warchest which is being used to fund development of innovative and engaging products for the pub.finance ecosystem.
           </p>
 
-          <p className='mt-10 text-xl xl:text-3xl leading-relaxed'>
+          <p className='mt-8 text-xl leading-relaxed opacity-75'>
             PINT’s flagship product, “Wen Rug” is a re-envisioning of the popular crash game, Moneypot; fleshed out and gamified with hot streaks, achievement badges, defi memes, bonuses, and more. While most crash games pay 50% of revenue to investors in the house pool and keep back 50% for the site owners, with PINT you are the “owners” of Wen Rug. User fees from the game are paid out to PINT stakers. Stake your PINT to earn a voice in the community’s governance, and direct use of funds in the CGW towards PINT buybacks or additional development–all the while earning revenue from Wen Rug and more. Own your play.
           </p>
         </section>
@@ -34,7 +34,7 @@ export const AboutPage = () => {
 
       <SectionPadding>
         <section className='max-w-screen-2xl mx-auto mb-48'>
-          <h2 className='font-bold text-4xl xl:text-5xl text-center'>
+          <h2 className='font-bold text-4xl xl:text-5xl xl:leading-tight text-center'>
             Check out PINT’s litepaper for more details
           </h2>
 
@@ -49,7 +49,9 @@ export const AboutPage = () => {
         </section>
       </SectionPadding>
 
-      <FaqSection />
+      <SectionPadding>
+        <FaqSection />
+      </SectionPadding>
 
       <PageFooter />
     </div>

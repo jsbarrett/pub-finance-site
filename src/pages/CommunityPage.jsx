@@ -71,7 +71,7 @@ export const CommunityPage = () => {
         <section className='max-w-screen-2xl mx-auto mb-24 mt-36'>
           <h2 className='font-bold text-4xl xl:text-7xl text-center'>Governance</h2>
 
-          <p className='mt-10 xl:mt-12 text-xl xl:text-3xl leading-relaxed text-center'>
+          <p className='mt-8 text-xl leading-relaxed text-center opacity-75'>
             Take an active role in the community by directing future PINT development and the deployment of PINT’s Community Governed Warchest through our governance portal at Snapshot.org Through this non-custodial decentralized governance system, voting power is derived from held PINT tokens. Publish and vote on proposals to initiate PINT buybacks, hire additional developers, or to build more partnerships for PINT within the DeFi industry.
           </p>
         </section>
@@ -83,8 +83,8 @@ export const CommunityPage = () => {
             VIP Channel
           </h2>
 
-          <div className='flex flex-wrap justify-center mt-12'>
-            <p className='text-xl xl:text-3xl text-center'>
+          <div className='flex flex-wrap justify-center mt-8'>
+            <p className='text-xl text-center opacity-75'>
               The Champagne Room is open to PINT’s strongest supporters who wish to engage on a more intimate level with the development team. Get first look at new developments for PINT and Wen Rug! Access is currently limited to individuals who hold a minimum of 5500 PINT tokens.
             </p>
           </div>
@@ -97,8 +97,8 @@ export const CommunityPage = () => {
             Resources
           </h2>
 
-          <div className='mt-12'>
-            <p className='flex flex-wrap justify-center text-xl xl:text-3xl text-center'>
+          <div className='mt-8'>
+            <p className='flex flex-wrap justify-center text-xl text-center'>
               <a className='text-accent-green' href='https://app.uniswap.org/#/swap?outputCurrency=0xfecba472b2540c5a2d3700b2c9e06f0aa7dc6462' target='_blank' rel='noreferrer'>Uniswap</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://etherscan.io/token/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>Etherscan</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://www.dextools.io/app/uniswap/pair-explorer/0x8f3869c177090eace770396f9495424780c73537' target='_blank' rel='noreferrer'>Dextools</a><span className='mx-2'>&bull;</span>
