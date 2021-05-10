@@ -263,7 +263,7 @@ const HistoricalLoading = () => (
 )
 
 export const DashboardPage = () => {
-  const [totalValueLocked, setTotalValueLocked] = useState('') // TODO: get value from uniswap
+  const [totalValueLocked, setTotalValueLocked] = useState('')
   const [totalSupply, setTotalSupply] = useState('')
   const [currentPrice, setCurrentPrice] = useState('')
   const [marketCap, setMarketCap] = useState('')

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { PageFooter } from '../components/PageFooter'
 import { SectionPadding } from '../components/SectionPadding'
 import { HeaderBackground } from '../components/HeaderBackground'
@@ -10,50 +10,22 @@ const Web3 = require('web3')
 const BartenderAbi = require('../Bartender.json')
 const UniswapAbi = require('../UniswapAbi.json')
 
-const unlockWallet = async (setAddress) => {
-  // TODO: check if connected to mainnet
-  try {
-    if (!window.ethereum) return alert('Please install metamask, and try again')
+//-----------------------------------------------------------------------------
+// SMART CONTRACT METHODS
+//-----------------------------------------------------------------------------
 
-    const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
-    if (accountAddress) return setAddress(accountAddress)
+// lockType is enum 0 = no lock, 1 = 3 days, 2 = week, 3 = month, 4 = forever
+const stake = async ({ address, amount, pid, lockType = 0 }) => {
+  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-    await window.ethereum.request({ method: 'eth_requestAccounts' })
-    const [address] = await window.ethereum.request({ method: 'eth_accounts' })
-    setAddress(address)
-  } catch (err) {
-    console.error(err)
-    alert('Sorry there was a problem unlocking your wallet, please try refreshing and trying again')
-  }
+  const w3 = new Web3(window.ethereum)
+  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+  return await bartenderContract.methods
+    .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(), lockType)
+    .send({ from: address })
+    .on('transactionHash', transaction => transaction.transactionHash)
 }
-
-// TODO: make "harvest" button disabled when nothing to harvest
-// TODO: make "unstake" button disabled when nothing to unstake
-// TODO: make wallet lock/unlock state global
-
-// const stake = async ({ address, amount, pid }) => {
-//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-//   const w3 = new Web3(window.ethereum)
-//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
-//   return await bartenderContract.methods
-//     .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-//     .send({ from: address })
-//     .on('transactionHash', transaction => transaction.transactionHash)
-// }
-
-// const unStake = async ({ address, amount, pid }) => {
-//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-//   const w3 = new Web3(window.ethereum)
-//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
-//   return await bartenderContract.methods
-//     .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-//     .send({ from: address })
-//     .on('transactionHash', transaction => transaction.transactionHash)
-// }
 
 const getAllowance = async ({ address }) => {
   try {
@@ -74,30 +46,58 @@ const getAllowance = async ({ address }) => {
   }
 }
 
-// const harvest = async ({ pid, address }) => {
-//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+const harvest = async ({ pid, address }) => {
+  try {
+    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-//   const w3 = new Web3(window.ethereum)
-//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+    const w3 = new Web3(window.ethereum)
+    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-//   return await bartenderContract.methods
-//     .deposit(pid, '0')
-//     .send({ from: address })
-//     .on('transactionHash', transaction => transaction.transactionHash)
-// }
+    return await bartenderContract.methods
+      .harvest(pid)
+      .send({ from: address })
+      .on('transactionHash', transaction => transaction.transactionHash)
+  } catch (err) {
+    console.error(err)
+    alert('Sorry, there was a problem harvesting, the transaction failed')
+  }
+}
 
-// const approve = async ({ lpContract, address }) => {
-//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+const unstake = async ({ pid, address }) => {
+  try {
+    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-//   const w3 = new Web3(window.ethereum)
-//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+    const w3 = new Web3(window.ethereum)
+    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-//   const maxUInt256 = 0
+    return await bartenderContract.methods
+      .withdrawMax(pid)
+      .send({ from: address })
+      .on('transactionHash', transaction => transaction.transactionHash)
+  } catch (err) {
+    console.error(err)
+    alert('Sorry, there was a problem unstaking, the transaction failed')
+  }
+}
 
-//   return lpContract.methods
-//     .approve(bartenderContract.options.address, maxUInt256)
-//     .send({ from: address })
-// }
+const approve = async ({ address }) => {
+  try {
+    const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
+    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+
+    const w3 = new Web3(window.ethereum)
+    const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
+
+    const maxUInt256 = new BigNumber('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+
+    return await UniswapContract.methods
+      .approve(BartenderAddress, maxUInt256)
+      .send({ from: address })
+  } catch (err) {
+    console.error(err)
+    alert('Sorry, there was a problem approving, the transaction failed')
+  }
+}
 
 // const redeem = async ({ address }) => {
 //   const now = new Date().getTime() / 1000
@@ -114,6 +114,45 @@ const getAllowance = async ({ address }) => {
 //     .on('transactionHash', transaction => transaction.transactionHash)
 // }
 
+//-----------------------------------------------------------------------------
+// HANDLERS
+//-----------------------------------------------------------------------------
+
+const handleHarvest = async ({ address, updateVaultData }) => {
+  await harvest({ pid: 0, address })
+  updateVaultData()
+}
+
+const handleUnstaking = async ({ address }) => {
+  try {
+    const pid = 0
+
+    await unstake({ address, pid })
+  } catch (err) {
+    console.error(err)
+    alert('Sorry, there was an error with unstaking, transaction failed')
+  }
+}
+
+const handleStake = async ({ address, stakeAmount, lockDuration, setUiState }) => {
+  try {
+    if (!address) return alert('invalid address')
+    if (!stakeAmount || Number(stakeAmount) === 0 || Number.isNaN(Number(stakeAmount))) return alert('invalid stake amount')
+    if (!lockDuration) return alert('invalid lock duration')
+
+    const pid = 0
+
+    const lockType = getLockType(lockDuration)
+
+    await stake({ address, amount: stakeAmount, pid, lockType })
+
+    setUiState('NOTHING')
+  } catch (err) {
+    console.error(err)
+    alert('Sorry, there was an error with staking, transaction failed')
+  }
+}
+
 const handleChangeLockDuration = (setLockDuration) => (evt) => {
   setLockDuration(evt.target.value)
 }
@@ -122,16 +161,159 @@ const handleChangeStakeAmount = (setStakeAmount, liquidityPoolBalance) => (evt) 
   const amount = Number(evt.target.value)
   const poolBalance = Number(liquidityPoolBalance)
 
-  if (amount > poolBalance) return setStakeAmount(poolBalance)
-  if (amount === 0) return setStakeAmount('')
+  if (amount > poolBalance) return setStakeAmount(String(poolBalance))
 
-  setStakeAmount(amount)
+  setStakeAmount(evt.target.value)
 }
 
-const handleStake = () => {
+//-----------------------------------------------------------------------------
+// UTILS
+//-----------------------------------------------------------------------------
+
+const getVaultData = async ({ address }) => {
+  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+  const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
+
+  const w3 = new Web3(window.ethereum)
+  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+  const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
+
+  const pendingPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingPubs(0, address).call(), 3)
+
+  const pendingLockedPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingLockedPubs(0, address).call(), 3)
+
+  const userInfo = formatBigNumberToSmall(await bartenderContract.methods.getUserInfo(0, address).call(), 3)
+
+  const userInfoLocked = formatBigNumberToSmall(await bartenderContract.methods.getUserInfoLocked(0, address).call(), 3)
+
+  const allowance = await getAllowance({ address })
+
+  const lpBalance = formatBigNumberToSmall(await UniswapContract.methods.balanceOf(address).call())
+
+  return {
+    pendingPubs,
+    pendingLockedPubs,
+    userInfo,
+    userInfoLocked,
+    allowance,
+    lpBalance
+  }
 }
 
-const StakingModal = ({ uiState, setUiState, liquidityPoolBalance }) => {
+const getLockType = (lockDuration) => {
+  const lockType = (lockDuration === 'Three Days')
+    ? 1
+    : 0
+
+  return lockType
+}
+
+const formatBigNumberToSmall = (number, decimals) => {
+  return (new BigNumber(number))
+    .dividedBy(new BigNumber(10).pow(18))
+    .toFormat(decimals)
+}
+
+const unlockWallet = async (setAddress) => {
+  // TODO: check if connected to mainnet
+  try {
+    if (!window.ethereum) return alert('Please install metamask, and try again')
+
+    const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
+    if (accountAddress) return setAddress(accountAddress)
+
+    await window.ethereum.request({ method: 'eth_requestAccounts' })
+    const [address] = await window.ethereum.request({ method: 'eth_accounts' })
+    setAddress(address)
+  } catch (err) {
+    console.error(err)
+    alert('Sorry there was a problem unlocking your wallet, please try refreshing and trying again')
+  }
+}
+
+//-----------------------------------------------------------------------------
+// COMPONENTS
+//-----------------------------------------------------------------------------
+
+const AddStakeButton = ({ setUiState, liquidityPoolBalance }) => {
+  return (liquidityPoolBalance && Number(liquidityPoolBalance) !== 0 && !Number.isNaN(Number(liquidityPoolBalance)))
+    ? (
+      <button
+        onClick={() => setUiState('STAKING')}
+        className='ml-4 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        +
+      </button>
+    )
+    : (
+      <button
+        className='ml-4 cursor-not-allowed opacity-30 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        +
+      </button>
+    )
+}
+
+const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
+  return (!!Number(pintEarned) || !!Number(lockedPintEarned))
+    ? (
+      <button
+        onClick={() => handleHarvest({ address, updateVaultData })}
+        className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        Harvest
+      </button>
+    )
+    : (
+      <button className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        Harvest
+      </button>
+    )
+}
+
+const ApproveButton = ({ address }) => {
+  return (address)
+    ? (
+      <button
+        onClick={() => approve({ address })}
+        className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        Approve
+      </button>
+    )
+    : (
+      <button
+        className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        Approve
+      </button>
+    )
+}
+
+const UnstakeButton = ({ tokensStaked, lockedTokensStaked, address }) => {
+  return (!!Number(tokensStaked) || !!Number(lockedTokensStaked))
+    ? (
+      <button
+        onClick={() => handleUnstaking({ address })}
+        className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        Unstake
+      </button>
+    )
+    : (
+      <button className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        Unstake
+      </button>
+    )
+}
+
+const UnlockWalletButton = ({ unlockWallet, setAddress, address }) => {
+  return (!address)
+    ? (
+      <button
+        onClick={() => unlockWallet(setAddress)}
+        className='ml-4 rounded-full px-12 py-6 font-bold border border-solid border-accent-green'>
+        Unlock Wallet
+      </button>
+    )
+    : null
+}
+
+const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) => {
   const [lockDuration, setLockDuration] = useState('None')
   const [stakeAmount, setStakeAmount] = useState('')
 
@@ -195,7 +377,7 @@ const StakingModal = ({ uiState, setUiState, liquidityPoolBalance }) => {
 
             <div className='mt-20 w-full'>
               <button
-                onClick={handleStake()}
+                onClick={() => handleStake({ address, stakeAmount, lockDuration, setUiState })}
                 className='w-full py-2 px-4 text-xl font-bold bg-accent-green text-green-900 border border-solid border-accent-green rounded-full'>
                 Stake
               </button>
@@ -207,45 +389,9 @@ const StakingModal = ({ uiState, setUiState, liquidityPoolBalance }) => {
   ) : null
 }
 
-const UnlockWalletButton = ({ unlockWallet, setAddress, address }) => {
-  return (!address)
-    ? (
-      <button
-        onClick={() => unlockWallet(setAddress)}
-        className='ml-4 rounded-full px-12 py-6 font-bold border border-solid border-accent-green'>
-        Unlock Wallet
-      </button>
-    )
-    : null
-}
-
-const UnstakeButton = ({ tokensStaked, lockedTokensStaked }) => {
-  return (!!Number(tokensStaked) || !!Number(lockedTokensStaked))
-    ? (
-      <button className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-        Unstake
-      </button>
-    )
-    : (
-      <button className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-        Unstake
-      </button>
-    )
-}
-
-const HarvestButton = ({ pintEarned, lockedPintEarned }) => {
-  return (!!Number(pintEarned) || !!Number(lockedPintEarned))
-    ? (
-      <button className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-        Harvest
-      </button>
-    )
-    : (
-      <button className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-        Harvest
-      </button>
-    )
-}
+//-----------------------------------------------------------------------------
+// MAIN EXPORT
+//-----------------------------------------------------------------------------
 
 export const VaultPage = () => {
   const [address, setAddress] = useState()
@@ -255,14 +401,10 @@ export const VaultPage = () => {
   const [lockedTokensStaked, setLockedTokensStaked] = useState()
   const [allowance, setAllowance] = useState()
   const [liquidityPoolBalance, setLiquidityPoolBalance] = useState()
-  const [uiState, setUiState] = useState('NOTHING')
 
-  // const states = [
-  //   'NOTHING',
-  //   'STAKING',
-  //   'UNSTAKING',
-  //   'HARVESTING',
-  // ]
+  // just a reference for the different finite states being used
+  // uiStates = [ 'NOTHING', 'STAKING', ]
+  const [uiState, setUiState] = useState('NOTHING')
 
   useEffect(() => {
     if (address) return
@@ -277,54 +419,40 @@ export const VaultPage = () => {
     effect()
   }, [address])
 
+  const updateVaultData = useCallback(async () => {
+    const vaultData = await getVaultData({ address })
+
+    setPintEarned(vaultData.pendingPubs)
+    setLockedPintEarned(vaultData.pendingLockedPubs)
+    setTokensStaked(vaultData.userInfo)
+    setLockedTokensStaked(vaultData.userInfoLocked)
+    setAllowance(vaultData.allowance)
+    setLiquidityPoolBalance(vaultData.lpBalance)
+  }, [address])
+
   useEffect(() => {
     if (!address) return
 
     async function effect () {
-      const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-      const w3 = new Web3(window.ethereum)
-      const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
-      console.log('address', address)
-      console.log('bartenderContract', bartenderContract)
-
-      const pendingPubs = await bartenderContract.methods.pendingPubs(1, address).call()
-      setPintEarned(pendingPubs)
-      console.log('pendingPubs', pendingPubs)
-
-      const pendingLockedPubs = await bartenderContract.methods.pendingLockedPubs(1, address).call()
-      setLockedPintEarned(pendingLockedPubs)
-      console.log('pendingLockedPubs', pendingLockedPubs)
-
-      const userInfo = await bartenderContract.methods.getUserInfo(1, address).call()
-      setTokensStaked(userInfo)
-      console.log('userInfo', userInfo)
-
-      const userInfoLocked = await bartenderContract.methods.getUserInfoLocked(1, address).call()
-      setLockedTokensStaked(userInfoLocked)
-      console.log('userInfoLocked', userInfoLocked)
-
-      const allowance = await getAllowance({ address })
-      setAllowance(allowance)
-      console.log('allowance', allowance)
-
-      const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-      const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
-
-      const lpBalance = (new BigNumber((await UniswapContract.methods.balanceOf(address).call())))
-        .dividedBy(new BigNumber(10).pow(18))
-        .toFormat()
-
-      setLiquidityPoolBalance(lpBalance)
+      await updateVaultData({
+        address,
+        setPintEarned,
+        setLockedPintEarned,
+        setTokensStaked,
+        setLockedTokensStaked,
+        setAllowance,
+        setLiquidityPoolBalance
+      })
     }
 
     effect()
-  }, [address])
+    setInterval(() => { effect() }, 1000 * 60)
+  }, [address, updateVaultData])
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white relative'>
-      <StakingModal uiState={uiState} setUiState={setUiState} liquidityPoolBalance={liquidityPoolBalance} />
+      <StakingModal address={address} uiState={uiState} setUiState={setUiState} liquidityPoolBalance={liquidityPoolBalance} />
+
       <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-60 text-center flex flex-col items-center'>
         <HeaderBackground />
         <h1
@@ -379,17 +507,8 @@ export const VaultPage = () => {
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked PINT Earned</div>
               </div>
 
-              {/* <Button */}
-              {/*   disabled={!earnings.toNumber() || pendingTx} */}
-              {/*   text={pendingTx ? 'Collecting PUB' : 'Harvest'} */}
-              {/*   onClick={async () => { */}
-              {/*     setPendingTx(true) */}
-              {/*     await onReward() */}
-              {/*     setPendingTx(false) */}
-              {/*   }} */}
-              {/* /> */}
               <div className='mt-12'>
-                <HarvestButton pintEarned={pintEarned} lockedPintEarned={lockedPintEarned} />
+                <HarvestButton updateVaultData={updateVaultData} address={address} pintEarned={pintEarned} lockedPintEarned={lockedPintEarned} />
               </div>
             </div>
 
@@ -425,19 +544,13 @@ export const VaultPage = () => {
               </div>
 
               <div className='mt-12'>
-                { !allowance ? (
-                <button className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-                  Approve
-                </button>
+                { !address || Number(allowance) === 0 ? (
+                <ApproveButton address={address} />
                 ) : (
                 <div>
-                  <UnstakeButton tokensStaked={tokensStaked} lockedTokensStaked={lockedTokensStaked} />
+                  <UnstakeButton address={address} tokensStaked={tokensStaked} lockedTokensStaked={lockedTokensStaked} />
 
-                  <button
-                    onClick={() => setUiState('STAKING')}
-                    className='ml-4 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-                    +
-                  </button>
+                  <AddStakeButton liquidityPoolBalance={liquidityPoolBalance} setUiState={setUiState} />
                 </div>
                 ) }
               </div>
