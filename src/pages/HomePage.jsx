@@ -45,7 +45,8 @@ export const HomePage = () => {
             </div>
           </Link>
 
-          <a href='http://wenrug.com' target='_blank' rel='noreferrer' className='w-full'>
+          {/* <a href='http://wenrug.com' target='_blank' rel='noreferrer' className='w-full'> */}
+          <div className='w-full'>
             <div
               className='px-8 py-6 rounded-3xl shadow-xl w-full h-full flex flex-col justify-between'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
@@ -55,7 +56,7 @@ export const HomePage = () => {
                 </svg>
               </div>
 
-              <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Wen Rug</h3>
+              <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Wen Rug (soon)</h3>
 
               <p className='mt-2 text-xl'></p>
 
@@ -66,7 +67,8 @@ export const HomePage = () => {
                   </svg>
                 </div>
             </div>
-          </a>
+          </div>
+          {/* </a> */}
 
           <Link to='/community' className='w-full'>
             <div
