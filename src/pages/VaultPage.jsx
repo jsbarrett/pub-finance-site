@@ -171,32 +171,36 @@ const handleChangeStakeAmount = (setStakeAmount, liquidityPoolBalance) => (evt) 
 //-----------------------------------------------------------------------------
 
 const getVaultData = async ({ address }) => {
-  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-  const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
+  try {
+    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+    const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
 
-  const w3 = new Web3(window.ethereum)
-  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-  const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
+    const w3 = new Web3(window.ethereum)
+    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+    const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
 
-  const pendingPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingPubs(0, address).call(), 3)
+    const pendingPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingPubs(0, address).call(), 3)
 
-  const pendingLockedPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingLockedPubs(0, address).call(), 3)
+    const pendingLockedPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingLockedPubs(0, address).call(), 3)
 
-  const userInfo = formatBigNumberToSmall(await bartenderContract.methods.getUserInfo(0, address).call(), 3)
+    const userInfo = formatBigNumberToSmall(await bartenderContract.methods.getUserInfo(0, address).call(), 3)
 
-  const userInfoLocked = formatBigNumberToSmall(await bartenderContract.methods.getUserInfoLocked(0, address).call(), 3)
+    const userInfoLocked = formatBigNumberToSmall(await bartenderContract.methods.getUserInfoLocked(0, address).call(), 3)
 
-  const allowance = await getAllowance({ address })
+    const allowance = await getAllowance({ address })
 
-  const lpBalance = formatBigNumberToSmall(await UniswapContract.methods.balanceOf(address).call())
+    const lpBalance = formatBigNumberToSmall(await UniswapContract.methods.balanceOf(address).call())
 
-  return {
-    pendingPubs,
-    pendingLockedPubs,
-    userInfo,
-    userInfoLocked,
-    allowance,
-    lpBalance
+    return {
+      pendingPubs,
+      pendingLockedPubs,
+      userInfo,
+      userInfoLocked,
+      allowance,
+      lpBalance
+    }
+  } catch (err) {
+    console.error(err)
   }
 }
 
@@ -422,6 +426,8 @@ export const VaultPage = () => {
   const updateVaultData = useCallback(async () => {
     const vaultData = await getVaultData({ address })
 
+    if (!vaultData) return
+
     setPintEarned(vaultData.pendingPubs)
     setLockedPintEarned(vaultData.pendingLockedPubs)
     setTokensStaked(vaultData.userInfo)
@@ -443,10 +449,11 @@ export const VaultPage = () => {
         setAllowance,
         setLiquidityPoolBalance
       })
+
+      setTimeout(() => { effect() }, 1000 * 60)
     }
 
     effect()
-    setInterval(() => { effect() }, 1000 * 60)
   }, [address, updateVaultData])
 
   return (
