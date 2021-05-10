@@ -12,6 +12,7 @@ import { SideNav } from './components/SideNav'
 
 const Web3 = require('web3')
 const PubAbi = require('./PubToken.json').abi
+const UniswapAbi = require('./UniswapAbi.json')
 
 // web3 or ether.js
 // rinkeby
@@ -44,21 +45,31 @@ const Wallet = ({ onClick }) => {
 
 const WalletDetails = ({ address, setModalIsOpen, setAddress }) => {
   const [balance, setBalance] = useState('---')
+  const [liquidityPoolBalance, setLiquidityPoolBalance] = useState('---')
 
   useEffect(() => {
     if (!address) return
 
     async function effect () {
-      const PubAddress = process.env.REACT_APP_PUB_ADDRESS
-
       const w3 = new Web3(window.ethereum)
+
+      const PubAddress = process.env.REACT_APP_PUB_ADDRESS
       const PubContract = new w3.eth.Contract(PubAbi, PubAddress)
 
       const balance = (new BigNumber(await PubContract.methods.balanceOf(address).call()))
         .dividedBy(new BigNumber(10).pow(18))
-        .toFormat(2)
+        .toFormat(4)
 
       setBalance(balance)
+
+      const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
+      const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
+
+      const lpBalance = (new BigNumber((await UniswapContract.methods.balanceOf(address).call())))
+        .dividedBy(new BigNumber(10).pow(18))
+        .toFormat(4)
+
+      setLiquidityPoolBalance(lpBalance)
     }
 
     effect()
@@ -67,26 +78,42 @@ const WalletDetails = ({ address, setModalIsOpen, setAddress }) => {
   return (
     <div className='fixed inset-0 z-50 w-full pointer-events-none'>
       <div
-        className='text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-8/12 xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex-col text-center'
+        onClick={() => setModalIsOpen(false)}
+        className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
+      </div>
+      <div
+        className='relative pointer-events-auto text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-6/12 xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex-col text-center'
         style={{ background: 'rgb(12,12,97)' }}>
-        <div className='text-4xl font-bold'>My Account</div>
-        <div className='mt-8'>
-          <div className='font-bold text-5xl'>
+        <div className='mt-4 flex justify-center relative'>
+          <div className='text-4xl font-bold'>My Account</div>
+          <div
+            onClick={() => setModalIsOpen(false)}
+            className='text-4xl absolute right-0 cursor-pointer px-2'>
+            X
+          </div>
+        </div>
+
+        <div className='mt-12'>
+          <div className='font-bold text-4xl'>
             {balance}
           </div>
-          <div>
+          <div className='opacity-75'>
             PINT Balance
           </div>
         </div>
-        <div className='flex flex-wrap mt-8 justify-center items-center'>
-          <button
-            onClick={() => setModalIsOpen(false)}
-            className='w-full sm:w-auto mt-2 border border-solid border-accent-green px-4 py-2 rounded'>
-            Cancel
-          </button>
 
+        <div className='mt-8'>
+          <div className='font-bold text-4xl'>
+            {liquidityPoolBalance}
+          </div>
+          <div className='opacity-75'>
+            Balance in Liquidity Pool
+          </div>
+        </div>
+
+        <div className='flex flex-wrap mt-12 justify-center items-center'>
           <a
-            className='w-full sm:w-auto mt-2 sm:ml-2 border border-solid border-accent-green bg-accent-green text-black px-4 py-2 rounded'
+            className='w-full mt-2 sm:ml-2 border border-solid border-accent-green bg-accent-green text-xl text-green-900 px-4 py-3 rounded-full font-bold'
             href={`https://etherscan.io/address/${address}`}
             target='_blank'
             rel='noreferrer'>
@@ -121,7 +148,11 @@ const UnlockWallet = ({ address, setAddress, setModalIsOpen }) => {
   return (
     <div className='fixed inset-0 z-50 w-full pointer-events-none'>
       <div
-        className='text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-8/12 xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex text-center items-center'
+        onClick={() => setModalIsOpen(false)}
+        className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
+      </div>
+      <div
+        className='relative point-events-auto text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-8/12 xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex text-center items-center'
         style={{ background: 'rgb(12,12,97)' }}>
         <div className='text-xl font-bold'>
           <button
@@ -144,6 +175,20 @@ const UnlockWallet = ({ address, setAddress, setModalIsOpen }) => {
 
 const WalletModal = ({ modalIsOpen, setModalIsOpen }) => {
   const [address, setAddress] = useState()
+
+  useEffect(() => {
+    if (address) return
+
+    async function effect () {
+      if (!window.ethereum) return
+
+      const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
+      setAddress(accountAddress)
+    }
+
+    effect()
+  }, [address])
+
   if (!modalIsOpen) return null
 
   if (!address) return <UnlockWallet address={address} setAddress={setAddress} setModalIsOpen={setModalIsOpen} />
