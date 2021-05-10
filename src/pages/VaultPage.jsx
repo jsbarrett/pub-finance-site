@@ -340,7 +340,7 @@ export const VaultPage = () => {
         <section className='max-w-screen-2xl mx-auto mb-24 xl:mb-48'>
           <div className='flex justify-center mt-4'>
             <a href='https://app.uniswap.org/#/add/v2/ETH/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>
-              <button className='text-gray-900 rounded-full px-12 py-6 font-bold bg-accent-green'>
+              <button className='text-green-900 rounded-full px-12 py-6 font-bold bg-accent-green'>
                 Add Liquidity
               </button>
             </a>

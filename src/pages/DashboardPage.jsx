@@ -456,14 +456,14 @@ export const DashboardPage = () => {
             className='shadow-lg rounded-3xl px-4 xl:px-8 mt-10 xl:mt-32 flex flex-wrap justify-center mb-10 xl:mb-32'
             style={{ background: 'rgb(12,12,97)' }}>
             <div className='xl:ml-16 w-full xl:mt-16'>
-              <div className=''>
+              <div>
                 { chartTypes.map(chartType => (
                 <button
                   key={chartType}
                   onClick={() => updateChartType(chartType, historicalData)}
                   className={(chartType === selectedChart)
-                    ? 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-accent-green text-gray-900'
-                    : 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-gray-500 text-white'}>
+                    ? 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-accent-green text-green-900'
+                    : 'mr-4 px-3 xl:px-10 py-2 rounded mt-4 font-bold text-sm xl:text-lg bg-gray-700 text-white'}>
                   { chartType }
                 </button>
                 )) }
