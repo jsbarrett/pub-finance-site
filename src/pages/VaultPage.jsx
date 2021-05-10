@@ -31,29 +31,29 @@ const unlockWallet = async (setAddress) => {
 // TODO: make "unstake" button disabled when nothing to unstake
 // TODO: make wallet lock/unlock state global
 
-const stake = async ({ address, amount, pid }) => {
-  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+// const stake = async ({ address, amount, pid }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-  const w3 = new Web3(window.ethereum)
-  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-  return await bartenderContract.methods
-    .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: address })
-    .on('transactionHash', transaction => transaction.transactionHash)
-}
+//   return await bartenderContract.methods
+//     .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
 
-const unStake = async ({ address, amount, pid }) => {
-  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+// const unStake = async ({ address, amount, pid }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-  const w3 = new Web3(window.ethereum)
-  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-  return await bartenderContract.methods
-    .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: address })
-    .on('transactionHash', transaction => transaction.transactionHash)
-}
+//   return await bartenderContract.methods
+//     .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
 
 const getAllowance = async ({ address }) => {
   try {
@@ -74,45 +74,45 @@ const getAllowance = async ({ address }) => {
   }
 }
 
-const harvest = async ({ pid, address }) => {
-  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+// const harvest = async ({ pid, address }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-  const w3 = new Web3(window.ethereum)
-  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-  return await bartenderContract.methods
-    .deposit(pid, '0')
-    .send({ from: address })
-    .on('transactionHash', transaction => transaction.transactionHash)
-}
+//   return await bartenderContract.methods
+//     .deposit(pid, '0')
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
 
-const approve = async ({ lpContract, address }) => {
-  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+// const approve = async ({ lpContract, address }) => {
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-  const w3 = new Web3(window.ethereum)
-  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-  const maxUInt256 = 0
+//   const maxUInt256 = 0
 
-  return lpContract.methods
-    .approve(bartenderContract.options.address, maxUInt256)
-    .send({ from: address })
-}
+//   return lpContract.methods
+//     .approve(bartenderContract.options.address, maxUInt256)
+//     .send({ from: address })
+// }
 
-const redeem = async ({ address }) => {
-  const now = new Date().getTime() / 1000
-  if (now < 1597172400) return alert('pool not active')
+// const redeem = async ({ address }) => {
+//   const now = new Date().getTime() / 1000
+//   if (now < 1597172400) return alert('pool not active')
 
-  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 
-  const w3 = new Web3(window.ethereum)
-  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+//   const w3 = new Web3(window.ethereum)
+//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-  return await bartenderContract.methods
-    .exit()
-    .send({ from: address })
-    .on('transactionHash', transaction => transaction.transactionHash)
-}
+//   return await bartenderContract.methods
+//     .exit()
+//     .send({ from: address })
+//     .on('transactionHash', transaction => transaction.transactionHash)
+// }
 
 const handleChangeLockDuration = (setLockDuration) => (evt) => {
   setLockDuration(evt.target.value)
