@@ -9,6 +9,9 @@ import BigNumber from 'bignumber.js'
 const Web3 = require('web3')
 const BartenderAbi = require('../Bartender.json')
 const UniswapAbi = require('../UniswapAbi.json')
+const wethAbi = require('../weth.json')
+const PubAbi = require('../PubToken.json').abi
+const ERC20Abi = require('../erc20.json')
 
 //-----------------------------------------------------------------------------
 // SMART CONTRACT METHODS
@@ -99,6 +102,105 @@ const approve = async ({ address }) => {
   }
 }
 
+const getPoolWeight = async () => {
+  try {
+    const w3 = new Web3(window.ethereum)
+    const pid = 0
+    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+
+    const { allocPoint } = await bartenderContract.methods.poolInfo(pid).call()
+    const totalAllocPoint = await bartenderContract.methods.totalAllocPoint().call()
+
+    return new BigNumber(allocPoint).div(new BigNumber(totalAllocPoint))
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+const getWethValues = async () => {
+  try {
+    const w3 = new Web3(window.ethereum)
+    const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
+    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+    const PubAddress = process.env.REACT_APP_PUB_ADDRESS
+    const WethAddress = process.env.REACT_APP_WETH_ADDRESS
+    const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
+    const ERC20Contract = new w3.eth.Contract(ERC20Abi, PubAddress)
+    const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
+
+    const totalSupply = await UniswapContract.methods.totalSupply().call()
+    const balance = await UniswapContract.methods.balanceOf(BartenderAddress).call()
+
+    const tokenAmountWholeLP = await ERC20Contract.methods.balanceOf(UniswapAddress).call()
+    const tokenDecimals = await ERC20Contract.methods.decimals().call()
+
+    const portionLp = new BigNumber(balance).div(new BigNumber(totalSupply))
+    const uniswapContractWeth = await wethContract.methods.balanceOf(UniswapAddress).call()
+
+    const wethAmount = new BigNumber(uniswapContractWeth).times(portionLp).div(new BigNumber(10).pow(18))
+
+    const tokenAmount = new BigNumber(tokenAmountWholeLP)
+      .times(portionLp)
+      .div(new BigNumber(10).pow(tokenDecimals))
+
+    const pubPrice = await getPubPrice()
+
+    return {
+      totalWethValue: tokenAmount.times(pubPrice).times(2),
+      totalPriceInWeth: wethAmount.div(tokenAmount)
+    }
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+const getPubPrice = async () => {
+  try {
+    const w3 = new Web3(window.ethereum)
+
+    const PubAddress = process.env.REACT_APP_PUB_ADDRESS
+    const WethAddress = process.env.REACT_APP_WETH_ADDRESS
+    const PubUniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
+
+    const pubContract = new w3.eth.Contract(PubAbi, PubAddress)
+    const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
+
+    const wethAmount = await wethContract.methods.balanceOf(PubUniswapAddress).call()
+    const pubAmount = await pubContract.methods.balanceOf(PubUniswapAddress).call()
+
+    return new BigNumber(wethAmount).div(new BigNumber(pubAmount))
+  } catch (err) {
+    console.error('Problem with getting the pub price')
+    throw err
+  }
+}
+
+const getAPY = async () => {
+  try {
+    const BLOCKS_PER_YEAR = new BigNumber(2336000)
+    const PINT_PER_BLOCK = new BigNumber(25)
+
+    const pubPrice = await getPubPrice()
+    const poolWeight = await getPoolWeight()
+    const { totalWethValue } = await getWethValues()
+
+    const ABY = pubPrice
+      .times(PINT_PER_BLOCK)
+      .times(BLOCKS_PER_YEAR)
+      .times(poolWeight)
+      .div(totalWethValue)
+      .times(new BigNumber(10))
+
+    return Math.floor(ABY.toNumber() * 100) / 100
+  } catch (err) {
+    console.error(err)
+    console.error('Problem with getting the ABY')
+  }
+}
+
 // const redeem = async ({ address }) => {
 //   const now = new Date().getTime() / 1000
 //   if (now < 1597172400) return alert('pool not active')
@@ -115,7 +217,7 @@ const approve = async ({ address }) => {
 // }
 
 //-----------------------------------------------------------------------------
-// HANDLERS
+// EVENT HANDLERS (onClick/onChange)
 //-----------------------------------------------------------------------------
 
 const handleHarvest = async ({ address, updateVaultData }) => {
@@ -191,13 +293,16 @@ const getVaultData = async ({ address }) => {
 
     const lpBalance = formatBigNumberToSmall(await UniswapContract.methods.balanceOf(address).call())
 
+    const apy = await getAPY()
+
     return {
       pendingPubs,
       pendingLockedPubs,
       userInfo,
       userInfoLocked,
       allowance,
-      lpBalance
+      lpBalance,
+      apy
     }
   } catch (err) {
     console.error(err)
@@ -405,11 +510,13 @@ export const VaultPage = () => {
   const [lockedTokensStaked, setLockedTokensStaked] = useState()
   const [allowance, setAllowance] = useState()
   const [liquidityPoolBalance, setLiquidityPoolBalance] = useState()
+  const [apy, setApy] = useState()
 
   // just a reference for the different finite states being used
   // uiStates = [ 'NOTHING', 'STAKING', ]
   const [uiState, setUiState] = useState('NOTHING')
 
+  // GET ADDRESS
   useEffect(() => {
     if (address) return
 
@@ -423,6 +530,7 @@ export const VaultPage = () => {
     effect()
   }, [address])
 
+  // HELPER FUNCTION
   const updateVaultData = useCallback(async () => {
     const vaultData = await getVaultData({ address })
 
@@ -434,8 +542,10 @@ export const VaultPage = () => {
     setLockedTokensStaked(vaultData.userInfoLocked)
     setAllowance(vaultData.allowance)
     setLiquidityPoolBalance(vaultData.lpBalance)
+    setApy(vaultData.apy)
   }, [address])
 
+  // UPDATE VAULT DATA LOOP
   useEffect(() => {
     if (!address) return
 
@@ -505,6 +615,7 @@ export const VaultPage = () => {
                   { (pintEarned || pintEarned === 0) ? pintEarned : '---' }
                 </p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>PINT Earned</div>
+                <div className='text-center leading-none h-0 opacity-75 text-gray-100 text-lg mt-4'>{ /* PLACEHOLDER TO KEEP BOTH CARDS SAME HEIGHT */ }</div>
               </div>
 
               <div className='mt-8'>
@@ -535,6 +646,7 @@ export const VaultPage = () => {
               </div>
 
               <div className='text-center leading-none text-gray-100 text-3xl mt-6'>ETH_PINT UNI-V2 LP</div>
+              <div className='text-center leading-none h-0 opacity-75 text-gray-100 text-lg mt-4'>APY {apy}%</div>
 
               <div className='mt-12'>
                 <p className='text-5xl font-bold text-white'>
