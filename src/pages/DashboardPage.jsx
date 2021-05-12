@@ -51,19 +51,16 @@ const getHistoricalDataPoints = async () => {
     })
 }
 
-// const getCurrentDataPoint = async () => {
-//   const url = 'https://api.coingecko.com/api/v3/coins/pub-finance'
-//   const config = { headers: { 'Content-Type': 'application/json' } }
+const getCurrentEthPrice = async () => {
+  const url = 'https://api.coingecko.com/api/v3/coins/ethereum'
+  const config = { headers: { 'Content-Type': 'application/json' } }
 
-//   return fetch(url, config)
-//     .then(x => x.json())
-//     .then(x => {
-//       return {
-//         Volume: x.market_data.total_volume.usd,
-//         Price: x.market_data.current_price.usd,
-//       }
-//     })
-// }
+  return fetch(url, config)
+    .then(x => x.json())
+    .then(x => {
+      return x.market_data.current_price.usd
+    })
+}
 
 const getLiquidityData = async () => {
   const query = `{
@@ -241,11 +238,12 @@ const getMarketCap = async () => {
 
   const wethBalance = await wethContract.methods.balanceOf(PubUniswapAddress).call()
   const pubBalance = await pubContract.methods.balanceOf(PubUniswapAddress).call()
+  const ethPrice = await getCurrentEthPrice()
   const pubPrice = new BigNumber(wethBalance).div(new BigNumber(pubBalance))
   const marketCap = '$' + totalSupply
     .dividedBy(new BigNumber(10).pow(18))
     .times(pubPrice)
-    .times(new BigNumber(1247))
+    .times(new BigNumber(ethPrice))
     .toFormat(2)
 
   return marketCap
