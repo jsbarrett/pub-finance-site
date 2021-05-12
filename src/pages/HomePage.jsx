@@ -22,7 +22,7 @@ export const HomePage = () => {
 
       <SectionPadding>
         <section className='-mt-60 relative space-y-16 xl:space-y-0 xl:space-x-16 flex flex-col xl:flex-row justify-between max-w-screen-2xl mx-auto'>
-          <Link to='/vault' className='w-full'>
+          <Link to='/vaults' className='w-full'>
             <div
               className='px-8 py-6 rounded-3xl shadow-xl w-full h-full flex flex-col justify-between'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
@@ -60,7 +60,7 @@ export const HomePage = () => {
 
               <p className='mt-2 text-xl'></p>
 
-                <div className='mt-4 text-lg flex justify-end items-center text-accent-green'>
+                <div className='opacity-0 pointer-events-none mt-4 text-lg flex justify-end items-center text-accent-green'>
                   <div>wenrug.com</div>
                   <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' />
