@@ -550,17 +550,21 @@ export const VaultPage = () => {
     if (!address) return
 
     async function effect () {
-      await updateVaultData({
-        address,
-        setPintEarned,
-        setLockedPintEarned,
-        setTokensStaked,
-        setLockedTokensStaked,
-        setAllowance,
-        setLiquidityPoolBalance
-      })
+      try {
+        await updateVaultData({
+          address,
+          setPintEarned,
+          setLockedPintEarned,
+          setTokensStaked,
+          setLockedTokensStaked,
+          setAllowance,
+          setLiquidityPoolBalance
+        })
+      } catch (err) {
+        console.error(err)
+      }
 
-      setTimeout(() => { effect() }, 1000 * 60)
+      setTimeout(() => { effect() }, 1000 * 30)
     }
 
     effect()
