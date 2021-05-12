@@ -11,7 +11,7 @@ const Web3 = require('web3')
 const PubTokenArtifact = require('../PubToken.json')
 const wethAbi = require('../weth.json')
 
-const getDataPoint = async (date) => {
+const getHistoricalDataPoint = async (date) => {
   const url = 'https://api.coingecko.com/api/v3/coins/pub-finance/history?date='
   const config = { headers: { 'Content-Type': 'application/json' } }
 
@@ -22,6 +22,20 @@ const getDataPoint = async (date) => {
     .then(x => {
       return {
         date: new Date(`${month}-${day}-${year}`),
+        Volume: x.market_data.total_volume.usd,
+        Price: x.market_data.current_price.usd,
+      }
+    })
+}
+
+const getCurrentDataPoint = async () => {
+  const url = 'https://api.coingecko.com/api/v3/coins/pub-finance'
+  const config = { headers: { 'Content-Type': 'application/json' } }
+
+  return fetch(url, config)
+    .then(x => x.json())
+    .then(x => {
+      return {
         Volume: x.market_data.total_volume.usd,
         Price: x.market_data.current_price.usd,
       }
@@ -66,9 +80,12 @@ const getHistoricalData = async () => {
       return `${day}-${month}-${year}`
     })
 
-  const data = await Promise.all(dates.map(getDataPoint))
+  const data = await Promise.all(dates.map(getHistoricalDataPoint))
+  const currentData = await getCurrentDataPoint()
 
   data.forEach((x, i) => { x.Liquidity = Number(liquidityData[i].reserveUSD) })
+  data[data.length - 1].Volume = currentData.Volume
+  data[data.length - 1].Price = currentData.Price
 
   HISTORICAL_DATA = data
 
