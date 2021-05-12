@@ -56,7 +56,7 @@ export const HomePage = () => {
                 </svg>
               </div>
 
-              <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>Wen Rug (soon)</h3>
+              <h3 className='text-center leading-none text-xl xl:text-3xl font-bold mt-4'>WenRug (soon)</h3>
 
               <p className='mt-2 text-xl'></p>
 
@@ -99,7 +99,7 @@ export const HomePage = () => {
         <section className='text-center max-w-screen-2xl mx-auto my-36'>
           <h2 className='font-bold text-4xl xl:text-7xl'>Tired of Losing to the House?</h2>
           <p className='mt-8 text-xl xl:text-xl leading-relaxed opacity-75'>
-            Tired of losing to the house? With PINT you are the house. Stake PINT tokens to receive user fees from Wen Rug and future pub.finance ecosystem products. Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest. Fair launch, fair ownership, fair play--Grab a pint.
+            Tired of losing to the house? With PINT you are the house. Stake PINT tokens to receive user fees from WenRug and future pub.finance ecosystem products. Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest. Fair launch, fair ownership, fair play--Grab a pint.
           </p>
         </section>
       </SectionPadding>

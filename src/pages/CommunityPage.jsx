@@ -85,7 +85,7 @@ export const CommunityPage = () => {
 
           <div className='flex flex-wrap justify-center mt-8'>
             <p className='text-xl text-center opacity-75'>
-              The Champagne Room is open to PINT’s strongest supporters who wish to engage on a more intimate level with the development team. Get first look at new developments for PINT and Wen Rug! Access is currently limited to individuals who hold a minimum of 5500 PINT tokens.
+              The Champagne Room is open to PINT’s strongest supporters who wish to engage on a more intimate level with the development team. Get first look at new developments for PINT and WenRug! Access is currently limited to individuals who hold a minimum of 5500 PINT tokens.
             </p>
           </div>
         </section>
