@@ -273,6 +273,8 @@ const handleChangeStakeAmount = (setStakeAmount, liquidityPoolBalance) => (evt) 
 // UTILS
 //-----------------------------------------------------------------------------
 
+const stringNumberToNumber = x => x ? Number(x.replace(/,/g, '')) : 0
+
 const getVaultData = async ({ address }) => {
   try {
     const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
@@ -345,27 +347,41 @@ const unlockWallet = async (setAddress) => {
 // COMPONENTS
 //-----------------------------------------------------------------------------
 
-const AddStakeButton = ({ setUiState, liquidityPoolBalance }) => {
-  return (liquidityPoolBalance && Number(liquidityPoolBalance) !== 0 && !Number.isNaN(Number(liquidityPoolBalance)))
-    ? (
-      <button
+const AddStakeButton = ({ setUiState, address }) => {
+  // const balanceAsNumber = stringNumberToNumber(liquidityPoolBalance)
+
+  return (address)
+    ? <button
         onClick={() => setUiState(UI_STATES.STAKING)}
         className='ml-4 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
         +
       </button>
-    )
     : (
       <button
         className='ml-4 cursor-not-allowed opacity-30 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
         +
       </button>
     )
+  // return (balanceAsNumber && !Number.isNaN(balanceAsNumber))
+  //   ? (
+  //     <button
+  //       onClick={() => setUiState(UI_STATES.STAKING)}
+  //       className='ml-4 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+  //       +
+  //     </button>
+  //   )
+  //   : (
+  //     <button
+  //       className='ml-4 cursor-not-allowed opacity-30 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+  //       +
+  //     </button>
+  //   )
 }
 
 const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
   return (
-    (pintEarned && !!Number(pintEarned.replace(/,/g, '')))
-    || (lockedPintEarned && !!Number(lockedPintEarned.replace(/,/g, '')))
+    (pintEarned && !!stringNumberToNumber(pintEarned))
+    || (lockedPintEarned && !!stringNumberToNumber(lockedPintEarned))
   )
 }
 
@@ -662,7 +678,7 @@ export const VaultPage = () => {
                 <div>
                   <UnstakeButton address={address} tokensStaked={tokensStaked} lockedTokensStaked={lockedTokensStaked} />
 
-                  <AddStakeButton liquidityPoolBalance={liquidityPoolBalance} setUiState={setUiState} />
+                  <AddStakeButton address={address} liquidityPoolBalance={liquidityPoolBalance} setUiState={setUiState} />
                 </div>
                 ) }
               </div>
