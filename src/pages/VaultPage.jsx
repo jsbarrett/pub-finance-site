@@ -489,7 +489,12 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
               <div className='my-1 mx-2 border-l border-solid border-gray-300'></div>
 
               <div
-                onClick={() => setStakeAmount(liquidityPoolBalance)}
+                onClick={() => {
+                  const amount = (liquidityPoolBalance && typeof liquidityPoolBalance === 'string')
+                    ? liquidityPoolBalance.replace(/,/g, '')
+                    : liquidityPoolBalance
+                  setStakeAmount(amount)
+                }}
                 className='text-green-800 cursor-pointer flex items-center'>
                 Max
               </div>
