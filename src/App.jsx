@@ -9,6 +9,7 @@ import { VaultPage } from './pages/VaultPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { CommunityPage } from './pages/CommunityPage'
 import { SideNav } from './components/SideNav'
+import { useAddress } from './hooks/useAddress'
 
 const Web3 = require('web3')
 const PubAbi = require('./PubToken.json').abi
@@ -43,7 +44,20 @@ const Wallet = ({ onClick }) => {
   )
 }
 
-const WalletDetails = ({ address, setModalIsOpen, setAddress }) => {
+const requestWalletPermissions = async () => {
+  try {
+    if (!window.ethereum) return
+
+    await window.ethereum.request({
+      method: 'wallet_requestPermissions',
+      params: [{ eth_accounts: {} }]
+    })
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+const WalletDetails = ({ address, setModalIsOpen }) => {
   const [balance, setBalance] = useState('---')
   const [liquidityPoolBalance, setLiquidityPoolBalance] = useState('---')
 
@@ -82,7 +96,7 @@ const WalletDetails = ({ address, setModalIsOpen, setAddress }) => {
         className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
       </div>
       <div
-        className='relative pointer-events-auto text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-6/12 xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex-col text-center'
+        className='relative pointer-events-auto text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex-col text-center'
         style={{ background: 'rgb(12,12,97)' }}>
         <div className='mt-4 flex justify-center relative'>
           <div className='text-4xl font-bold'>My Account</div>
@@ -111,7 +125,13 @@ const WalletDetails = ({ address, setModalIsOpen, setAddress }) => {
           </div>
         </div>
 
-        <div className='flex flex-wrap mt-12 justify-center items-center'>
+        <div className='flex flex-col sm:flex-row mt-12 justify-center items-center'>
+          <button
+            onClick={() => requestWalletPermissions()}
+            className='w-full mt-2 sm:ml-2 border border-solid border-accent-green text-accent-green text-xl px-4 py-3 rounded-full font-bold'>
+            Add Wallet
+          </button>
+
           <a
             className='w-full mt-2 sm:ml-2 border border-solid border-accent-green bg-accent-green text-xl text-green-900 px-4 py-3 rounded-full font-bold'
             href={`https://etherscan.io/address/${address}`}
@@ -174,30 +194,23 @@ const UnlockWallet = ({ address, setAddress, setModalIsOpen }) => {
 }
 
 const WalletModal = ({ modalIsOpen, setModalIsOpen }) => {
-  const [address, setAddress] = useState()
-
-  useEffect(() => {
-    if (address) return
-
-    async function effect () {
-      if (!window.ethereum) return
-
-      const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
-      setAddress(accountAddress)
-    }
-
-    effect()
-  }, [address])
+  const [address, setAddress] = useAddress()
 
   if (!modalIsOpen) return null
 
   if (!address) return <UnlockWallet address={address} setAddress={setAddress} setModalIsOpen={setModalIsOpen} />
 
-  return <WalletDetails address={address} setAddress={setAddress} setModalIsOpen={setModalIsOpen} />
+  return <WalletDetails address={address} setModalIsOpen={setModalIsOpen} />
 }
 
 export const App = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  useEffect(() => {
+    if (!window.ethereum) {
+      alert(`Most of this site's functionality requires the use of the Metamask extension, please install it if you wish to get the most from this site`)
+    }
+  }, [])
 
   return (
     <Router>

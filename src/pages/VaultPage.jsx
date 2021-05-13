@@ -3,6 +3,7 @@ import { PageFooter } from '../components/PageFooter'
 import { SectionPadding } from '../components/SectionPadding'
 import { HeaderBackground } from '../components/HeaderBackground'
 import { EthereumLogoSvg } from '../components/EthereumLogoSvg'
+import { useAddress } from '../hooks/useAddress'
 import pintGearLogoUrl from '../pint-gear-logo.svg'
 import BigNumber from 'bignumber.js'
 
@@ -503,7 +504,7 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
 //-----------------------------------------------------------------------------
 
 export const VaultPage = () => {
-  const [address, setAddress] = useState()
+  const [address, setAddress] = useAddress()
   const [pintEarned, setPintEarned] = useState()
   const [lockedPintEarned, setLockedPintEarned] = useState()
   const [tokensStaked, setTokensStaked] = useState()
@@ -515,20 +516,6 @@ export const VaultPage = () => {
   // just a reference for the different finite states being used
   // uiStates = [ 'NOTHING', 'STAKING', ]
   const [uiState, setUiState] = useState('NOTHING')
-
-  // GET ADDRESS
-  useEffect(() => {
-    if (address) return
-
-    async function effect () {
-      if (!window.ethereum) return
-
-      const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
-      setAddress(accountAddress)
-    }
-
-    effect()
-  }, [address])
 
   // HELPER FUNCTION
   const updateVaultData = useCallback(async () => {
@@ -551,15 +538,7 @@ export const VaultPage = () => {
 
     async function effect () {
       try {
-        await updateVaultData({
-          address,
-          setPintEarned,
-          setLockedPintEarned,
-          setTokensStaked,
-          setLockedTokensStaked,
-          setAllowance,
-          setLiquidityPoolBalance
-        })
+        await updateVaultData()
       } catch (err) {
         console.error(err)
       }
