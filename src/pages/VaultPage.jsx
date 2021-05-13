@@ -249,7 +249,7 @@ const handleStake = async ({ address, stakeAmount, lockDuration, setUiState }) =
 
     await stake({ address, amount: stakeAmount, pid, lockType })
 
-    setUiState('NOTHING')
+    setUiState(UI_STATES.NOTHING)
   } catch (err) {
     console.error(err)
     alert('Sorry, there was an error with staking, transaction failed')
@@ -349,7 +349,7 @@ const AddStakeButton = ({ setUiState, liquidityPoolBalance }) => {
   return (liquidityPoolBalance && Number(liquidityPoolBalance) !== 0 && !Number.isNaN(Number(liquidityPoolBalance)))
     ? (
       <button
-        onClick={() => setUiState('STAKING')}
+        onClick={() => setUiState(UI_STATES.STAKING)}
         className='ml-4 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
         +
       </button>
@@ -362,8 +362,8 @@ const AddStakeButton = ({ setUiState, liquidityPoolBalance }) => {
     )
 }
 
-const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
-  return (!!Number(pintEarned) || !!Number(lockedPintEarned))
+const HarvestButton = ({ address, updateVaultData }) => {
+  return (address)
     ? (
       <button
         onClick={() => handleHarvest({ address, updateVaultData })}
@@ -427,10 +427,10 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
   const [lockDuration, setLockDuration] = useState('None')
   const [stakeAmount, setStakeAmount] = useState('')
 
-  return (uiState === 'STAKING') ? (
+  return (uiState === UI_STATES.STAKING) ? (
     <div className='fixed inset-0 z-50 w-full pointer-events-none'>
       <div
-        onClick={() => setUiState('NOTHING')}
+        onClick={() => setUiState(UI_STATES.NOTHING)}
         className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
       </div>
       <div
@@ -440,7 +440,7 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
           <div className='flex justify-between text-2xl'>
             <h2>Stake PINT</h2>
             <div
-              onClick={() => setUiState('NOTHING')}
+              onClick={() => setUiState(UI_STATES.NOTHING)}
               className='px-2 cursor-pointer'>
               X
             </div>
@@ -503,6 +503,11 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
 // MAIN EXPORT
 //-----------------------------------------------------------------------------
 
+const UI_STATES = {
+  NOTHING: 'NOTHING',
+  STAKING: 'STAKING',
+}
+
 export const VaultPage = () => {
   const [address, setAddress] = useAddress()
   const [pintEarned, setPintEarned] = useState()
@@ -513,9 +518,7 @@ export const VaultPage = () => {
   const [liquidityPoolBalance, setLiquidityPoolBalance] = useState()
   const [apy, setApy] = useState()
 
-  // just a reference for the different finite states being used
-  // uiStates = [ 'NOTHING', 'STAKING', ]
-  const [uiState, setUiState] = useState('NOTHING')
+  const [uiState, setUiState] = useState(UI_STATES.NOTHING)
 
   // HELPER FUNCTION
   const updateVaultData = useCallback(async () => {
@@ -609,7 +612,7 @@ export const VaultPage = () => {
               </div>
 
               <div className='mt-12'>
-                <HarvestButton updateVaultData={updateVaultData} address={address} pintEarned={pintEarned} lockedPintEarned={lockedPintEarned} />
+                <HarvestButton updateVaultData={updateVaultData} address={address} />
               </div>
             </div>
 
