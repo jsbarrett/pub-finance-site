@@ -25,8 +25,12 @@ const stake = async ({ address, amount, pid, lockType = 0 }) => {
   const w3 = new Web3(window.ethereum)
   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
+  const depositAmount = new BigNumber(amount)
+    .times(new BigNumber(10).pow(18))
+    // .toString()
+
   return await bartenderContract.methods
-    .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(), lockType)
+    .deposit(pid, depositAmount, lockType)
     .send({ from: address })
     .on('transactionHash', transaction => transaction.transactionHash)
 }
