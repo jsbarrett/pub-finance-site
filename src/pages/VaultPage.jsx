@@ -364,8 +364,8 @@ const AddStakeButton = ({ setUiState, liquidityPoolBalance }) => {
 
 const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
   return (
-    !!Number(pintEarned.replace(/,/g, ''))
-    || !!Number(lockedPintEarned.replace(/,/g, ''))
+    (pintEarned && !!Number(pintEarned.replace(/,/g, '')))
+    || (lockedPintEarned && !!Number(lockedPintEarned.replace(/,/g, '')))
   )
 }
 
