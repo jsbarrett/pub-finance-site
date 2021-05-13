@@ -240,7 +240,7 @@ const handleUnstaking = async ({ address }) => {
 const handleStake = async ({ address, stakeAmount, lockDuration, setUiState }) => {
   try {
     if (!address) return alert('invalid address')
-    if (!stakeAmount || Number(stakeAmount) === 0 || Number.isNaN(Number(stakeAmount))) return alert('invalid stake amount')
+    // if (!stakeAmount || Number(stakeAmount) === 0 || Number.isNaN(Number(stakeAmount))) return alert('invalid stake amount')
     if (!lockDuration) return alert('invalid lock duration')
 
     const pid = 0
