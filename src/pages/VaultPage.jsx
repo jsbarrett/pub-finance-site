@@ -362,8 +362,15 @@ const AddStakeButton = ({ setUiState, liquidityPoolBalance }) => {
     )
 }
 
-const HarvestButton = ({ address, updateVaultData }) => {
-  return (address)
+const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
+  return (
+    !!Number(pintEarned.replace(/,/g, ''))
+    || !!Number(lockedPintEarned.replace(/,/g, ''))
+  )
+}
+
+const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
+  return (hasEarnedPint({ pintEarned, lockedPintEarned }))
     ? (
       <button
         onClick={() => handleHarvest({ address, updateVaultData })}
@@ -612,7 +619,7 @@ export const VaultPage = () => {
               </div>
 
               <div className='mt-12'>
-                <HarvestButton updateVaultData={updateVaultData} address={address} />
+                <HarvestButton updateVaultData={updateVaultData} address={address} pintEarned={pintEarned} lockedPintEarned={lockedPintEarned} />
               </div>
             </div>
 
