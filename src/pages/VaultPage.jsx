@@ -25,9 +25,9 @@ const stake = async ({ address, amount, pid, lockType = 0 }) => {
   const w3 = new Web3(window.ethereum)
   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 
-  const depositAmount = new BigNumber(amount)
+  const depositAmount = '0x' + new BigNumber(amount)
     .times(new BigNumber(10).pow(18))
-    // .toString()
+    .toString(16)
 
   return await bartenderContract.methods
     .deposit(pid, depositAmount, lockType)
@@ -468,7 +468,7 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
         className='pointer-events-auto shadow-2xl rounded-2xl text-white fixed inset-1/2 z-20 w-full md:max-w-md h-full transform -translate-x-1/2 -translate-y-1/2'>
         <div className='p-6 md:p-12'>
           <div className='flex justify-between text-2xl'>
-            <h2>Stake PINT</h2>
+            <h2>Stake PINT-ETH LP tokens</h2>
             <div
               onClick={() => setUiState(UI_STATES.NOTHING)}
               className='px-2 cursor-pointer'>
@@ -489,8 +489,8 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
                 onChange={handleChangeStakeAmount(setStakeAmount, liquidityPoolBalance)}
                 value={stakeAmount} />
 
-              <div className='text-black flex items-center ml-2'>
-                PINT
+              <div className='text-black flex w-32 items-center ml-2'>
+                LP Tokens
               </div>
 
               <div className='my-1 mx-2 border-l border-solid border-gray-300'></div>
