@@ -461,9 +461,12 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
         className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
       </div>
       <div
-        style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}
-        className='pointer-events-auto shadow-2xl rounded-2xl text-white fixed inset-1/2 z-20 w-6/12 max-w-md h-3/6 transform -translate-x-1/2 -translate-y-1/2'>
-        <div className='p-12'>
+        style={{
+          background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)',
+          maxHeight: '600px',
+        }}
+        className='pointer-events-auto shadow-2xl rounded-2xl text-white fixed inset-1/2 z-20 w-full md:max-w-md h-full transform -translate-x-1/2 -translate-y-1/2'>
+        <div className='p-6 md:p-12'>
           <div className='flex justify-between text-2xl'>
             <h2>Stake PINT</h2>
             <div
