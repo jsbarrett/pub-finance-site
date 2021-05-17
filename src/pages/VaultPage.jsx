@@ -581,7 +581,7 @@ export const VaultPage = () => {
         console.error(err)
       }
 
-      setTimeout(() => { effect() }, 1000 * 30)
+      setTimeout(() => { effect() }, 1000)
     }
 
     effect()
