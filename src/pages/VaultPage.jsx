@@ -18,13 +18,21 @@ const ERC20Abi = require('../erc20.json')
 // SMART CONTRACT METHODS
 //-----------------------------------------------------------------------------
 
+const w3 = new Web3(window.ethereum)
+
+const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
+const PubAddress = process.env.REACT_APP_PUB_ADDRESS
+const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
+const WethAddress = process.env.REACT_APP_WETH_ADDRESS
+
+const ERC20Contract = new w3.eth.Contract(ERC20Abi, PubAddress)
+const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
+const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+const pubContract = new w3.eth.Contract(PubAbi, PubAddress)
+const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
+
 // lockType is enum 0 = no lock, 1 = 3 days, 2 = week, 3 = month, 4 = forever
 const stake = async ({ address, amount, pid, lockType = 0 }) => {
-  const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-  const w3 = new Web3(window.ethereum)
-  const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
   const depositAmount = '0x' + new BigNumber(amount)
     .times(new BigNumber(10).pow(18))
     .toString(16)
@@ -37,12 +45,6 @@ const stake = async ({ address, amount, pid, lockType = 0 }) => {
 
 const getAllowance = async ({ address }) => {
   try {
-    const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-    const w3 = new Web3(window.ethereum)
-    const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
-
     const allowance = await UniswapContract.methods
      .allowance(address, BartenderAddress)
      .call()
@@ -56,11 +58,6 @@ const getAllowance = async ({ address }) => {
 
 const harvest = async ({ pid, address }) => {
   try {
-    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-    const w3 = new Web3(window.ethereum)
-    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
     return await bartenderContract.methods
       .harvest(pid)
       .send({ from: address })
@@ -73,11 +70,6 @@ const harvest = async ({ pid, address }) => {
 
 const unstake = async ({ pid, address }) => {
   try {
-    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-    const w3 = new Web3(window.ethereum)
-    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
     return await bartenderContract.methods
       .withdrawMax(pid)
       .send({ from: address })
@@ -90,12 +82,6 @@ const unstake = async ({ pid, address }) => {
 
 const approve = async ({ address }) => {
   try {
-    const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-    const w3 = new Web3(window.ethereum)
-    const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
-
     const maxUInt256 = new BigNumber('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
 
     return await UniswapContract.methods
@@ -109,11 +95,7 @@ const approve = async ({ address }) => {
 
 const getPoolWeight = async () => {
   try {
-    const w3 = new Web3(window.ethereum)
     const pid = 0
-    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
     const { allocPoint } = await bartenderContract.methods.poolInfo(pid).call()
     const totalAllocPoint = await bartenderContract.methods.totalAllocPoint().call()
 
@@ -126,15 +108,6 @@ const getPoolWeight = async () => {
 
 const getWethValues = async () => {
   try {
-    const w3 = new Web3(window.ethereum)
-    const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-    const PubAddress = process.env.REACT_APP_PUB_ADDRESS
-    const WethAddress = process.env.REACT_APP_WETH_ADDRESS
-    const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
-    const ERC20Contract = new w3.eth.Contract(ERC20Abi, PubAddress)
-    const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
-
     const totalSupply = await UniswapContract.methods.totalSupply().call()
     const balance = await UniswapContract.methods.balanceOf(BartenderAddress).call()
 
@@ -164,17 +137,8 @@ const getWethValues = async () => {
 
 const getPubPrice = async () => {
   try {
-    const w3 = new Web3(window.ethereum)
-
-    const PubAddress = process.env.REACT_APP_PUB_ADDRESS
-    const WethAddress = process.env.REACT_APP_WETH_ADDRESS
-    const PubUniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-
-    const pubContract = new w3.eth.Contract(PubAbi, PubAddress)
-    const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
-
-    const wethAmount = await wethContract.methods.balanceOf(PubUniswapAddress).call()
-    const pubAmount = await pubContract.methods.balanceOf(PubUniswapAddress).call()
+    const wethAmount = await wethContract.methods.balanceOf(UniswapAddress).call()
+    const pubAmount = await pubContract.methods.balanceOf(UniswapAddress).call()
 
     return new BigNumber(wethAmount).div(new BigNumber(pubAmount))
   } catch (err) {
@@ -202,19 +166,13 @@ const getAPY = async () => {
     return Math.floor(ABY.toNumber() * 100) / 100
   } catch (err) {
     console.error(err)
-    console.error('Problem with getting the ABY')
+    console.error('Problem with getting the APY')
   }
 }
 
 // const redeem = async ({ address }) => {
 //   const now = new Date().getTime() / 1000
 //   if (now < 1597172400) return alert('pool not active')
-
-//   const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-
-//   const w3 = new Web3(window.ethereum)
-//   const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-
 //   return await bartenderContract.methods
 //     .exit()
 //     .send({ from: address })
@@ -281,26 +239,23 @@ const stringNumberToNumber = x => x ? Number(x.replace(/,/g, '')) : 0
 
 const getVaultData = async ({ address }) => {
   try {
-    const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-    const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-
-    const w3 = new Web3(window.ethereum)
-    const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
-    const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
-
-    const pendingPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingPubs(0, address).call(), 3)
-
-    const pendingLockedPubs = formatBigNumberToSmall(await bartenderContract.methods.pendingLockedPubs(0, address).call(), 3)
-
-    const userInfo = formatBigNumberToSmall(await bartenderContract.methods.getUserInfo(0, address).call(), 3)
-
-    const userInfoLocked = formatBigNumberToSmall(await bartenderContract.methods.getUserInfoLocked(0, address).call(), 3)
-
-    const allowance = await getAllowance({ address })
-
-    const lpBalance = formatBigNumberToSmall(await UniswapContract.methods.balanceOf(address).call())
-
-    const apy = await getAPY()
+    const [
+      pendingPubs,
+      pendingLockedPubs,
+      userInfo,
+      userInfoLocked,
+      allowance,
+      lpBalance,
+      apy
+    ] = await Promise.all([
+      formatBigNumberToSmall(await bartenderContract.methods.pendingPubs(0, address).call(), 3),
+      formatBigNumberToSmall(await bartenderContract.methods.pendingLockedPubs(0, address).call(), 3),
+      formatBigNumberToSmall(await bartenderContract.methods.getUserInfo(0, address).call(), 3),
+      formatBigNumberToSmall(await bartenderContract.methods.getUserInfoLocked(0, address).call(), 3),
+      await getAllowance({ address }),
+      formatBigNumberToSmall(await UniswapContract.methods.balanceOf(address).call()),
+      await getAPY()
+    ])
 
     return {
       pendingPubs,
@@ -557,6 +512,8 @@ export const VaultPage = () => {
 
   // HELPER FUNCTION
   const updateVaultData = useCallback(async () => {
+    console.log('updating vault data')
+
     const vaultData = await getVaultData({ address })
 
     if (!vaultData) return
@@ -574,17 +531,23 @@ export const VaultPage = () => {
   useEffect(() => {
     if (!address) return
 
+    let looping = true
+
     async function effect () {
+      if (!looping) return
+
       try {
         await updateVaultData()
       } catch (err) {
         console.error(err)
       }
 
-      setTimeout(() => { effect() }, 1000)
+      return setTimeout(effect, 1000)
     }
 
     effect()
+
+    return () => { looping = false }
   }, [address, updateVaultData])
 
   return (
