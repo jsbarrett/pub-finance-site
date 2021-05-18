@@ -257,6 +257,8 @@ const getVaultData = async ({ address }) => {
       await getAPY()
     ])
 
+    console.log({ pendingLockedPubs })
+
     return {
       pendingPubs,
       pendingLockedPubs,
