@@ -514,6 +514,8 @@ export const VaultPage = () => {
   const updateVaultData = useCallback(async () => {
     console.log('updating vault data')
 
+    if (!address) return
+
     const vaultData = await getVaultData({ address })
 
     if (!vaultData) return
