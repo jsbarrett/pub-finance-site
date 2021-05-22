@@ -18,16 +18,19 @@ const ERC20Abi = require('../erc20.json')
 // SMART CONTRACT METHODS
 //-----------------------------------------------------------------------------
 
-const w3 = new Web3(window.ethereum)
-
+const infuraEndpoint = process.env.REACT_APP_INFURA_ENDPOINT
 const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
 const PubAddress = process.env.REACT_APP_PUB_ADDRESS
 const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
 const WethAddress = process.env.REACT_APP_WETH_ADDRESS
 
+const w3 = new Web3(window.ethereum)
+const infura = new Web3(new Web3.providers.HttpProvider(infuraEndpoint))
+
 const ERC20Contract = new w3.eth.Contract(ERC20Abi, PubAddress)
 const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
 const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
+const bartenderContractReads = new infura.eth.Contract(BartenderAbi, BartenderAddress)
 const pubContract = new w3.eth.Contract(PubAbi, PubAddress)
 const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
 
@@ -96,8 +99,8 @@ const approve = async ({ address }) => {
 const getPoolWeight = async () => {
   try {
     const pid = 0
-    const { allocPoint } = await bartenderContract.methods.poolInfo(pid).call()
-    const totalAllocPoint = await bartenderContract.methods.totalAllocPoint().call()
+    const { allocPoint } = await bartenderContractReads.methods.poolInfo(pid).call()
+    const totalAllocPoint = await bartenderContractReads.methods.totalAllocPoint().call()
 
     return new BigNumber(allocPoint).div(new BigNumber(totalAllocPoint))
   } catch (err) {
@@ -248,24 +251,22 @@ const getVaultData = async ({ address }) => {
       lpBalance,
       apy
     ] = await Promise.all([
-      formatBigNumberToSmall(await bartenderContract.methods.pendingPubs(0, address).call(), 3),
-      formatBigNumberToSmall(await bartenderContract.methods.pendingLockedPubs(0, address).call(), 3),
-      formatBigNumberToSmall(await bartenderContract.methods.getUserInfo(0, address).call(), 3),
-      formatBigNumberToSmall(await bartenderContract.methods.getUserInfoLocked(0, address).call(), 3),
+      await bartenderContractReads.methods.pendingPubs(0, address).call(),
+      await bartenderContractReads.methods.pendingLockedPubs(0, address).call(),
+      await bartenderContractReads.methods.getUserInfo(0, address).call(),
+      await bartenderContractReads.methods.getUserInfoLocked(0, address).call(),
       await getAllowance({ address }),
-      formatBigNumberToSmall(await UniswapContract.methods.balanceOf(address).call()),
+      await UniswapContract.methods.balanceOf(address).call(),
       await getAPY()
     ])
 
-    console.log({ pendingLockedPubs })
-
     return {
-      pendingPubs,
-      pendingLockedPubs,
-      userInfo,
-      userInfoLocked,
+      pendingPubs: formatBigNumberToSmall(pendingPubs, 3),
+      pendingLockedPubs: formatBigNumberToSmall(pendingLockedPubs, 3),
+      userInfo: formatBigNumberToSmall(userInfo, 3),
+      userInfoLocked: formatBigNumberToSmall(userInfoLocked, 3),
       allowance,
-      lpBalance,
+      lpBalance: formatBigNumberToSmall(lpBalance),
       apy
     }
   } catch (err) {
@@ -546,7 +547,7 @@ export const VaultPage = () => {
         console.error(err)
       }
 
-      return setTimeout(effect, 1000)
+      return setTimeout(effect, 5000)
     }
 
     effect()
