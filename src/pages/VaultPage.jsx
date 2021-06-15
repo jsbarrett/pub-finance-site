@@ -381,7 +381,7 @@ const ApproveButton = ({ address }) => {
 }
 
 const UnstakeButton = ({ tokensStaked, lockedTokensStaked, address }) => {
-  return (!!Number(tokensStaked) || !!Number(lockedTokensStaked))
+  return (!!stringNumberToNumber(tokensStaked) || !!stringNumberToNumber(lockedTokensStaked))
     ? (
       <button
         onClick={() => handleUnstaking({ address })}
