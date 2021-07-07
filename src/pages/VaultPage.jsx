@@ -85,7 +85,7 @@ const unstake = async ({ pid, address }) => {
 
 const approve = async ({ address }) => {
   try {
-    const maxUInt256 = new BigNumber('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+    const maxUInt256 = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
     return await UniswapContract.methods
       .approve(BartenderAddress, maxUInt256)
