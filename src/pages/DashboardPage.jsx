@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import BigNumber from 'bignumber.js'
 import Chart from 'chart.js/auto'
 import { PageFooter } from '../components/PageFooter'
@@ -104,22 +104,14 @@ const generateChartData = (chartType, historicalData) => {
   const datapoints = historicalData.map(x => x[chartType])
   return {
     labels,
-    datasets: [
-      {
-        data: datapoints,
-        borderColor: 'blue',
-        fill: true,
-        backgroundColor: ACCENT_GREEN_RGBA,
-        tension: 0.4
-      }
-    ]
+    datasets: [generateChartDataset(datapoints)]
   }
 }
 
-const generateConfig = (chartType, historicalData) => {
+const generateConfig = (data) => {
   return {
     type: 'line',
-    data: generateChartData(chartType, historicalData),
+    data,
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -150,7 +142,7 @@ const LineChart = ({ chartType, historicalData }) => {
 
     const ctx = canvasElement.getContext('2d')
 
-    setChart(new Chart(ctx, generateConfig(chartType, historicalData)))
+    setChart(new Chart(ctx, generateConfig(generateChartData(chartType, historicalData))))
   }
 
   useEffect(() => {
@@ -159,6 +151,67 @@ const LineChart = ({ chartType, historicalData }) => {
       chart.update()
     }
   }, [chartType, chart, historicalData])
+
+  // eslint-disable-next-line
+  useEffect(() => { return setupChart() }, [])
+
+  return (
+    <div id='chart-container' className='w-full relative h-64'></div>
+  )
+}
+
+const generateChartDataset = data => ({
+  data,
+  borderColor: 'blue',
+  fill: true,
+  backgroundColor: ACCENT_GREEN_RGBA,
+  tension: 0.4
+})
+
+const PriceChart = ({ historicalData, currentPrice }) => {
+  const [chart, setChart] = useState()
+
+  const setupChart = () => {
+    const container = document.getElementById('chart-container')
+
+    // this is for development hot reloading
+    container.innerHTML = ''
+
+    const canvasElement = document.createElement('canvas')
+    container.appendChild(canvasElement)
+
+    const ctx = canvasElement.getContext('2d')
+
+    const labels = historicalData.map(x => x.date.toLocaleDateString())
+    let datapoints = historicalData.map(x => x['Price'])
+    if (currentPrice) {
+      labels.push((new Date()).toLocaleDateString())
+      datapoints.push(currentPrice)
+    }
+    const chartData = {
+      labels,
+      datasets: [generateChartDataset(datapoints)]
+    }
+    setChart(new Chart(ctx, generateConfig(chartData)))
+  }
+
+  useEffect(() => {
+    if (chart) {
+      const labels = historicalData.map(x => x.date.toLocaleDateString())
+      const datapoints = historicalData.map(x => x['Price'])
+
+      if (currentPrice) {
+        labels.push((new Date()).toLocaleDateString())
+        datapoints.push(currentPrice)
+      }
+
+      chart.data = {
+        labels,
+        datasets: [generateChartDataset(datapoints)]
+      }
+      chart.update()
+    }
+  }, [chart, historicalData, currentPrice])
 
   // eslint-disable-next-line
   useEffect(() => { return setupChart() }, [])
@@ -330,6 +383,29 @@ export const DashboardPage = () => {
     return () => { ref.current = false }
   }, [])
 
+  const updateChartType = useCallback((chartType, historicalData) => {
+    if (historicalData && historicalData.length > 0) {
+      switch (chartType) {
+        case 'Price': {
+          const recentValue = currentPrice
+          setRecentChartValue(recentValue)
+
+          break
+        }
+
+        default: {
+          const recentValue = Math.round(historicalData[historicalData.length - 1][chartType] * 1000) / 1000
+          if (Number.isNaN(recentValue)) {
+            setRecentChartValue('Unknown')
+          } else {
+            setRecentChartValue(recentValue.toLocaleString())
+          }
+        }
+      }
+    }
+    setSelectedChart(chartType)
+  }, [currentPrice])
+
   // LOAD HISTORICAL DATA
   useMemo(() => {
     getHistoricalData()
@@ -342,19 +418,7 @@ export const DashboardPage = () => {
       })
 
     return () => { ref.current = false }
-  }, [])
-
-  const updateChartType = (chartType, historicalData) => {
-    if (historicalData && historicalData.length > 0) {
-      const recentValue = Math.round(historicalData[historicalData.length - 1][chartType] * 1000) / 1000
-      if (Number.isNaN(recentValue)) {
-        setRecentChartValue('Unknown')
-      } else {
-        setRecentChartValue(recentValue.toLocaleString())
-      }
-    }
-    setSelectedChart(chartType)
-  }
+  }, [updateChartType])
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
@@ -377,7 +441,7 @@ export const DashboardPage = () => {
           </div>
           <Loading isLoading={loadingCardData} loadingView={<CardLoading />}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
-              $ { currentPrice } <span className='text-xl'>USD</span>
+              ${ currentPrice } <span className='text-xl'>USD</span>
             </div>
           </Loading>
         </div>
@@ -413,7 +477,7 @@ export const DashboardPage = () => {
           </div>
           <Loading isLoading={loadingCardData} loadingView={<CardLoading />}>
             <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
-              $ { totalValueLocked } <span className='text-xl'>USD</span>
+              ${ totalValueLocked } <span className='text-xl'>USD</span>
             </div>
           </Loading>
         </div>
@@ -498,7 +562,8 @@ export const DashboardPage = () => {
               </div>
             </div>
 
-            <LineChart chartType={selectedChart} historicalData={historicalData} />
+            { selectedChart !== 'Price' && <LineChart chartType={selectedChart} historicalData={historicalData} /> }
+            { selectedChart === 'Price' && <PriceChart chartType={selectedChart} historicalData={historicalData} currentPrice={currentPrice} /> }
           </section>
         </Loading>
       </div>
