@@ -563,7 +563,7 @@ export const VaultPage = () => {
 
       try {
         const apy = await getAPY()
-        setApy(apy)
+        if (apy) setApy(apy)
       } catch (err) {
         console.log('error in apy loop')
         console.error(err)
