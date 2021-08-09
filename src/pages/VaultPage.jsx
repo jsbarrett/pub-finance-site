@@ -249,7 +249,6 @@ const getVaultData = async ({ address }) => {
       userInfoLocked,
       allowance,
       lpBalance,
-      apy
     ] = await Promise.all([
       await bartenderContractReads.methods.pendingPubs(0, address).call(),
       await bartenderContractReads.methods.pendingLockedPubs(0, address).call(),
@@ -257,7 +256,6 @@ const getVaultData = async ({ address }) => {
       await bartenderContractReads.methods.getUserInfoLocked(0, address).call(),
       await getAllowance({ address }),
       await UniswapContract.methods.balanceOf(address).call(),
-      await getAPY()
     ])
 
     return {
@@ -267,9 +265,9 @@ const getVaultData = async ({ address }) => {
       userInfoLocked: formatBigNumberToSmall(userInfoLocked, 3),
       allowance,
       lpBalance: formatBigNumberToSmall(lpBalance),
-      apy
     }
   } catch (err) {
+    console.log('Error getting vault data')
     console.error(err)
   }
 }
@@ -529,7 +527,6 @@ export const VaultPage = () => {
     setLockedTokensStaked(vaultData.userInfoLocked)
     setAllowance(vaultData.allowance)
     setLiquidityPoolBalance(vaultData.lpBalance)
-    setApy(vaultData.apy)
   }, [address])
 
   // UPDATE VAULT DATA LOOP
@@ -540,6 +537,7 @@ export const VaultPage = () => {
 
     async function effect () {
       if (!looping) return
+      if (document.hidden) return setTimeout(effect, 15000)
 
       try {
         await updateVaultData()
@@ -547,13 +545,37 @@ export const VaultPage = () => {
         console.error(err)
       }
 
-      return setTimeout(effect, 5000)
+      return setTimeout(effect, 15000)
     }
 
     effect()
 
     return () => { looping = false }
   }, [address, updateVaultData])
+
+  // UPDATE APY LOOP
+  useEffect(() => {
+    let looping = true
+
+    async function effect () {
+      if (!looping) return
+      if (document.hidden) return setTimeout(effect, 15000)
+
+      try {
+        const apy = await getAPY()
+        setApy(apy)
+      } catch (err) {
+        console.log('error in apy loop')
+        console.error(err)
+      }
+
+      return setTimeout(effect, 15000)
+    }
+
+    effect()
+
+    return () => { looping = false }
+  }, [])
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white relative'>
