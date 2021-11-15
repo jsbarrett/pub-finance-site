@@ -57,7 +57,7 @@ export const HomePage = () => {
                 </div>
 
                 <h3 className='mt-4 text-xl font-bold leading-none text-center xl:text-3xl'>
-                  WenRug (soon)
+                  WenRug Beta
                 </h3>
 
                 <p className='mt-2 text-xl'></p>
