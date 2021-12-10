@@ -38,7 +38,7 @@ const Wallet = ({ onClick }) => {
     <div
       onClick={onClick}
       style={{ background: 'rgb(12,12,97)' }}
-      className='cursor-pointer text-lg absolute right-4 top-24 xl:top-8 z-30 text-white py-2 rounded-xl px-8 font-bold'>
+      className='absolute z-30 px-8 py-2 text-lg font-bold text-white cursor-pointer right-4 top-24 xl:top-8 rounded-xl'>
       Wallet
     </div>
   )
@@ -93,22 +93,22 @@ const WalletDetails = ({ address, setModalIsOpen }) => {
     <div className='fixed inset-0 z-50 w-full pointer-events-none'>
       <div
         onClick={() => setModalIsOpen(false)}
-        className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
+        className='absolute inset-0 bg-gray-900 pointer-events-auto opacity-80'>
       </div>
       <div
-        className='relative pointer-events-auto text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex-col text-center'
+        className='relative flex flex-col justify-center w-11/12 p-8 mx-auto text-center text-white bg-blue-500 shadow-2xl pointer-events-auto rounded-2xl my-36 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'
         style={{ background: 'rgb(12,12,97)' }}>
-        <div className='mt-4 flex justify-center relative'>
+        <div className='relative flex justify-center mt-4'>
           <div className='text-4xl font-bold'>My Account</div>
           <div
             onClick={() => setModalIsOpen(false)}
-            className='text-4xl absolute right-0 cursor-pointer px-2'>
+            className='absolute right-0 px-2 text-4xl cursor-pointer'>
             X
           </div>
         </div>
 
         <div className='mt-12'>
-          <div className='font-bold text-4xl'>
+          <div className='text-4xl font-bold'>
             {balance}
           </div>
           <div className='opacity-75'>
@@ -117,7 +117,7 @@ const WalletDetails = ({ address, setModalIsOpen }) => {
         </div>
 
         <div className='mt-8'>
-          <div className='font-bold text-4xl'>
+          <div className='text-4xl font-bold'>
             {liquidityPoolBalance}
           </div>
           <div className='opacity-75'>
@@ -125,15 +125,15 @@ const WalletDetails = ({ address, setModalIsOpen }) => {
           </div>
         </div>
 
-        <div className='flex flex-col sm:flex-row mt-12 justify-center items-center'>
+        <div className='flex flex-col items-center justify-center mt-12 sm:flex-row'>
           <button
             onClick={() => requestWalletPermissions()}
-            className='w-full mt-2 sm:ml-2 border border-solid border-accent-green text-accent-green text-xl px-4 py-3 rounded-full font-bold'>
+            className='w-full px-4 py-3 mt-2 text-xl font-bold border border-solid rounded-full sm:ml-2 border-accent-green text-accent-green'>
             Add Wallet
           </button>
 
           <a
-            className='w-full mt-2 sm:ml-2 border border-solid border-accent-green bg-accent-green text-xl text-green-900 px-4 py-3 rounded-full font-bold'
+            className='w-full px-4 py-3 mt-2 text-xl font-bold text-green-900 border border-solid rounded-full sm:ml-2 border-accent-green bg-accent-green'
             href={`https://etherscan.io/address/${address}`}
             target='_blank'
             rel='noreferrer'>
@@ -169,21 +169,21 @@ const UnlockWallet = ({ address, setAddress, setModalIsOpen }) => {
     <div className='fixed inset-0 z-50 w-full pointer-events-none'>
       <div
         onClick={() => setModalIsOpen(false)}
-        className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
+        className='absolute inset-0 bg-gray-900 pointer-events-auto opacity-80'>
       </div>
       <div
-        className='relative point-events-auto text-white rounded-2xl shadow-2xl bg-blue-500 p-8 my-36 w-11/12 md:w-8/12 xl:w-4/12 mx-auto pointer-events-auto flex justify-center flex text-center items-center'
+        className='relative flex items-center justify-center w-11/12 p-8 mx-auto text-center text-white bg-blue-500 shadow-2xl pointer-events-auto point-events-auto rounded-2xl my-36 md:w-8/12 xl:w-4/12'
         style={{ background: 'rgb(12,12,97)' }}>
         <div className='text-xl font-bold'>
           <button
             onClick={() => setModalIsOpen(false)}
-            className='border border-solid border-accent-green rounded py-2 px-4'>
+            className='px-4 py-2 border border-solid rounded border-accent-green'>
             Cancel
           </button>
         </div>
         <div className='ml-4 text-xl font-bold'>
           <button
-            className='bg-accent-green text-black border border-solid border-accent-green rounded py-2 px-4'
+            className='px-4 py-2 text-black border border-solid rounded bg-accent-green border-accent-green'
             onClick={() => Unlock({ address, setAddress })}>
             Unlock Wallet
           </button>
@@ -223,7 +223,7 @@ export const App = () => {
 
         <WalletModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
 
-        <main className='flex-grow mt-20 xl:mt-0 xl:ml-16 relative'>
+        <main className='relative flex-grow mt-20 xl:mt-0 xl:ml-16'>
           <Switch>
             <Route path='/about'><AboutPage /></Route>
             <Route path='/vaults'><VaultPage /></Route>
