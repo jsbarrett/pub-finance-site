@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom'
-import BigNumber from 'bignumber.js'
 import './App.css'
 
 import { HomePage } from './pages/HomePage'
@@ -10,10 +9,9 @@ import { DashboardPage } from './pages/DashboardPage'
 import { CommunityPage } from './pages/CommunityPage'
 import { SideNav } from './components/SideNav'
 import { useAddress } from './hooks/useAddress'
+import { Wallet } from './Wallet'
 
 const Web3 = require('web3')
-const PubAbi = require('./PubToken.json').abi
-const UniswapAbi = require('./UniswapAbi.json')
 
 // web3 or ether.js
 // rinkeby
@@ -33,7 +31,7 @@ const ScrollToTop = () => {
   return null
 }
 
-const Wallet = ({ onClick }) => {
+const WalletButton = ({ onClick }) => {
   return (
     <div
       onClick={onClick}
@@ -57,6 +55,14 @@ const requestWalletPermissions = async () => {
   }
 }
 
+const addChainChangedListener = () => {
+  if (window.ethereum) {
+    window.ethereum.on('chainChanged', _chainId => {
+      window.location.reload()
+    })
+  }
+}
+
 const WalletDetails = ({ address, setModalIsOpen }) => {
   const [balance, setBalance] = useState('---')
   const [liquidityPoolBalance, setLiquidityPoolBalance] = useState('---')
@@ -66,24 +72,13 @@ const WalletDetails = ({ address, setModalIsOpen }) => {
 
     async function effect () {
       const w3 = new Web3(window.ethereum)
+      const { getPubBalance, getLPBalance } = Wallet()
 
-      const PubAddress = process.env.REACT_APP_PUB_ADDRESS
-      const PubContract = new w3.eth.Contract(PubAbi, PubAddress)
+      const balance = await getPubBalance({ address, w3 })
+      if (balance) setBalance(balance)
 
-      const balance = (new BigNumber(await PubContract.methods.balanceOf(address).call()))
-        .dividedBy(new BigNumber(10).pow(18))
-        .toFormat(4)
-
-      setBalance(balance)
-
-      const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-      const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
-
-      const lpBalance = (new BigNumber((await UniswapContract.methods.balanceOf(address).call())))
-        .dividedBy(new BigNumber(10).pow(18))
-        .toFormat(4)
-
-      setLiquidityPoolBalance(lpBalance)
+      const lpBalance = await getLPBalance({ address, w3 })
+      if (lpBalance) setLiquidityPoolBalance(lpBalance)
     }
 
     effect()
@@ -210,6 +205,8 @@ export const App = () => {
     if (!window.ethereum) {
       alert(`Most of this site's functionality requires the use of the Metamask extension, please install it if you wish to get the most from this site`)
     }
+
+    setTimeout(() => { addChainChangedListener() }, 500)
   }, [])
 
   return (
@@ -217,7 +214,7 @@ export const App = () => {
       <ScrollToTop />
 
       <div className='flex flex-col xl:flex-row'>
-        <Wallet onClick={() => setModalIsOpen(!modalIsOpen) }/>
+        <WalletButton onClick={() => setModalIsOpen(!modalIsOpen) }/>
 
         <SideNav />
 
