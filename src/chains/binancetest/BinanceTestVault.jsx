@@ -1,3 +1,6 @@
+export const lpTokenLabel = 'BNB_PINT ??? LP'
+export const addLiquidityLink = 'https://testnet.bscscan.com/'
+
 // lockType is enum 0 = no lock, 1 = 3 days, 2 = week, 3 = month, 4 = forever
 export const stake = async ({ address, amount, pid, lockType = 0 }) => {
   alert('sorry not yet implemented on this chain')

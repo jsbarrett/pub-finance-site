@@ -13,15 +13,18 @@ const formatBigNumberToSmall = (number, decimals) => {
     .toFormat(decimals)
 }
 
+export const lpTokenLabel = 'ETH_PINT UNI-V2 LP'
+export const addLiquidityLink = 'https://app.uniswap.org/#/add/v2/ETH/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
+
 //-----------------------------------------------------------------------------
 // SMART CONTRACT METHODS
 //-----------------------------------------------------------------------------
 
-const infuraEndpoint = process.env.REACT_APP_INFURA_ENDPOINT
-const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-const PubAddress = process.env.REACT_APP_PUB_ADDRESS
-const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-const WethAddress = process.env.REACT_APP_WETH_ADDRESS
+const infuraEndpoint = 'https://mainnet.infura.io/v3/b9727f2a835649c3b2d4b785b314cb48'
+const BartenderAddress = '0x3ad4e2F9574b5dA2d054505a94FC31ee141C6338'
+const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
+const UniswapAddress = '0x8f3869c177090eace770396f9495424780c73537'
+const WethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
 
 const w3 = new Web3(window.ethereum)
 const infura = new Web3(new Web3.providers.HttpProvider(infuraEndpoint))

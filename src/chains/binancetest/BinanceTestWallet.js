@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
-const PubAbi = require('../PubToken.json').abi
-const UniswapAbi = require('../UniswapAbi.json')
+
+const PubAbi = require('../../PubToken.json').abi
+const UniswapAbi = require('../../UniswapAbi.json')
 
 const getPubBalance = async ({ address, w3 }) => {
   const PubAddress = '0x82ED5aBA668D2609B36D6AAC4865c2aF72109AC5'

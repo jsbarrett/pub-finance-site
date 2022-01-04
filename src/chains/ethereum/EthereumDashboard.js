@@ -4,6 +4,10 @@ const Web3 = require('web3')
 const PubTokenArtifact = require('../../PubToken.json')
 const wethAbi = require('../../weth.json')
 
+const PubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
+const WethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+const PubUniswapAddress = '0x8f3869c177090eace770396f9495424780c73537'
+
 // const getHistoricalDataPoint = async (date) => {
 //   const url = 'https://api.coingecko.com/api/v3/coins/pub-finance/history?date='
 //   const config = { headers: { 'Content-Type': 'application/json' } }
@@ -150,10 +154,6 @@ const getOtherCardData = async () => {
 const getMarketCap = async () => {
   if (!window.ethereum) return '0'
 
-  const WethAddress = process.env.REACT_APP_WETH_ADDRESS
-  const PubAddress = process.env.REACT_APP_PUB_ADDRESS
-  const PubUniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-
   const w3 = new Web3(window.ethereum)
   const pubContract = new w3.eth.Contract(PubTokenArtifact.abi, PubAddress)
   const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
@@ -179,7 +179,6 @@ const getYourPINTBalance = async () => {
   const [accountAddress] = await window.ethereum.request({ method: 'eth_accounts' })
   if (!accountAddress) return
 
-  const PubAddress = process.env.REACT_APP_PUB_ADDRESS
   const w3 = new Web3(window.ethereum)
   const pubContract = new w3.eth.Contract(PubTokenArtifact.abi, PubAddress)
 
