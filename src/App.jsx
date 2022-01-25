@@ -9,9 +9,7 @@ import { DashboardPage } from './pages/DashboardPage'
 import { CommunityPage } from './pages/CommunityPage'
 import { SideNav } from './components/SideNav'
 import { useAddress } from './hooks/useAddress'
-import { Wallet } from './Wallet'
-
-const Web3 = require('web3')
+import { WalletDetails } from './Wallet'
 
 // web3 or ether.js
 // rinkeby
@@ -23,7 +21,6 @@ const Web3 = require('web3')
 // have two instances of web3
 // -- gets use infura
 // -- sets use metamask/ethereum
-
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -42,102 +39,12 @@ const WalletButton = ({ onClick }) => {
   )
 }
 
-const requestWalletPermissions = async () => {
-  try {
-    if (!window.ethereum) return
-
-    await window.ethereum.request({
-      method: 'wallet_requestPermissions',
-      params: [{ eth_accounts: {} }]
-    })
-  } catch (err) {
-    console.error(err)
-  }
-}
-
 const addChainChangedListener = () => {
   if (window.ethereum) {
     window.ethereum.on('chainChanged', _chainId => {
       window.location.reload()
     })
   }
-}
-
-const WalletDetails = ({ address, setModalIsOpen }) => {
-  const [balance, setBalance] = useState('---')
-  const [liquidityPoolBalance, setLiquidityPoolBalance] = useState('---')
-
-  useEffect(() => {
-    if (!address) return
-
-    async function effect () {
-      const w3 = new Web3(window.ethereum)
-      const { getPubBalance, getLPBalance } = Wallet()
-
-      const balance = await getPubBalance({ address, w3 })
-      if (balance) setBalance(balance)
-
-      const lpBalance = await getLPBalance({ address, w3 })
-      if (lpBalance) setLiquidityPoolBalance(lpBalance)
-    }
-
-    effect()
-  }, [address])
-
-  return (
-    <div className='fixed inset-0 z-50 w-full pointer-events-none'>
-      <div
-        onClick={() => setModalIsOpen(false)}
-        className='absolute inset-0 bg-gray-900 pointer-events-auto opacity-80'>
-      </div>
-      <div
-        className='relative flex flex-col justify-center w-11/12 p-8 mx-auto text-center text-white bg-blue-500 shadow-2xl pointer-events-auto rounded-2xl my-36 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'
-        style={{ background: 'rgb(12,12,97)' }}>
-        <div className='relative flex justify-center mt-4'>
-          <div className='text-4xl font-bold'>My Account</div>
-          <div
-            onClick={() => setModalIsOpen(false)}
-            className='absolute right-0 px-2 text-4xl cursor-pointer'>
-            X
-          </div>
-        </div>
-
-        <div className='mt-12'>
-          <div className='text-4xl font-bold'>
-            {balance}
-          </div>
-          <div className='opacity-75'>
-            PINT Balance
-          </div>
-        </div>
-
-        <div className='mt-8'>
-          <div className='text-4xl font-bold'>
-            {liquidityPoolBalance}
-          </div>
-          <div className='opacity-75'>
-            Balance in Liquidity Pool
-          </div>
-        </div>
-
-        <div className='flex flex-col items-center justify-center mt-12 sm:flex-row'>
-          <button
-            onClick={() => requestWalletPermissions()}
-            className='w-full px-4 py-3 mt-2 text-xl font-bold border border-solid rounded-full sm:ml-2 border-accent-green text-accent-green'>
-            Add Wallet
-          </button>
-
-          <a
-            className='w-full px-4 py-3 mt-2 text-xl font-bold text-green-900 border border-solid rounded-full sm:ml-2 border-accent-green bg-accent-green'
-            href={`https://etherscan.io/address/${address}`}
-            target='_blank'
-            rel='noreferrer'>
-            View on Etherscan
-          </a>
-        </div>
-      </div>
-    </div>
-  )
 }
 
 const Unlock = async ({ address, setAddress }) => {

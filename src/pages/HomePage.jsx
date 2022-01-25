@@ -104,7 +104,7 @@ export const HomePage = () => {
             Tired of losing to the house?
             With PINT you are the house.
             Stake PINT tokens to receive user fees from
-            <a class="text-accent-green mx-2" href="https://beta.wenrug.com" target="_blank" rel="noreferrer">
+            <a className="text-accent-green mx-2" href="https://beta.wenrug.com" target="_blank" rel="noreferrer">
               WenRug
             </a>
             and future pub.finance ecosystem products.

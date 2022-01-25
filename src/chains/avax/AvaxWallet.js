@@ -26,7 +26,7 @@ const getLPBalance = async ({ address, w3 }) => {
   return lpBalance
 }
 
-export const FujiWallet = {
+export const AvaxWallet = {
   getPubBalance,
   getLPBalance,
 }

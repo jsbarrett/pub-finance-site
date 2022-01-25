@@ -14,6 +14,14 @@
   border-color: #241D8C;
 }
 
+.text-dark-blue {
+  color: #241D8C;
+}
+
+.text-darker-blue {
+  color: #02044F;
+}
+
 .border-gradient-darker-blue {
   border-color: #02044F;
 }
@@ -30,3 +38,8 @@
   color: #44FF01;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

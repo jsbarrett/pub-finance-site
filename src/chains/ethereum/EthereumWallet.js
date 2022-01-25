@@ -9,8 +9,6 @@ const getPubBalance = async ({ address, w3 }) => {
   const PubContract = new w3.eth.Contract(PubAbi, PubAddress)
 
   const balance = (new BigNumber(await PubContract.methods.balanceOf(address).call()))
-    .dividedBy(new BigNumber(10).pow(18))
-    .toFormat(4)
 
   return balance
 }
