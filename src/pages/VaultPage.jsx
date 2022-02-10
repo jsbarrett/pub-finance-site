@@ -623,7 +623,7 @@ export const VaultPage = () => {
 
               <div className='mt-12'>
                 <p className='text-5xl font-bold text-white'>
-                  { (pintEarned || pintEarned === 0) ? pintEarned : '---' }
+                  ---
                 </p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>PINT Earned</div>
                 <div className='text-center leading-none h-0 opacity-75 text-gray-100 text-lg mt-4'>{ /* PLACEHOLDER TO KEEP BOTH CARDS SAME HEIGHT */ }</div>
@@ -631,7 +631,7 @@ export const VaultPage = () => {
 
               <div className='mt-8'>
                 <p className='text-5xl font-bold text-white'>
-                  { (lockedPintEarned || lockedPintEarned === 0) ? lockedPintEarned : '---' }
+                  ---
                 </p>
                 <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked PINT Earned</div>
               </div>
