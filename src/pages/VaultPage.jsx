@@ -59,17 +59,17 @@ const getAllowance = async ({ address }) => {
   }
 }
 
-const harvest = async ({ pid, address }) => {
-  try {
-    return await bartenderContract.methods
-      .harvest(pid)
-      .send({ from: address })
-      .on('transactionHash', transaction => transaction.transactionHash)
-  } catch (err) {
-    console.error(err)
-    alert('Sorry, there was a problem harvesting, the transaction failed')
-  }
-}
+// const harvest = async ({ pid, address }) => {
+//   try {
+//     return await bartenderContract.methods
+//       .harvest(pid)
+//       .send({ from: address })
+//       .on('transactionHash', transaction => transaction.transactionHash)
+//   } catch (err) {
+//     console.error(err)
+//     alert('Sorry, there was a problem harvesting, the transaction failed')
+//   }
+// }
 
 const unstake = async ({ pid, address }) => {
   try {
@@ -186,10 +186,10 @@ const getAPY = async () => {
 // EVENT HANDLERS (onClick/onChange)
 //-----------------------------------------------------------------------------
 
-const handleHarvest = async ({ address, updateVaultData }) => {
-  await harvest({ pid: 0, address })
-  updateVaultData()
-}
+// const handleHarvest = async ({ address, updateVaultData }) => {
+//   await harvest({ pid: 0, address })
+//   updateVaultData()
+// }
 
 const handleUnstaking = async ({ address }) => {
   try {
@@ -313,12 +313,12 @@ const AddStakeButton = ({ setUiState, address }) => {
   return (address)
     ? <button
         onClick={() => setUiState(UI_STATES.STAKING)}
-        className='ml-4 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
         +
       </button>
     : (
       <button
-        className='ml-4 cursor-not-allowed opacity-30 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
         +
       </button>
     )
@@ -326,39 +326,47 @@ const AddStakeButton = ({ setUiState, address }) => {
   //   ? (
   //     <button
   //       onClick={() => setUiState(UI_STATES.STAKING)}
-  //       className='ml-4 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+  //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
   //       +
   //     </button>
   //   )
   //   : (
   //     <button
-  //       className='ml-4 cursor-not-allowed opacity-30 rounded-full px-6 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+  //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
   //       +
   //     </button>
   //   )
 }
 
-const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
-  return (
-    (pintEarned && !!stringNumberToNumber(pintEarned))
-    || (lockedPintEarned && !!stringNumberToNumber(lockedPintEarned))
-  )
-}
+// const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
+//   return (
+//     (pintEarned && !!stringNumberToNumber(pintEarned))
+//     || (lockedPintEarned && !!stringNumberToNumber(lockedPintEarned))
+//   )
+// }
 
-const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
-  return (hasEarnedPint({ pintEarned, lockedPintEarned }))
-    ? (
-      <button
-        onClick={() => handleHarvest({ address, updateVaultData })}
-        className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-        Harvest
-      </button>
-    )
-    : (
-      <button className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
-        Harvest
-      </button>
-    )
+// const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
+  // return (hasEarnedPint({ pintEarned, lockedPintEarned }))
+  //   ? (
+  //     <button
+  //       onClick={() => handleHarvest({ address, updateVaultData })}
+  //       className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
+  //       Harvest
+  //     </button>
+  //   )
+  //   : (
+  //     <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
+  //       Harvest
+  //     </button>
+  //   )
+// }
+
+const HarvestButton = () => {
+  return (
+    <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
+      Harvest
+    </button>
+  )
 }
 
 const ApproveButton = ({ address }) => {
@@ -366,13 +374,13 @@ const ApproveButton = ({ address }) => {
     ? (
       <button
         onClick={() => approve({ address })}
-        className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
         Approve
       </button>
     )
     : (
       <button
-        className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
         Approve
       </button>
     )
@@ -383,12 +391,12 @@ const UnstakeButton = ({ tokensStaked, lockedTokensStaked, address }) => {
     ? (
       <button
         onClick={() => handleUnstaking({ address })}
-        className='rounded-full px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+        className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
         Unstake
       </button>
     )
     : (
-      <button className='rounded-full cursor-not-allowed opacity-30 px-12 py-4 font-bold border text-accent-green border-solid border-accent-green'>
+      <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
         Unstake
       </button>
     )
@@ -399,7 +407,7 @@ const UnlockWalletButton = ({ unlockWallet, setAddress, address }) => {
     ? (
       <button
         onClick={() => unlockWallet(setAddress)}
-        className='ml-4 rounded-full px-12 py-6 font-bold border border-solid border-accent-green'>
+        className='px-12 py-6 ml-4 font-bold border border-solid rounded-full border-accent-green'>
         Unlock Wallet
       </button>
     )
@@ -414,14 +422,14 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
     <div className='fixed inset-0 z-50 w-full pointer-events-none'>
       <div
         onClick={() => setUiState(UI_STATES.NOTHING)}
-        className='absolute pointer-events-auto inset-0 bg-gray-900 opacity-80'>
+        className='absolute inset-0 bg-gray-900 pointer-events-auto opacity-80'>
       </div>
       <div
         style={{
           background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)',
           maxHeight: '600px',
         }}
-        className='pointer-events-auto shadow-2xl rounded-2xl text-white fixed inset-1/2 z-20 w-full md:max-w-md h-full transform -translate-x-1/2 -translate-y-1/2'>
+        className='fixed z-20 w-full h-full text-white shadow-2xl pointer-events-auto rounded-2xl inset-1/2 md:max-w-md transform -translate-x-1/2 -translate-y-1/2'>
         <div className='p-6 md:p-12'>
           <div className='flex justify-between text-2xl'>
             <h2>Stake PINT-ETH LP tokens</h2>
@@ -433,23 +441,23 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
           </div>
 
           <div className='flex flex-col items-start mt-4'>
-            <div className='flex text-sm w-full justify-start items-center'>
+            <div className='flex items-center justify-start w-full text-sm'>
               <div className='opacity-75'>Current Balance:</div>
               <div className='ml-2 font-bold'>{liquidityPoolBalance || '0.0000'}</div>
             </div>
 
-            <div className='mt-16 w-full rounded-full px-4 overflow-hidden bg-white flex'>
+            <div className='flex w-full px-4 mt-16 overflow-hidden bg-white rounded-full'>
               <input
-                className='text-black h-full w-full px-1 py-3 ml-1'
+                className='w-full h-full px-1 py-3 ml-1 text-black'
                 placeholder='Enter Amount'
                 onChange={handleChangeStakeAmount(setStakeAmount, liquidityPoolBalance)}
                 value={stakeAmount} />
 
-              <div className='text-black flex w-32 items-center ml-2'>
+              <div className='flex items-center w-32 ml-2 text-black'>
                 LP Tokens
               </div>
 
-              <div className='my-1 mx-2 border-l border-solid border-gray-300'></div>
+              <div className='mx-2 my-1 border-l border-gray-300 border-solid'></div>
 
               <div
                 onClick={() => {
@@ -458,28 +466,28 @@ const StakingModal = ({ address, uiState, setUiState, liquidityPoolBalance }) =>
                     : liquidityPoolBalance
                   setStakeAmount(amount)
                 }}
-                className='text-green-800 cursor-pointer flex items-center'>
+                className='flex items-center text-green-800 cursor-pointer'>
                 Max
               </div>
             </div>
 
-            <div className='flex w-full justify-between mt-8 items-center'>
+            <div className='flex items-center justify-between w-full mt-8'>
               <div className='text-lg font-bold'>Lock Duration:</div>
               <div className='flex-grow ml-4'>
                 <select
                   onChange={handleChangeLockDuration(setLockDuration)}
                   value={lockDuration}
-                  className='bg-transparent w-full px-2 py-1 font-bold text-lg border border-solid border-white rounded'>
-                  <option className='bg-white text-black'>None</option>
-                  <option className='bg-white text-black'>Three Days</option>
+                  className='w-full px-2 py-1 text-lg font-bold bg-transparent border border-white border-solid rounded'>
+                  <option className='text-black bg-white'>None</option>
+                  <option className='text-black bg-white'>Three Days</option>
                 </select>
               </div>
             </div>
 
-            <div className='mt-20 w-full'>
+            <div className='w-full mt-20'>
               <button
                 onClick={() => handleStake({ address, stakeAmount, lockDuration, setUiState })}
-                className='w-full py-2 px-4 text-xl font-bold bg-accent-green text-green-900 border border-solid border-accent-green rounded-full'>
+                className='w-full px-4 py-2 text-xl font-bold text-green-900 border border-solid rounded-full bg-accent-green border-accent-green'>
                 Stake
               </button>
             </div>
@@ -578,25 +586,25 @@ export const VaultPage = () => {
   }, [])
 
   return (
-    <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white relative'>
+    <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='relative text-white'>
       <StakingModal address={address} uiState={uiState} setUiState={setUiState} liquidityPoolBalance={liquidityPoolBalance} />
 
-      <header className='relative pt-36 xl:pt-48 pb-48 xl:pb-60 text-center flex flex-col items-center'>
+      <header className='relative flex flex-col items-center pb-48 text-center pt-36 xl:pt-48 xl:pb-60'>
         <HeaderBackground />
         <h1
-          className='relative z-10 font-bold text-6xl xl:text-9xl leading-none'>
+          className='relative z-10 text-6xl font-bold leading-none xl:text-9xl'>
           Vaults
         </h1>
-        <p className='relative z-10 text-2xl xl:text-5xl mt-10 xl:mt-16'>
+        <p className='relative z-10 mt-10 text-2xl xl:text-5xl xl:mt-16'>
           Flexible Deposits, Higher Profits.
         </p>
       </header>
 
       <SectionPadding>
-        <section className='max-w-screen-2xl mx-auto mb-24 xl:mb-48'>
+        <section className='mx-auto mb-24 max-w-screen-2xl xl:mb-48'>
           <div className='flex justify-center mt-4'>
             <a href='https://app.uniswap.org/#/add/v2/ETH/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>
-              <button className='text-green-900 rounded-full px-12 py-6 font-bold bg-accent-green'>
+              <button className='px-12 py-6 font-bold text-green-900 rounded-full bg-accent-green'>
                 Add Liquidity
               </button>
             </a>
@@ -606,12 +614,12 @@ export const VaultPage = () => {
           <p className='mt-8 text-center'>
             (One-sided PINT staking. Coming soon!)
           </p>
-          <div className='flex flex-col xl:flex-row justify-center mt-16 max-w-screen-lg mx-auto items-center'>
+          <div className='flex flex-col items-center justify-center mx-auto mt-16 xl:flex-row max-w-screen-lg'>
             <div
-              className='px-8 py-6 m-2 text-center rounded-3xl shadow-xl w-full md:w-3/4 flex flex-col items-center justify-between'
+              className='flex flex-col items-center justify-between w-full px-8 py-6 m-2 text-center shadow-xl rounded-3xl md:w-3/4'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
 
-              <div className='h-24 flex justify-center'>
+              <div className='flex justify-center h-24'>
                 <img
                   className='w-32 h-24'
                   alt='Pints logo of a gear'
@@ -619,33 +627,38 @@ export const VaultPage = () => {
                   src={pintGearLogoUrl} />
               </div>
 
-              <div className='text-center leading-none text-gray-100 text-3xl mt-6'>PINT</div>
+              <div className='mt-6 text-3xl leading-none text-center text-gray-100'>PINT</div>
 
               <div className='mt-12'>
                 <p className='text-5xl font-bold text-white'>
                   ---
                 </p>
-                <div className='text-center leading-none text-gray-300 text-xl mt-4'>PINT Earned</div>
-                <div className='text-center leading-none h-0 opacity-75 text-gray-100 text-lg mt-4'>{ /* PLACEHOLDER TO KEEP BOTH CARDS SAME HEIGHT */ }</div>
+                <div className='mt-4 text-xl leading-none text-center text-gray-300'>PINT Earned</div>
+                <div className='h-0 mt-4 text-lg leading-none text-center text-gray-100 opacity-75'>{ /* PLACEHOLDER TO KEEP BOTH CARDS SAME HEIGHT */ }</div>
               </div>
 
               <div className='mt-8'>
                 <p className='text-5xl font-bold text-white'>
                   ---
                 </p>
-                <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked PINT Earned</div>
+                <div className='mt-4 text-xl leading-none text-center text-gray-300'>Locked PINT Earned</div>
               </div>
 
               <div className='mt-12'>
                 <HarvestButton updateVaultData={updateVaultData} address={address} pintEarned={pintEarned} lockedPintEarned={lockedPintEarned} />
               </div>
+              <div className='mt-4'>
+                <p>
+                  (We've reached 10,000,000 total supply)
+                </p>
+              </div>
             </div>
 
             <div
-              className='px-8 py-6 m-2 text-center rounded-3xl shadow-xl w-full md:w-3/4 flex flex-col items-center justify-between'
+              className='flex flex-col items-center justify-between w-full px-8 py-6 m-2 text-center shadow-xl rounded-3xl md:w-3/4'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
 
-              <div className='h-24 flex justify-center'>
+              <div className='flex justify-center h-24'>
                 <img
                   className='w-32 h-24'
                   alt='Pints logo of a gear'
@@ -656,21 +669,21 @@ export const VaultPage = () => {
                 </div>
               </div>
 
-              <div className='text-center leading-none text-gray-100 text-3xl mt-6'>ETH_PINT UNI-V2 LP</div>
-              <div className='text-center leading-none h-0 opacity-75 text-gray-100 text-lg mt-4'>APY {apy}%</div>
+              <div className='mt-6 text-3xl leading-none text-center text-gray-100'>ETH_PINT UNI-V2 LP</div>
+              <div className='h-0 mt-4 text-lg leading-none text-center text-gray-100 opacity-75'>APY {apy}%</div>
 
               <div className='mt-12'>
                 <p className='text-5xl font-bold text-white'>
                   { (tokensStaked || tokensStaked === 0) ? tokensStaked : '---' }
                 </p>
-                <div className='text-center leading-none text-gray-300 text-xl mt-4'>Tokens Staked</div>
+                <div className='mt-4 text-xl leading-none text-center text-gray-300'>Tokens Staked</div>
               </div>
 
               <div className='mt-8'>
                 <p className='text-5xl font-bold text-white'>
                   { (lockedTokensStaked || lockedTokensStaked === 0) ? lockedTokensStaked : '---' }
                 </p>
-                <div className='text-center leading-none text-gray-300 text-xl mt-4'>Locked Tokens Staked</div>
+                <div className='mt-4 text-xl leading-none text-center text-gray-300'>Locked Tokens Staked</div>
               </div>
 
               <div className='mt-12'>
