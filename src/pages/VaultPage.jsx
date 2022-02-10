@@ -697,6 +697,12 @@ export const VaultPage = () => {
                 </div>
                 ) }
               </div>
+
+              <div className='mt-4'>
+                <p className='opacity-0 pointer-events-none'>
+                  -
+                </p>
+              </div>
             </div>
           </div>
           <p className='mt-8 text-center'>
