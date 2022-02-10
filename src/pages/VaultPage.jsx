@@ -695,12 +695,6 @@ export const VaultPage = () => {
             </a>
 
             <UnlockWalletButton unlockWallet={unlockWallet} setAddress={setAddress} address={address} />
-
-            <button
-              onClick={() => calculatePendingPubs(address)}
-              className='px-12 py-6 font-bold text-green-900 rounded-full bg-accent-green'>
-              push me
-            </button>
           </div>
           <p className='mt-8 text-center'>
             (One-sided PINT staking. Coming soon!)
