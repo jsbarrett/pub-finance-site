@@ -10,9 +10,9 @@ import BigNumber from 'bignumber.js'
 const Web3 = require('web3')
 const BartenderAbi = require('../Bartender.json')
 const UniswapAbi = require('../UniswapAbi.json')
-const wethAbi = require('../weth.json')
-const PubAbi = require('../PubToken.json').abi
-const ERC20Abi = require('../erc20.json')
+// const wethAbi = require('../weth.json')
+// const PubAbi = require('../PubToken.json').abi
+// const ERC20Abi = require('../erc20.json')
 
 //-----------------------------------------------------------------------------
 // SMART CONTRACT METHODS
@@ -20,19 +20,19 @@ const ERC20Abi = require('../erc20.json')
 
 const infuraEndpoint = process.env.REACT_APP_INFURA_ENDPOINT
 const BartenderAddress = process.env.REACT_APP_BARTENDER_ADDRESS
-const PubAddress = process.env.REACT_APP_PUB_ADDRESS
 const UniswapAddress = process.env.REACT_APP_UNISWAP_ADDRESS
-const WethAddress = process.env.REACT_APP_WETH_ADDRESS
+// const PubAddress = process.env.REACT_APP_PUB_ADDRESS
+// const WethAddress = process.env.REACT_APP_WETH_ADDRESS
 
 const w3 = new Web3(window.ethereum)
 const infura = new Web3(new Web3.providers.HttpProvider(infuraEndpoint))
 
-const ERC20Contract = new w3.eth.Contract(ERC20Abi, PubAddress)
+// const ERC20Contract = new w3.eth.Contract(ERC20Abi, PubAddress)
 const UniswapContract = new w3.eth.Contract(UniswapAbi, UniswapAddress)
 const bartenderContract = new w3.eth.Contract(BartenderAbi, BartenderAddress)
 const bartenderContractReads = new infura.eth.Contract(BartenderAbi, BartenderAddress)
-const pubContract = new w3.eth.Contract(PubAbi, PubAddress)
-const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
+// const pubContract = new w3.eth.Contract(PubAbi, PubAddress)
+// const wethContract = new w3.eth.Contract(wethAbi, WethAddress)
 
 // lockType is enum 0 = no lock, 1 = 3 days, 2 = week, 3 = month, 4 = forever
 const stake = async ({ address, amount, pid, lockType = 0 }) => {
@@ -96,82 +96,82 @@ const approve = async ({ address }) => {
   }
 }
 
-const getPoolWeight = async () => {
-  try {
-    const pid = 0
-    const { allocPoint } = await bartenderContractReads.methods.poolInfo(pid).call()
-    const totalAllocPoint = await bartenderContractReads.methods.totalAllocPoint().call()
+// const getPoolWeight = async () => {
+//   try {
+//     const pid = 0
+//     const { allocPoint } = await bartenderContractReads.methods.poolInfo(pid).call()
+//     const totalAllocPoint = await bartenderContractReads.methods.totalAllocPoint().call()
 
-    return new BigNumber(allocPoint).div(new BigNumber(totalAllocPoint))
-  } catch (err) {
-    console.error(err)
-    throw err
-  }
-}
+//     return new BigNumber(allocPoint).div(new BigNumber(totalAllocPoint))
+//   } catch (err) {
+//     console.error(err)
+//     throw err
+//   }
+// }
 
-const getWethValues = async () => {
-  try {
-    const totalSupply = await UniswapContract.methods.totalSupply().call()
-    const balance = await UniswapContract.methods.balanceOf(BartenderAddress).call()
+// const getWethValues = async () => {
+//   try {
+//     const totalSupply = await UniswapContract.methods.totalSupply().call()
+//     const balance = await UniswapContract.methods.balanceOf(BartenderAddress).call()
 
-    const tokenAmountWholeLP = await ERC20Contract.methods.balanceOf(UniswapAddress).call()
-    const tokenDecimals = await ERC20Contract.methods.decimals().call()
+//     const tokenAmountWholeLP = await ERC20Contract.methods.balanceOf(UniswapAddress).call()
+//     const tokenDecimals = await ERC20Contract.methods.decimals().call()
 
-    const portionLp = new BigNumber(balance).div(new BigNumber(totalSupply))
-    const uniswapContractWeth = await wethContract.methods.balanceOf(UniswapAddress).call()
+//     const portionLp = new BigNumber(balance).div(new BigNumber(totalSupply))
+//     const uniswapContractWeth = await wethContract.methods.balanceOf(UniswapAddress).call()
 
-    const wethAmount = new BigNumber(uniswapContractWeth).times(portionLp).div(new BigNumber(10).pow(18))
+//     const wethAmount = new BigNumber(uniswapContractWeth).times(portionLp).div(new BigNumber(10).pow(18))
 
-    const tokenAmount = new BigNumber(tokenAmountWholeLP)
-      .times(portionLp)
-      .div(new BigNumber(10).pow(tokenDecimals))
+//     const tokenAmount = new BigNumber(tokenAmountWholeLP)
+//       .times(portionLp)
+//       .div(new BigNumber(10).pow(tokenDecimals))
 
-    const pubPrice = await getPubPrice()
+//     const pubPrice = await getPubPrice()
 
-    return {
-      totalWethValue: tokenAmount.times(pubPrice).times(2),
-      totalPriceInWeth: wethAmount.div(tokenAmount)
-    }
-  } catch (err) {
-    console.error(err)
-    throw err
-  }
-}
+//     return {
+//       totalWethValue: tokenAmount.times(pubPrice).times(2),
+//       totalPriceInWeth: wethAmount.div(tokenAmount)
+//     }
+//   } catch (err) {
+//     console.error(err)
+//     throw err
+//   }
+// }
 
-const getPubPrice = async () => {
-  try {
-    const wethAmount = await wethContract.methods.balanceOf(UniswapAddress).call()
-    const pubAmount = await pubContract.methods.balanceOf(UniswapAddress).call()
+// const getPubPrice = async () => {
+//   try {
+//     const wethAmount = await wethContract.methods.balanceOf(UniswapAddress).call()
+//     const pubAmount = await pubContract.methods.balanceOf(UniswapAddress).call()
 
-    return new BigNumber(wethAmount).div(new BigNumber(pubAmount))
-  } catch (err) {
-    console.error('Problem with getting the pub price')
-    throw err
-  }
-}
+//     return new BigNumber(wethAmount).div(new BigNumber(pubAmount))
+//   } catch (err) {
+//     console.error('Problem with getting the pub price')
+//     throw err
+//   }
+// }
 
-const getAPY = async () => {
-  try {
-    const BLOCKS_PER_YEAR = new BigNumber(2336000)
-    const PINT_PER_BLOCK = new BigNumber(25)
+// const getAPY = async () => {
+//   try {
+//     const BLOCKS_PER_YEAR = new BigNumber(2336000)
+//     const PINT_PER_BLOCK = new BigNumber(25)
 
-    const pubPrice = await getPubPrice()
-    const poolWeight = await getPoolWeight()
-    const { totalWethValue } = await getWethValues()
+//     const pubPrice = await getPubPrice()
+//     const poolWeight = await getPoolWeight()
+//     const { totalWethValue } = await getWethValues()
 
-    const ABY = pubPrice
-      .times(PINT_PER_BLOCK)
-      .times(BLOCKS_PER_YEAR)
-      .times(poolWeight)
-      .div(totalWethValue)
-      .times(new BigNumber(10))
+//     const ABY = pubPrice
+//       .times(PINT_PER_BLOCK)
+//       .times(BLOCKS_PER_YEAR)
+//       .times(poolWeight)
+//       .div(totalWethValue)
+//       .times(new BigNumber(10))
 
-    return Math.floor(ABY.toNumber() * 100) / 100
-  } catch (err) {
-    console.error(err)
-    console.error('Problem with getting the APY')
-  }
-}
+//     return Math.floor(ABY.toNumber() * 100) / 100
+//   } catch (err) {
+//     console.error(err)
+//     console.error('Problem with getting the APY')
+//   }
+// }
 
 // const redeem = async ({ address }) => {
 //   const now = new Date().getTime() / 1000
@@ -307,36 +307,36 @@ const unlockWallet = async (setAddress) => {
 // COMPONENTS
 //-----------------------------------------------------------------------------
 
-const AddStakeButton = ({ setUiState, address }) => {
-  // const balanceAsNumber = stringNumberToNumber(liquidityPoolBalance)
+// const AddStakeButton = ({ setUiState, address }) => {
+//   // const balanceAsNumber = stringNumberToNumber(liquidityPoolBalance)
 
-  return (address)
-    ? <button
-        onClick={() => setUiState(UI_STATES.STAKING)}
-        className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-        +
-      </button>
-    : (
-      <button
-        className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-        +
-      </button>
-    )
-  // return (balanceAsNumber && !Number.isNaN(balanceAsNumber))
-  //   ? (
-  //     <button
-  //       onClick={() => setUiState(UI_STATES.STAKING)}
-  //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-  //       +
-  //     </button>
-  //   )
-  //   : (
-  //     <button
-  //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-  //       +
-  //     </button>
-  //   )
-}
+//   return (address)
+//     ? <button
+//         onClick={() => setUiState(UI_STATES.STAKING)}
+//         className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
+//         +
+//       </button>
+//     : (
+//       <button
+//         className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
+//         +
+//       </button>
+//     )
+//   // return (balanceAsNumber && !Number.isNaN(balanceAsNumber))
+//   //   ? (
+//   //     <button
+//   //       onClick={() => setUiState(UI_STATES.STAKING)}
+//   //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
+//   //       +
+//   //     </button>
+//   //   )
+//   //   : (
+//   //     <button
+//   //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
+//   //       +
+//   //     </button>
+//   //   )
+// }
 
 // const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
 //   return (
@@ -515,7 +515,6 @@ export const VaultPage = () => {
   const [lockedTokensStaked, setLockedTokensStaked] = useState()
   const [allowance, setAllowance] = useState()
   const [liquidityPoolBalance, setLiquidityPoolBalance] = useState()
-  const [apy, setApy] = useState()
 
   const [uiState, setUiState] = useState(UI_STATES.NOTHING)
 
@@ -560,30 +559,6 @@ export const VaultPage = () => {
 
     return () => { looping = false }
   }, [address, updateVaultData])
-
-  // UPDATE APY LOOP
-  useEffect(() => {
-    let looping = true
-
-    async function effect () {
-      if (!looping) return
-      if (document.hidden) return setTimeout(effect, 15000)
-
-      try {
-        const apy = await getAPY()
-        if (apy) setApy(apy)
-      } catch (err) {
-        console.log('error in apy loop')
-        console.error(err)
-      }
-
-      return setTimeout(effect, 15000)
-    }
-
-    effect()
-
-    return () => { looping = false }
-  }, [])
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='relative text-white'>
@@ -631,7 +606,7 @@ export const VaultPage = () => {
 
               <div className='mt-12'>
                 <p className='text-5xl font-bold text-white'>
-                  ---
+                  { (pintEarned || pintEarned === 0) ? pintEarned : '---' }
                 </p>
                 <div className='mt-4 text-xl leading-none text-center text-gray-300'>PINT Earned</div>
                 <div className='h-0 mt-4 text-lg leading-none text-center text-gray-100 opacity-75'>{ /* PLACEHOLDER TO KEEP BOTH CARDS SAME HEIGHT */ }</div>
@@ -639,7 +614,7 @@ export const VaultPage = () => {
 
               <div className='mt-8'>
                 <p className='text-5xl font-bold text-white'>
-                  ---
+                  { (lockedPintEarned || lockedPintEarned === 0) ? lockedPintEarned : '---' }
                 </p>
                 <div className='mt-4 text-xl leading-none text-center text-gray-300'>Locked PINT Earned</div>
               </div>
@@ -648,8 +623,8 @@ export const VaultPage = () => {
                 <HarvestButton updateVaultData={updateVaultData} address={address} pintEarned={pintEarned} lockedPintEarned={lockedPintEarned} />
               </div>
               <div className='mt-4'>
-                <p>
-                  (We've reached 10,000,000 total supply)
+                <p className='opacity-0 pointer-events-none'>
+                  -
                 </p>
               </div>
             </div>
@@ -670,7 +645,7 @@ export const VaultPage = () => {
               </div>
 
               <div className='mt-6 text-3xl leading-none text-center text-gray-100'>ETH_PINT UNI-V2 LP</div>
-              <div className='h-0 mt-4 text-lg leading-none text-center text-gray-100 opacity-75'>APY {apy}%</div>
+              <div className='h-0 mt-4 text-lg leading-none text-center text-gray-100 opacity-75'>APY 0%</div>
 
               <div className='mt-12'>
                 <p className='text-5xl font-bold text-white'>
@@ -693,7 +668,7 @@ export const VaultPage = () => {
                 <div>
                   <UnstakeButton address={address} tokensStaked={tokensStaked} lockedTokensStaked={lockedTokensStaked} />
 
-                  <AddStakeButton address={address} liquidityPoolBalance={liquidityPoolBalance} setUiState={setUiState} />
+                  {/* <AddStakeButton address={address} liquidityPoolBalance={liquidityPoolBalance} setUiState={setUiState} /> */}
                 </div>
                 ) }
               </div>
