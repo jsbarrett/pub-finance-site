@@ -59,17 +59,109 @@ const getAllowance = async ({ address }) => {
   }
 }
 
-// const harvest = async ({ pid, address }) => {
-//   try {
-//     return await bartenderContract.methods
-//       .harvest(pid)
-//       .send({ from: address })
-//       .on('transactionHash', transaction => transaction.transactionHash)
-//   } catch (err) {
-//     console.error(err)
-//     alert('Sorry, there was a problem harvesting, the transaction failed')
-//   }
-// }
+// const getBlockNumber = () => new Promise((resolve, reject) => {
+//   w3.eth.getBlockNumber(function (err, num) {
+//     if (err) reject(err)
+//     resolve(new BigNumber(num))
+//   })
+// })
+
+// View function to see pending PUBs on frontend.
+const calculatePendingPubs = async (address) => {
+  const pool = await getPoolInfo()
+  const userInfoArr = await getUserInfo(address)
+  let totalPubToTransfer = new BigNumber(0)
+  let accPubPerShare = new BigNumber(pool.accPubPerShare)
+
+  const user = userInfoArr
+  const userAmount = new BigNumber(user.amount)
+  const unlockDate = new Date(Number(user.unlockDate) * 1000)
+
+  if (userAmount.gt(new BigNumber('0')) && unlockDate <= Date.now()) {
+    const pending = userAmount
+      .times(new BigNumber(accPubPerShare))
+      .div(new BigNumber('1000000000000'))
+      .minus(new BigNumber(user.rewardDebt))
+
+    totalPubToTransfer = totalPubToTransfer.plus(pending)
+
+    // Distribute taxes
+    if (Number(user.lockType) >= 2) {
+      const pendingTax = userAmount
+        .times(new BigNumber(pool.accTaxPubPerShare))
+        .div(new BigNumber('1000000000000'))
+        .minus(new BigNumber(user.taxRewardDebt))
+
+      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+    }
+
+    // Distribute LP taxes
+    if (Number(user.lockType) >= 3) {
+      const pendingTax = userAmount
+        .times(new BigNumber(pool.accLPTaxPubPerShare))
+        .div(new BigNumber('1000000000000'))
+        .minus(new BigNumber(user.lpTaxRewardDebt))
+
+      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+    }
+  }
+
+  return totalPubToTransfer
+}
+
+const calculatePendingLockedPubs = async (address) => {
+  const pool = await getPoolInfo()
+  const userInfoArr = await getUserInfo(address)
+  let totalPubToTransfer = new BigNumber(0)
+  let accPubPerShare = new BigNumber(pool.accPubPerShare)
+
+  const user = userInfoArr
+  const userAmount = new BigNumber(user.amount)
+  const unlockDate = new Date(Number(user.unlockDate) * 1000)
+
+  if (userAmount.gt(new BigNumber('0')) && unlockDate > Date.now()) {
+    const pending = userAmount
+      .times(new BigNumber(accPubPerShare))
+      .div(new BigNumber('1000000000000'))
+      .minus(new BigNumber(user.rewardDebt))
+
+    totalPubToTransfer = totalPubToTransfer.plus(pending)
+
+    // Distribute taxes
+    if (Number(user.lockType) >= 2) {
+      const pendingTax = userAmount
+        .times(new BigNumber(pool.accTaxPubPerShare))
+        .div(new BigNumber('1000000000000'))
+        .minus(new BigNumber(user.taxRewardDebt))
+
+      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+    }
+
+    // Distribute LP taxes
+    if (Number(user.lockType) >= 3) {
+      const pendingTax = userAmount
+        .times(new BigNumber(pool.accLPTaxPubPerShare))
+        .div(new BigNumber('1000000000000'))
+        .minus(new BigNumber(user.lpTaxRewardDebt))
+
+      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+    }
+  }
+
+  return totalPubToTransfer
+}
+
+const harvest = async ({ pid, address }) => {
+  try {
+    return await bartenderContract.methods
+      .harvest(pid)
+      .send({ from: address })
+      .on('transactionHash', transaction => transaction.transactionHash)
+  } catch (err) {
+    console.error(err)
+    alert('Sorry, there was a problem harvesting, the transaction failed')
+  }
+}
 
 const unstake = async ({ pid, address }) => {
   try {
@@ -95,6 +187,24 @@ const approve = async ({ address }) => {
     alert('Sorry, there was a problem approving, the transaction failed')
   }
 }
+
+const getPoolInfo = async () => {
+  const pid = 0
+  const poolInfo = await bartenderContractReads.methods.poolInfo(pid).call()
+  return poolInfo
+}
+
+const getUserInfo = async (address) => {
+  return await bartenderContractReads.methods.userInfo(0, address, 0).call()
+}
+
+// const getTotalAllocPoint = async () => {
+//   return await bartenderContractReads.methods.totalAllocPoint().call()
+// }
+
+// const getPubPerBlock = async () => {
+//   return await bartenderContractReads.methods.pubPerBlock().call()
+// }
 
 // const getPoolWeight = async () => {
 //   try {
@@ -186,10 +296,10 @@ const approve = async ({ address }) => {
 // EVENT HANDLERS (onClick/onChange)
 //-----------------------------------------------------------------------------
 
-// const handleHarvest = async ({ address, updateVaultData }) => {
-//   await harvest({ pid: 0, address })
-//   updateVaultData()
-// }
+const handleHarvest = async ({ address, updateVaultData }) => {
+  await harvest({ pid: 0, address })
+  updateVaultData()
+}
 
 const handleUnstaking = async ({ address }) => {
   try {
@@ -250,8 +360,8 @@ const getVaultData = async ({ address }) => {
       allowance,
       lpBalance,
     ] = await Promise.all([
-      await bartenderContractReads.methods.pendingPubs(0, address).call(),
-      await bartenderContractReads.methods.pendingLockedPubs(0, address).call(),
+      await calculatePendingPubs(address),
+      await calculatePendingLockedPubs(address),
       await bartenderContractReads.methods.getUserInfo(0, address).call(),
       await bartenderContractReads.methods.getUserInfoLocked(0, address).call(),
       await getAllowance({ address }),
@@ -338,36 +448,36 @@ const unlockWallet = async (setAddress) => {
 //   //   )
 // }
 
-// const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
-//   return (
-//     (pintEarned && !!stringNumberToNumber(pintEarned))
-//     || (lockedPintEarned && !!stringNumberToNumber(lockedPintEarned))
-//   )
-// }
-
-// const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
-  // return (hasEarnedPint({ pintEarned, lockedPintEarned }))
-  //   ? (
-  //     <button
-  //       onClick={() => handleHarvest({ address, updateVaultData })}
-  //       className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-  //       Harvest
-  //     </button>
-  //   )
-  //   : (
-  //     <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-  //       Harvest
-  //     </button>
-  //   )
-// }
-
-const HarvestButton = () => {
+const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
   return (
-    <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-      Harvest
-    </button>
+    (pintEarned && !!stringNumberToNumber(pintEarned))
+    || (lockedPintEarned && !!stringNumberToNumber(lockedPintEarned))
   )
 }
+
+const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
+  return (hasEarnedPint({ pintEarned, lockedPintEarned }))
+    ? (
+      <button
+        onClick={() => handleHarvest({ address, updateVaultData })}
+        className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
+        Harvest
+      </button>
+    )
+    : (
+      <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
+        Harvest
+      </button>
+    )
+}
+
+// const HarvestButton = () => {
+//   return (
+//     <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
+//       Harvest
+//     </button>
+//   )
+// }
 
 const ApproveButton = ({ address }) => {
   return (address)
@@ -585,6 +695,12 @@ export const VaultPage = () => {
             </a>
 
             <UnlockWalletButton unlockWallet={unlockWallet} setAddress={setAddress} address={address} />
+
+            <button
+              onClick={() => calculatePendingPubs(address)}
+              className='px-12 py-6 font-bold text-green-900 rounded-full bg-accent-green'>
+              push me
+            </button>
           </div>
           <p className='mt-8 text-center'>
             (One-sided PINT staking. Coming soon!)
