@@ -466,7 +466,7 @@ const HarvestButton = ({ pintEarned, lockedPintEarned, address }) => {
     )
     : (
       <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-        Harvest
+        Harvest/Unstake
       </button>
     )
 }
@@ -507,7 +507,7 @@ const UnstakeButton = ({ tokensStaked, lockedTokensStaked, address }) => {
     )
     : (
       <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-        Unstake
+        Harvest/Unstake
       </button>
     )
 }
