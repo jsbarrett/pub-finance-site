@@ -151,17 +151,17 @@ const calculatePendingLockedPubs = async (address) => {
   return totalPubToTransfer
 }
 
-const harvest = async ({ pid, address }) => {
-  try {
-    return await bartenderContract.methods
-      .harvest(pid)
-      .send({ from: address })
-      .on('transactionHash', transaction => transaction.transactionHash)
-  } catch (err) {
-    console.error(err)
-    alert('Sorry, there was a problem harvesting, the transaction failed')
-  }
-}
+// const harvest = async ({ pid, address }) => {
+//   try {
+//     return await bartenderContract.methods
+//       .harvest(pid)
+//       .send({ from: address })
+//       .on('transactionHash', transaction => transaction.transactionHash)
+//   } catch (err) {
+//     console.error(err)
+//     alert('Sorry, there was a problem harvesting, the transaction failed')
+//   }
+// }
 
 const unstake = async ({ pid, address }) => {
   try {
@@ -296,10 +296,10 @@ const getUserInfo = async (address) => {
 // EVENT HANDLERS (onClick/onChange)
 //-----------------------------------------------------------------------------
 
-const handleHarvest = async ({ address, updateVaultData }) => {
-  await harvest({ pid: 0, address })
-  updateVaultData()
-}
+// const handleHarvest = async ({ address, updateVaultData }) => {
+//   await harvest({ pid: 0, address })
+//   updateVaultData()
+// }
 
 const handleUnstaking = async ({ address }) => {
   try {
@@ -455,13 +455,13 @@ const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
   )
 }
 
-const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData }) => {
+const HarvestButton = ({ pintEarned, lockedPintEarned, address }) => {
   return (hasEarnedPint({ pintEarned, lockedPintEarned }))
     ? (
       <button
-        onClick={() => handleHarvest({ address, updateVaultData })}
+        onClick={() => handleUnstaking({ address })}
         className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-        Harvest
+        Harvest/Unstake
       </button>
     )
     : (
