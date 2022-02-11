@@ -502,7 +502,7 @@ const UnstakeButton = ({ tokensStaked, lockedTokensStaked, address }) => {
       <button
         onClick={() => handleUnstaking({ address })}
         className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-        Unstake
+        Harvest/Unstake
       </button>
     )
     : (
