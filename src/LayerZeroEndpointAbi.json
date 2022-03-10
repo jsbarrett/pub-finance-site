@@ -27,7 +27,7 @@
           "type": "bytes"
         }
       ],
-      "name": "estimateNativeFees",
+      "name": "estimateFees",
       "outputs": [
         {
           "internalType": "uint256",

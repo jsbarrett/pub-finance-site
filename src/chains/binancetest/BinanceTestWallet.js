@@ -1,11 +1,12 @@
+import { ethers } from 'ethers'
 import BigNumber from 'bignumber.js'
 
 const PubAbi = require('../../PubToken.json').abi
 const UniswapAbi = require('../../UniswapAbi.json')
-const LayerZeroEndpointAbi = require('../../LayerZeroEndpointAbi.json')
+// const LayerZeroEndpointAbi = require('../../LayerZeroEndpointAbi.json')
 
 const getPubBalance = async ({ address, w3 }) => {
-  const PubAddress = '0x82ED5aBA668D2609B36D6AAC4865c2aF72109AC5'
+  const PubAddress = '0x6DbcC67369c9F3D1CB75B07aAC421c6E9700C62d'
 
   const PubContract = new w3.eth.Contract(PubAbi, PubAddress)
 
@@ -28,37 +29,47 @@ const getLPBalance = async ({ address, w3 }) => {
 }
 
 const sendTokens = async ({ address, amount, w3 }) => {
-  const binancetestPubAddress = '0x82ED5aBA668D2609B36D6AAC4865c2aF72109AC5'
-  const fujiPubAddress = '0x4B4F1211A4E41C6e3aac57ffa89a9dFAD0Bc4F8e'
+  const binancetestPubAddress = '0x6DbcC67369c9F3D1CB75B07aAC421c6E9700C62d'
+  const fujiPubAddress = '0xeC104B9cA585c73D38b87397Cd3B34417Be0EDf6'
   const fujiChainId = '10006'
-  const lzEndpointAddress = '0x64Aed168Cb7EC01C1Bf3556BF5f48297770BA5dC'
+  // const lzEndpointAddress = '0x8da2f530a798b8D7949694AD00ad51E409a872B8'
 
   const PubContract = new w3.eth.Contract(PubAbi, binancetestPubAddress)
-  const LZEndpoint = new w3.eth.Contract(LayerZeroEndpointAbi, lzEndpointAddress)
+  // const LZEndpoint = new w3.eth.Contract(LayerZeroEndpointAbi, lzEndpointAddress)
 
   // approve
   await PubContract.methods
     .approve(binancetestPubAddress, amount)
     .send({ from: address })
 
-  // estimate fee
-  const fee = await LZEndpoint.methods
-    .estimateNativeFees(
-      fujiChainId,
-      fujiPubAddress,
-      '0x00010000000000000000000000000000000000000000000000000000000000001234',
-      false,
-      '0x00010000000000000000000000000000000000000000000000000000000000001234'
-    )
-    .call()
+  // const payload = ethers.utils.defaultAbiCoder
+  //   .encode(
+  //     ['address', 'uint'],
+  //     [address, amount.toString()]
+  //   )
+  // console.log({ payload })
 
-  console.log('estimated fee', fee)
-  const feePlusThreePercent = new BigNumber(fee).times('103').div('100')
+  // estimate fee
+  // const estimatedFee = await LZEndpoint.methods
+  //   .estimateFees(
+  //     fujiChainId,
+  //     fujiPubAddress,
+  //     payload,
+  //     false,
+  //     '0x00010000000000000000000000000000000000000000000000000000000000001234'
+  //   )
+  //   .call()
+
+  // console.log('estimated fee', estimatedFee)
+  // const fee = new BigNumber(estimatedFee).times('105').div('100').decimalPlaces(0)
+  // console.log('fee', fee.toString())
+
+  const fee = ethers.utils.parseEther('0.003')
 
   // sendTokens
   await PubContract.methods
     .sendTokens(fujiChainId, fujiPubAddress, amount)
-    .send({ from: address, value: feePlusThreePercent })
+    .send({ from: address, value: fee })
 }
 
 export const BinanceTestWallet = {
