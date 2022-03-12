@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import { calculatePendingPubs, calculatePendingLockedPubs } from '../getPendingRewards'
 
 const Web3 = require('web3')
 const BartenderAbi = require('../../Bartender.json')
@@ -164,8 +165,8 @@ export const getVaultData = async ({ address }) => {
       allowance,
       lpBalance,
     ] = await Promise.all([
-      await bartenderContractReads.methods.pendingPubs(0, address).call(),
-      await bartenderContractReads.methods.pendingLockedPubs(0, address).call(),
+      await calculatePendingPubs(address),
+      await calculatePendingLockedPubs(address),
       await bartenderContractReads.methods.getUserInfo(0, address).call(),
       await bartenderContractReads.methods.getUserInfoLocked(0, address).call(),
       await getAllowance({ address }),

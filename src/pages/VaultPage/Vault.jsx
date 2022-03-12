@@ -88,37 +88,6 @@ const unlockWallet = async (setAddress) => {
 // COMPONENTS
 //-----------------------------------------------------------------------------
 
-const AddStakeButton = ({ setUiState, address }) => {
-  // const balanceAsNumber = stringNumberToNumber(liquidityPoolBalance)
-
-  return (address)
-    ? <button
-        onClick={() => setUiState(UI_STATES.STAKING)}
-        className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-        +
-      </button>
-    : (
-      <button
-        className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-        +
-      </button>
-    )
-  // return (balanceAsNumber && !Number.isNaN(balanceAsNumber))
-  //   ? (
-  //     <button
-  //       onClick={() => setUiState(UI_STATES.STAKING)}
-  //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-  //       +
-  //     </button>
-  //   )
-  //   : (
-  //     <button
-  //       className='px-6 py-4 ml-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-  //       +
-  //     </button>
-  //   )
-}
-
 const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
   return (
     (pintEarned && !!stringNumberToNumber(pintEarned))
@@ -465,8 +434,6 @@ export const Vault = (props) => {
                     lockedTokensStaked={lockedTokensStaked}
                     unstake={unstake}
                   />
-
-                  <AddStakeButton address={address} liquidityPoolBalance={liquidityPoolBalance} setUiState={setUiState} />
                 </div>
                 ) }
               </div>
