@@ -10,11 +10,6 @@ import pintGearLogoUrl from '../../pint-gear-logo.svg'
 // EVENT HANDLERS (onClick/onChange)
 //-----------------------------------------------------------------------------
 
-const handleHarvest = async ({ address, updateVaultData, harvest }) => {
-  await harvest({ pid: 0, address })
-  updateVaultData()
-}
-
 const handleUnstaking = async ({ address, unstake }) => {
   try {
     const pid = 0
@@ -131,18 +126,18 @@ const hasEarnedPint = ({ pintEarned, lockedPintEarned }) => {
   )
 }
 
-const HarvestButton = ({ pintEarned, lockedPintEarned, address, updateVaultData, harvest }) => {
+const HarvestButton = ({ pintEarned, lockedPintEarned, address, unstake }) => {
   return (hasEarnedPint({ pintEarned, lockedPintEarned }))
     ? (
       <button
-        onClick={() => handleHarvest({ address, updateVaultData, harvest })}
+        onClick={() => handleUnstaking({ address, unstake })}
         className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-        Harvest
+        Harvest/Unstake
       </button>
     )
     : (
       <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-        Harvest
+        Harvest/Unstake
       </button>
     )
 }
@@ -170,12 +165,12 @@ const UnstakeButton = ({ tokensStaked, lockedTokensStaked, address, unstake }) =
       <button
         onClick={() => handleUnstaking({ address, unstake })}
         className='px-12 py-4 font-bold border border-solid rounded-full text-accent-green border-accent-green'>
-        Unstake
+        Harvest/Unstake
       </button>
     )
     : (
       <button className='px-12 py-4 font-bold border border-solid rounded-full cursor-not-allowed opacity-30 text-accent-green border-accent-green'>
-        Unstake
+        Harvest/Unstake
       </button>
     )
 }
@@ -288,7 +283,6 @@ const UI_STATES = {
 export const Vault = (props) => {
   const {
     stake,
-    harvest,
     unstake,
     approve,
     getVaultData,
@@ -415,11 +409,10 @@ export const Vault = (props) => {
 
               <div className='mt-12'>
                 <HarvestButton
-                  updateVaultData={updateVaultData}
                   address={address}
                   pintEarned={pintEarned}
                   lockedPintEarned={lockedPintEarned}
-                  harvest={harvest}
+                  unstake={unstake}
                 />
               </div>
             </div>
