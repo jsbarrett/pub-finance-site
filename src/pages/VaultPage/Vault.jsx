@@ -291,7 +291,6 @@ export const Vault = (props) => {
     harvest,
     unstake,
     approve,
-    getAPY,
     getVaultData,
     lpTokenLabel,
     addLiquidityLink
@@ -304,7 +303,6 @@ export const Vault = (props) => {
   const [lockedTokensStaked, setLockedTokensStaked] = useState()
   const [allowance, setAllowance] = useState()
   const [liquidityPoolBalance, setLiquidityPoolBalance] = useState()
-  const [apy, setApy] = useState()
 
   const [uiState, setUiState] = useState(UI_STATES.NOTHING)
 
@@ -349,30 +347,6 @@ export const Vault = (props) => {
 
     return () => { looping = false }
   }, [address, updateVaultData])
-
-  // UPDATE APY LOOP
-  useEffect(() => {
-    let looping = true
-
-    async function effect () {
-      if (!looping) return
-      if (document.hidden) return setTimeout(effect, 15000)
-
-      try {
-        const apy = await getAPY()
-        if (apy) setApy(apy)
-      } catch (err) {
-        console.log('error in apy loop')
-        console.error(err)
-      }
-
-      return setTimeout(effect, 15000)
-    }
-
-    effect()
-
-    return () => { looping = false }
-  }, [getAPY])
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='relative text-white'>
@@ -468,7 +442,7 @@ export const Vault = (props) => {
               <div className='mt-6 text-3xl leading-none text-center text-gray-100'>
                 { lpTokenLabel }
               </div>
-              <div className='h-0 mt-4 text-lg leading-none text-center text-gray-100 opacity-75'>APY {apy}%</div>
+              <div className='h-0 mt-4 text-lg leading-none text-center text-gray-100 opacity-75'>APY 0%</div>
 
               <div className='mt-12'>
                 <p className='text-5xl font-bold text-white'>

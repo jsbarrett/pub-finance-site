@@ -8,7 +8,7 @@
 const axios = require("axios");
 const ethers = require("ethers");
 
-const MORALIS_API_KEY = process.env.MORALIS_API_KEY; // pull key from Netlify
+const MORALIS_API_KEY = process.env.MORALIS_API_KEY || 'id2IEjpP4Fu80tJXBlLnW0nBVTcQTRqO4K6IQgjEjL0r6QI8xf4MwnfdWIV6sQSK'; // pull key from Netlify
 const MORALIS_BASE = "https://deep-index.moralis.io/api/v2/"
 
 // useful addresses
@@ -16,58 +16,66 @@ const MORALIS_BASE = "https://deep-index.moralis.io/api/v2/"
 // const PINT_AVAX_FUJI = "0xeC104B9cA585c73D38b87397Cd3B34417Be0EDf6"
 
 exports.handler = async event => {
-
-  // require a POST
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: 'Method Not Allowed, Must POST', headers: { "Allow": "POST" } }
-  }
-
-  // get the payload
-  const data = JSON.parse(event.body)
-
-  // for now we require the payload to include an address to check the balance of, and a chain
-  if (!data.addressToCheck || !data.chain) {
-    return { statusCode: 422, body: '"addressToCheck" and "chain" are required parameters' }
-  }
-
-  const chain = strToHex(data.chain); // moralis expects hexed chain IDs (strings), not numbers
-  const erc20 = data.token || ""; // if erc20 isn't passed, Moralis will return all balances
-  const addressToCheck = data.addressToCheck;
-
-  // build the API URL
-  const MORALIS_ENDPOINT = `${addressToCheck}/erc20`
-  const MORALIS_PARAMS = `?chain=${chain}&token_addresses=${erc20}`
-  const URL = MORALIS_BASE + MORALIS_ENDPOINT + MORALIS_PARAMS;
-
-  const REQ_OPTS = {
-    url: URL,
-    method: "get",
-    headers: {
-      accept: "application/json",
-      "X-API-Key": MORALIS_API_KEY
-    }
-  }
-
-  let response;
   try {
-    response = await axios.get(URL, REQ_OPTS);
+    // require a POST
+    if (event.httpMethod !== "POST") {
+      return { statusCode: 405, body: 'Method Not Allowed, Must POST', headers: { "Allow": "POST" } }
+    }
 
-    // DEBUG:
-    // console.log(event.queryStringParameters);
-    // console.log('response:', response)
-    // console.log('response.data:', response.data);
-    return {
-       statusCode: response.status,
-       body: JSON.stringify(response.data),
+    // get the payload
+    const data = JSON.parse(event.body)
+
+    // for now we require the payload to include an address to check the balance of, and a chain
+    if (!data.addressToCheck || !data.chain) {
+      return { statusCode: 422, body: '"addressToCheck" and "chain" are required parameters' }
+    }
+
+    const chain = data.chain; // moralis expects hexed chain IDs (strings), not numbers
+    const erc20 = data.token || ""; // if erc20 isn't passed, Moralis will return all balances
+    const addressToCheck = data.addressToCheck;
+
+    // build the API URL
+    const MORALIS_ENDPOINT = `${addressToCheck}/erc20`
+    const MORALIS_PARAMS = `?chain=${chain}&token_addresses=${erc20}`
+    const URL = MORALIS_BASE + MORALIS_ENDPOINT + MORALIS_PARAMS;
+
+    const REQ_OPTS = {
+      url: URL,
+      method: "get",
+      headers: {
+        accept: "application/json",
+        "X-API-Key": MORALIS_API_KEY
+      }
+    }
+
+    let response;
+    try {
+      response = await axios.get(URL, REQ_OPTS);
+
+      console.log(response)
+      // DEBUG:
+      // console.log(event.queryStringParameters);
+      // console.log('response:', response)
+      // console.log('response.data:', response.data);
+      return {
+        statusCode: response.status,
+        body: JSON.stringify(response.data),
       };
 
-  } catch (e) {
-    // DEBUG:
-    // console.error("error while getting data...", e)
-    if(e.code === "ERR_HTTP_INVALID_HEADER_VALUE"){
-      e = "\nPlease set MORALIS_API_KEY in Netlify Environment Variables"
-    };
+    } catch (e) {
+      console.error(e)
+      // DEBUG:
+      // console.error("error while getting data...", e)
+      if(e.code === "ERR_HTTP_INVALID_HEADER_VALUE"){
+        e = "\nPlease set MORALIS_API_KEY in Netlify Environment Variables"
+      };
 
+      return {
+        statusCode: 500,
+        body: "Error while fetching data from moralis: " + e,
+      }
+    }
+  } catch (err) {
     return {
       statusCode: 500,
       body: "Error while fetching data from moralis: " + e,

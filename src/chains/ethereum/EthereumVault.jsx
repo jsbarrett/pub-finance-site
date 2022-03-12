@@ -152,37 +152,7 @@ export const getPubPrice = async () => {
   }
 }
 
-export const getAPY = async () => {
-  try {
-    const BLOCKS_PER_YEAR = new BigNumber(2336000)
-    const PINT_PER_BLOCK = new BigNumber(25)
-
-    const pubPrice = await getPubPrice()
-    const poolWeight = await getPoolWeight()
-    const { totalWethValue } = await getWethValues()
-
-    const ABY = pubPrice
-      .times(PINT_PER_BLOCK)
-      .times(BLOCKS_PER_YEAR)
-      .times(poolWeight)
-      .div(totalWethValue)
-      .times(new BigNumber(10))
-
-    return Math.floor(ABY.toNumber() * 100) / 100
-  } catch (err) {
-    console.error(err)
-    console.error('Problem with getting the APY')
-  }
-}
-
-// const redeem = async ({ address }) => {
-//   const now = new Date().getTime() / 1000
-//   if (now < 1597172400) return alert('pool not active')
-//   return await bartenderContract.methods
-//     .exit()
-//     .send({ from: address })
-//     .on('transactionHash', transaction => transaction.transactionHash)
-// }
+export const getAPY = async () => 0
 
 export const getVaultData = async ({ address }) => {
   try {

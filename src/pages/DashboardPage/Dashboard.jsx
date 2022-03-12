@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Chart from 'chart.js/auto'
 import { PageFooter } from '../../components/PageFooter'
 import { HeaderBackground } from '../../components/HeaderBackground'
 import { PintLogoSvg } from '../../components/PintLogoSvg'
+import { useBalance } from '../../hooks/useBalance'
+import { useCurrentPrice } from '../../hooks/useCurrentPrice'
+import { useTotalValueLocked } from '../../hooks/useTotalValueLocked'
+import { useTotalSupply } from '../../hooks/useTotalSupply'
+import { useHistoricalData } from '../../hooks/useHistoricalData'
+import { useMarketCap } from '../../hooks/useMarketCap'
 
 import { ACCENT_GREEN_RGBA } from '../../styles'
 
@@ -150,56 +156,39 @@ const HistoricalLoading = () => (
   </section>
 )
 
-export const Dashboard = ({ getData }) => {
-  const {
-    getHistoricalData,
-    getTotalValueLockedCardData,
-    getOtherCardData,
-    getMarketCap,
-    getYourPINTBalance,
-  } = getData
-
-  const [totalValueLocked, setTotalValueLocked] = useState('')
-  const [totalSupply, setTotalSupply] = useState('')
-  const [currentPrice, setCurrentPrice] = useState('')
-  const [marketCap, setMarketCap] = useState('')
+export const Dashboard = () => {
+  const [totalSupply] = useTotalSupply()
+  const [marketCap] = useMarketCap()
   const [selectedChart, setSelectedChart] = useState('Liquidity')
-  const [historicalData, setHistoricalData] = useState([])
-  const [loadingCardData, setLoadingCardData] = useState(true)
+  // const [historicalData, setHistoricalData] = useState([])
+  const [historicalData] = useHistoricalData()
+  const [loadingCardData] = useState(false)
   const [loadingHistoricalData, setLoadingHistoricalData] = useState(true)
   const [recentChartValue, setRecentChartValue] = useState('')
-  const [yourPINTBalance, setYourPINTBalance] = useState()
-  const ref = useRef(true)
+  const [yourPINTBalance] = useBalance()
+  const [currentPrice] = useCurrentPrice()
+  const [totalValueLocked] = useTotalValueLocked()
+  // const ref = useRef(true)
 
   const chartTypes = [ 'Liquidity', 'Volume', 'Price' ]
 
   // LOAD CARDS
-  useEffect(() => {
-    Promise.all([
-      getOtherCardData(),
-      getTotalValueLockedCardData(),
-      getMarketCap(),
-      getYourPINTBalance(),
-    ])
-      .then(xs => {
-        if (!ref.current) return
-        setCurrentPrice(xs[0].market_data.current_price.usd.toLocaleString())
-        setMarketCap(xs[2])
-        // setMarketCap(xs[0].market_data.market_cap.usd.toLocaleString())
-        setYourPINTBalance(xs[3])
-        setTotalSupply(Math.floor(xs[0].market_data.total_supply).toLocaleString())
-        setTotalValueLocked(xs[1])
-        setLoadingCardData(false)
-      })
-      .catch(err => {
-        console.error(err)
+  // useEffect(() => {
+  //   getMarketCap()
+  //     .then(x => {
+  //       if (!ref.current) return
+  //       setMarketCap(x)
+  //       setLoadingCardData(false)
+  //     })
+  //     .catch(err => {
+  //       console.error(err)
 
-        if (!ref.current) return
-        setLoadingCardData(false)
-      })
+  //       if (!ref.current) return
+  //       setLoadingCardData(false)
+  //     })
 
-    return () => { ref.current = false }
-  }, [getMarketCap, getOtherCardData, getTotalValueLockedCardData, getYourPINTBalance])
+  //   return () => { ref.current = false }
+  // }, [getMarketCap])
 
   const updateChartType = useCallback((chartType, historicalData) => {
     if (historicalData && historicalData.length > 0) {
@@ -207,7 +196,6 @@ export const Dashboard = ({ getData }) => {
         case 'Price': {
           const recentValue = currentPrice
           setRecentChartValue(recentValue)
-
           break
         }
 
@@ -225,18 +213,12 @@ export const Dashboard = ({ getData }) => {
   }, [currentPrice])
 
   // LOAD HISTORICAL DATA
-  useMemo(() => {
-    getHistoricalData()
-      .then(x => {
-        if (!ref.current) return
-        setHistoricalData(x)
-        updateChartType('Liquidity', x)
+  useEffect(() => {
+    if (historicalData.length <= 0) return
 
-        setLoadingHistoricalData(false)
-      })
-
-    return () => { ref.current = false }
-  }, [updateChartType, getHistoricalData])
+    updateChartType('Liquidity', historicalData)
+    setLoadingHistoricalData(false)
+  }, [historicalData, updateChartType])
 
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='text-white'>
@@ -327,10 +309,10 @@ export const Dashboard = ({ getData }) => {
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3' />
               </svg>
             </div>
-            <div className='text-xl xl:text-2xl ml-6'>YOUR PINT BALANCE</div>
+            <div className='text-xl xl:text-2xl ml-6'>YOUR TOTAL PINT BALANCE</div>
           </div>
           <div className='px-10 font-bold text-xl xl:text-4xl text-center xl:text-left py-8'>
-            { (yourPINTBalance || yourPINTBalance === 0) ? yourPINTBalance.toLocaleString() + ' PINT' : 'Locked' }
+            {(yourPINTBalance || '0') + ' PINT'}
           </div>
         </div>
       </section>
