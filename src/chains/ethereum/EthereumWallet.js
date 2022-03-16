@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import {ethers} from 'ethers'
 const PubAbi = require('../../PubToken.json').abi
 const UniswapAbi = require('../../UniswapAbi.json')
 

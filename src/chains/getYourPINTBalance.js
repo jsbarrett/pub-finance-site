@@ -7,7 +7,8 @@ const getBalance = async (body) => {
     body: JSON.stringify(body)
   })
     .then(x => x.json())
-    .then(x => new BigNumber(x[0].balance))
+    .then(x => x[0] ? x[0].balance : '0')
+    .then(x => new BigNumber(x))
 }
 
 export const getYourPINTBalance = async ({

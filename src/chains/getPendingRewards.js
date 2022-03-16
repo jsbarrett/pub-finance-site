@@ -19,85 +19,94 @@ const getUserInfo = async (address) => {
 }
 
 export const calculatePendingPubs = async (address) => {
-  const pool = await getPoolInfo()
-  const userInfoArr = await getUserInfo(address)
-  let totalPubToTransfer = new BigNumber(0)
-  let accPubPerShare = new BigNumber(pool.accPubPerShare)
+  try {
+    const pool = await getPoolInfo()
+    const userInfoArr = await getUserInfo(address)
+    let totalPubToTransfer = new BigNumber(0)
+    let accPubPerShare = new BigNumber(pool.accPubPerShare)
 
-  const user = userInfoArr
-  const userAmount = new BigNumber(user.amount)
-  const unlockDate = new Date(Number(user.unlockDate) * 1000)
+    const user = userInfoArr
+    const userAmount = new BigNumber(user.amount)
+    const unlockDate = new Date(Number(user.unlockDate) * 1000)
 
-  if (userAmount.gt(new BigNumber('0')) && unlockDate <= Date.now()) {
-    const pending = userAmount
-      .times(new BigNumber(accPubPerShare))
-      .div(new BigNumber('1000000000000'))
-      .minus(new BigNumber(user.rewardDebt))
-
-    totalPubToTransfer = totalPubToTransfer.plus(pending)
-
-    // Distribute taxes
-    if (Number(user.lockType) >= 2) {
-      const pendingTax = userAmount
-        .times(new BigNumber(pool.accTaxPubPerShare))
+    if (userAmount.gt(new BigNumber('0')) && unlockDate <= Date.now()) {
+      const pending = userAmount
+        .times(new BigNumber(accPubPerShare))
         .div(new BigNumber('1000000000000'))
-        .minus(new BigNumber(user.taxRewardDebt))
+        .minus(new BigNumber(user.rewardDebt))
 
-      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+      totalPubToTransfer = totalPubToTransfer.plus(pending)
+
+      // Distribute taxes
+      if (Number(user.lockType) >= 2) {
+        const pendingTax = userAmount
+          .times(new BigNumber(pool.accTaxPubPerShare))
+          .div(new BigNumber('1000000000000'))
+          .minus(new BigNumber(user.taxRewardDebt))
+
+        totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+      }
+
+      // Distribute LP taxes
+      if (Number(user.lockType) >= 3) {
+        const pendingTax = userAmount
+          .times(new BigNumber(pool.accLPTaxPubPerShare))
+          .div(new BigNumber('1000000000000'))
+          .minus(new BigNumber(user.lpTaxRewardDebt))
+
+        totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+      }
     }
 
-    // Distribute LP taxes
-    if (Number(user.lockType) >= 3) {
-      const pendingTax = userAmount
-        .times(new BigNumber(pool.accLPTaxPubPerShare))
-        .div(new BigNumber('1000000000000'))
-        .minus(new BigNumber(user.lpTaxRewardDebt))
-
-      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
-    }
+    return totalPubToTransfer
+  } catch (err) {
+    return new BigNumber('0')
   }
-
-  return totalPubToTransfer
 }
 
 export const calculatePendingLockedPubs = async (address) => {
-  const pool = await getPoolInfo()
-  const userInfoArr = await getUserInfo(address)
-  let totalPubToTransfer = new BigNumber(0)
-  let accPubPerShare = new BigNumber(pool.accPubPerShare)
+  try {
+    const pool = await getPoolInfo()
+    const userInfoArr = await getUserInfo(address)
+    let totalPubToTransfer = new BigNumber(0)
+    let accPubPerShare = new BigNumber(pool.accPubPerShare)
 
-  const user = userInfoArr
-  const userAmount = new BigNumber(user.amount)
-  const unlockDate = new Date(Number(user.unlockDate) * 1000)
+    const user = userInfoArr
+    const userAmount = new BigNumber(user.amount)
+    const unlockDate = new Date(Number(user.unlockDate) * 1000)
 
-  if (userAmount.gt(new BigNumber('0')) && unlockDate > Date.now()) {
-    const pending = userAmount
-      .times(new BigNumber(accPubPerShare))
-      .div(new BigNumber('1000000000000'))
-      .minus(new BigNumber(user.rewardDebt))
-
-    totalPubToTransfer = totalPubToTransfer.plus(pending)
-
-    // Distribute taxes
-    if (Number(user.lockType) >= 2) {
-      const pendingTax = userAmount
-        .times(new BigNumber(pool.accTaxPubPerShare))
+    if (userAmount.gt(new BigNumber('0')) && unlockDate > Date.now()) {
+      const pending = userAmount
+        .times(new BigNumber(accPubPerShare))
         .div(new BigNumber('1000000000000'))
-        .minus(new BigNumber(user.taxRewardDebt))
+        .minus(new BigNumber(user.rewardDebt))
 
-      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+      totalPubToTransfer = totalPubToTransfer.plus(pending)
+
+      // Distribute taxes
+      if (Number(user.lockType) >= 2) {
+        const pendingTax = userAmount
+          .times(new BigNumber(pool.accTaxPubPerShare))
+          .div(new BigNumber('1000000000000'))
+          .minus(new BigNumber(user.taxRewardDebt))
+
+        totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+      }
+
+      // Distribute LP taxes
+      if (Number(user.lockType) >= 3) {
+        const pendingTax = userAmount
+          .times(new BigNumber(pool.accLPTaxPubPerShare))
+          .div(new BigNumber('1000000000000'))
+          .minus(new BigNumber(user.lpTaxRewardDebt))
+
+        totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
+      }
     }
 
-    // Distribute LP taxes
-    if (Number(user.lockType) >= 3) {
-      const pendingTax = userAmount
-        .times(new BigNumber(pool.accLPTaxPubPerShare))
-        .div(new BigNumber('1000000000000'))
-        .minus(new BigNumber(user.lpTaxRewardDebt))
-
-      totalPubToTransfer = totalPubToTransfer.plus(pendingTax)
-    }
+    return totalPubToTransfer
+  } catch (err) {
+    return new BigNumber('0')
   }
-
-  return totalPubToTransfer
 }
+  
