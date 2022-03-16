@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 
 const Web3 = require('web3')
-const BartenderAbi = require('../Bartender.json')
+const BartenderAbi = require('../Bartender.json').abi
 const infuraEndpoint = 'https://mainnet.infura.io/v3/b9727f2a835649c3b2d4b785b314cb48'
 const infura = new Web3(new Web3.providers.HttpProvider(infuraEndpoint))
 

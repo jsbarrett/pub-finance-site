@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { calculatePendingPubs, calculatePendingLockedPubs } from '../getPendingRewards'
 
 const Web3 = require('web3')
-const BartenderAbi = require('../../Bartender.json')
+const BartenderAbi = require('../../Bartender.json').abi
 const UniswapAbi = require('../../UniswapAbi.json')
 const wethAbi = require('../../weth.json')
 const PubAbi = require('../../PubToken.json').abi

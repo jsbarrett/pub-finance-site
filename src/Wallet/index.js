@@ -100,7 +100,7 @@ export const WalletDetails = ({ address, setModalIsOpen }) => {
         className='absolute inset-0 bg-gray-900 pointer-events-auto opacity-80'>
       </div>
       <div
-        className='max-h-full overflow-y-auto relative flex flex-col justify-center w-11/12 py-8 px-8 mx-auto text-center text-white shadow-2xl pointer-events-auto rounded-2xl mt-0 xl:mt-36 mb-36 lg:w-8/12 xl:w-6/12 2xl:w-4/12'
+        className='max-h-full overflow-y-auto relative flex flex-col justify-center w-11/12 py-8 px-8 mx-auto text-center text-white shadow-2xl pointer-events-auto rounded-2xl mt-0 xl:mt-12 mb-36 lg:w-8/12 xl:w-6/12 2xl:w-4/12'
         style={{ background: 'rgb(12,12,97)' }}>
         <div className='relative flex justify-center'>
           <div className='text-4xl font-bold'>MY ACCOUNT</div>
