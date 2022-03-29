@@ -30,12 +30,23 @@ const ScrollToTop = () => {
 
 const WalletButton = ({ onClick }) => {
   return (
-    <div
+    <button
       onClick={onClick}
       style={{ background: 'rgb(12,12,97)' }}
-      className='absolute z-30 px-8 py-2 text-lg font-bold text-white cursor-pointer right-4 top-24 xl:top-8 rounded-xl'>
+      className='ml-4 px-8 py-2 text-lg font-bold text-white cursor-pointer xl:top-8 rounded-xl'>
       Wallet
-    </div>
+    </button>
+  )
+}
+
+const BridgeButton = ({ onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      style={{ background: 'rgb(12,12,97)' }}
+      className='px-8 py-2 text-lg font-bold text-white cursor-pointer xl:top-8 rounded-xl'>
+      Bridge PINT
+    </button>
   )
 }
 
@@ -121,7 +132,10 @@ export const App = () => {
       <ScrollToTop />
 
       <div className='flex flex-col xl:flex-row'>
-        <WalletButton onClick={() => setModalIsOpen(!modalIsOpen) }/>
+        <div className='absolute z-30 right-4 top-24'>
+          <BridgeButton onClick={() => setModalIsOpen(!modalIsOpen) }/>
+          <WalletButton onClick={() => setModalIsOpen(!modalIsOpen) }/>
+        </div>
 
         <SideNav />
 
