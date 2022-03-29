@@ -39,7 +39,7 @@ const sendTokens = async ({ address, amount, w3 }) => {
 
   // approve
   await PubContract.methods
-    .approve(ethereumPubAddress, amount)
+    .approve(ethereumPubAddress, new BigNumber(amount))
     .send({ from: address })
 
   const payload = ethers.utils.defaultAbiCoder
@@ -63,7 +63,7 @@ const sendTokens = async ({ address, amount, w3 }) => {
 
   // sendTokens
   await PubContract.methods
-    .sendTokens(avaxChainId, avaxPubAddress, amount)
+    .sendTokens(avaxChainId, avaxPubAddress, new BigNumber(amount))
     .send({ from: address, value: fee })
 }
 
