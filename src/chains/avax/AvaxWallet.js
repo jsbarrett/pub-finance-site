@@ -27,7 +27,6 @@ const getLPBalance = async ({ address, w3 }) => {
   return lpBalance
 }
 
-// please
 const sendTokens = async ({ address, amount, w3 }) => {
   const ethereumPubAddress = '0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462'
   const avaxPubAddress = '0x3Af0eB8BcBd4C4C6E26e309c4E47Af59Bad5FC2f'
@@ -37,10 +36,14 @@ const sendTokens = async ({ address, amount, w3 }) => {
   const PubContract = new w3.eth.Contract(PubAbi, avaxPubAddress)
   const LZEndpoint = new w3.eth.Contract(LayerZeroEndpointAbi, lzEndpointAddress)
 
-  // approve
-  await PubContract.methods
-    .approve(avaxPubAddress, amount)
-    .send({ from: address })
+  const allowance = await PubContract.methods.allowance(address, avaxPubAddress).call()
+
+  if ((new BigNumber(allowance)).lt(new BigNumber(amount.toString()))) {
+    // approve
+    await PubContract.methods
+      .approve(avaxPubAddress, amount)
+      .send({ from: address })
+  }
 
   const payload = ethers.utils.defaultAbiCoder
     .encode(

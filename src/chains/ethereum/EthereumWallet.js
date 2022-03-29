@@ -37,10 +37,14 @@ const sendTokens = async ({ address, amount, w3 }) => {
   const PubContract = new w3.eth.Contract(PubAbi, ethereumPubAddress)
   const LZEndpoint = new w3.eth.Contract(LayerZeroEndpointAbi, lzEndpointAddress)
 
-  // approve
-  await PubContract.methods
-    .approve(ethereumPubAddress, amount.toString())
-    .send({ from: address })
+  const allowance = await PubContract.methods.allowance(address, ethereumPubAddress).call()
+
+  if ((new BigNumber(allowance)).lt(new BigNumber(amount.toString()))) {
+    // approve
+    await PubContract.methods
+      .approve(ethereumPubAddress, amount.toString())
+      .send({ from: address })
+  }
 
   const payload = ethers.utils.defaultAbiCoder
     .encode(
