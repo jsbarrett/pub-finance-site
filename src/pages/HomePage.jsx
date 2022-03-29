@@ -45,7 +45,7 @@ export const HomePage = () => {
             </div>
           </Link>
 
-          <a href='https://beta.wenrug.com' target='_blank' rel='noreferrer' className='w-full'>
+          {/* <a href='https://beta.wenrug.com' target='_blank' rel='noreferrer' className='w-full'> */}
             <div className='w-full'>
               <div
                 className='flex flex-col justify-between w-full h-full px-8 py-6 shadow-xl rounded-3xl'
@@ -60,7 +60,7 @@ export const HomePage = () => {
                   WenRug Beta
                 </h3>
 
-                <p className='mt-2 text-xl'></p>
+                <p className='mt-2 text-xl text-center'>(coming soon)</p>
 
                   <div className='flex items-center justify-end mt-4 text-lg opacity-0 pointer-events-none text-accent-green'>
                     <div>wenrug.com</div>
@@ -70,7 +70,7 @@ export const HomePage = () => {
                   </div>
               </div>
             </div>
-          </a>
+          {/* </a> */}
 
           <Link to='/community' className='w-full'>
             <div
@@ -104,9 +104,9 @@ export const HomePage = () => {
             Tired of losing to the house?
             With PINT you are the house.
             Stake PINT tokens to receive user fees from
-            <a className="text-accent-green mx-2" href="https://beta.wenrug.com" target="_blank" rel="noreferrer">
-              WenRug
-            </a>
+            {/* <a className="text-accent-green mx-2" href="https://beta.wenrug.com" target="_blank" rel="noreferrer"> */}
+              &nbsp;WenRug&nbsp;
+            {/* </a> */}
             and future pub.finance ecosystem products.
             Use your staking weight to govern the future of the project and direct the use of the Community Governed Warchest.
             Fair launch, fair ownership, fair play--Grab a pint.

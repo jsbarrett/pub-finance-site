@@ -86,9 +86,9 @@ export const CommunityPage = () => {
           <div className='flex flex-wrap justify-center mt-8'>
             <p className='text-xl text-center opacity-75'>
               The Champagne Room is open to PINT’s strongest supporters who wish to engage on a more intimate level with the development team. Get first look at new developments for PINT and
-              <a className="text-accent-green mx-2" href="https://beta.wenrug.com" target="_blank" rel="noreferrer">
+              {/* <a className="text-accent-green mx-2" href="https://beta.wenrug.com" target="_blank" rel="noreferrer"> */}
                 WenRug!
-              </a>
+              {/* </a> */}
               Access is currently limited to individuals who hold a minimum of 5500 PINT tokens.
             </p>
           </div>

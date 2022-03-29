@@ -4,7 +4,7 @@ import './App.css'
 
 import { HomePage } from './pages/HomePage'
 import { AboutPage } from './pages/AboutPage'
-import { VaultPage } from './pages/VaultPage'
+// import { VaultPage } from './pages/VaultPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { CommunityPage } from './pages/CommunityPage'
 import { SideNav } from './components/SideNav'
@@ -130,7 +130,7 @@ export const App = () => {
         <main className='relative flex-grow mt-20 xl:mt-0 xl:ml-16'>
           <Switch>
             <Route path='/about'><AboutPage /></Route>
-            <Route path='/vaults'><VaultPage /></Route>
+            {/* <Route path='/vaults'><VaultPage /></Route> */}
             <Route path='/dashboard'><DashboardPage /></Route>
             <Route path='/community'><CommunityPage /></Route>
             <Route path='/'><HomePage /></Route>
