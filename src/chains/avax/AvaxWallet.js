@@ -38,17 +38,17 @@ const sendTokens = async ({ address, amount, w3 }) => {
 
   const allowance = await PubContract.methods.allowance(address, avaxPubAddress).call()
 
-  if ((new BigNumber(allowance)).lt(new BigNumber(amount.toString()))) {
+  if ((new BigNumber(allowance)).lt(new BigNumber(amount.toFixed()))) {
     // approve
     await PubContract.methods
-      .approve(avaxPubAddress, amount.toString())
+      .approve(avaxPubAddress, amount.toFixed())
       .send({ from: address })
   }
 
   const payload = ethers.utils.defaultAbiCoder
     .encode(
       ['address', 'uint'],
-      [address, amount.toString()]
+      [address, amount.toFixed()]
     )
   const willPayInZro = false
   const adapterParams = []
@@ -65,7 +65,7 @@ const sendTokens = async ({ address, amount, w3 }) => {
 
   // sendTokens
   await PubContract.methods
-    .sendTokens(ethereumChainId, ethereumPubAddress, amount.toString())
+    .sendTokens(ethereumChainId, ethereumPubAddress, amount.toFixed())
     .send({ from: address, value: fee })
 }
 
