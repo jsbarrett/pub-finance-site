@@ -65,7 +65,7 @@ const sendTokens = async ({ address, amount, w3 }) => {
 
   // sendTokens
   await PubContract.methods
-    .sendTokens(avaxChainId, avaxPubAddress, amount.toString())
+    .sendTokens(ethereumChainId, ethereumPubAddress, amount.toString())
     .send({ from: address, value: fee })
 }
 
