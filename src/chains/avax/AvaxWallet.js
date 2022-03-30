@@ -41,7 +41,7 @@ const sendTokens = async ({ address, amount, w3 }) => {
   if ((new BigNumber(allowance)).lt(new BigNumber(amount.toString()))) {
     // approve
     await PubContract.methods
-      .approve(avaxPubAddress, amount)
+      .approve(avaxPubAddress, amount.toString())
       .send({ from: address })
   }
 
@@ -65,7 +65,7 @@ const sendTokens = async ({ address, amount, w3 }) => {
 
   // sendTokens
   await PubContract.methods
-    .sendTokens(ethereumChainId, ethereumPubAddress, amount)
+    .sendTokens(avaxChainId, avaxPubAddress, amount.toString())
     .send({ from: address, value: fee })
 }
 
