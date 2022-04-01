@@ -104,7 +104,9 @@ export const CommunityPage = () => {
           <div className='mt-8'>
             <p className='flex flex-wrap justify-center text-xl text-center'>
               <a className='text-accent-green' href='https://app.uniswap.org/#/swap?outputCurrency=0xfecba472b2540c5a2d3700b2c9e06f0aa7dc6462&use=V2' target='_blank' rel='noreferrer'>Uniswap</a><span className='mx-2'>&bull;</span>
+              <a className='text-accent-green' href='https://traderjoexyz.com/pool/0x3af0eb8bcbd4c4c6e26e309c4e47af59bad5fc2f/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e' target='_blank' rel='noreferrer'>Trader Joe</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://etherscan.io/token/0xFECBa472B2540C5a2d3700b2C9E06F0aa7dC6462' target='_blank' rel='noreferrer'>Etherscan</a><span className='mx-2'>&bull;</span>
+              <a className='text-accent-green' href='https://snowtrace.io/token/0x3af0eb8bcbd4c4c6e26e309c4e47af59bad5fc2f' target='_blank' rel='noreferrer'>Snowtrace</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://www.dextools.io/app/uniswap/pair-explorer/0x8f3869c177090eace770396f9495424780c73537' target='_blank' rel='noreferrer'>Dextools</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://www.coingecko.com/en/coins/pub-finance' target='_blank' rel='noreferrer'>Coingecko</a><span className='mx-2'>&bull;</span>
               <a className='text-accent-green' href='https://coinmarketcap.com/currencies/pub-finance/' target='_blank' rel='noreferrer'>Coinmarketcap</a>
