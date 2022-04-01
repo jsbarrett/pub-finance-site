@@ -1,5 +1,6 @@
 import React from 'react'
 import { EtherscanLogoSvg } from './EtherscanLogoSvg'
+import { SnowtraceLogoSvg } from './SnowtraceLogoSvg'
 
 export const PageFooter = () => {
   return (
@@ -23,6 +24,14 @@ export const PageFooter = () => {
             style={{ borderWidth: '2px' }}
             className='flex items-center justify-center p-2 border-white border-solid rounded-full'>
             <EtherscanLogoSvg />
+          </a>
+          <a
+            href='https://snowtrace.io/token/0x3af0eb8bcbd4c4c6e26e309c4e47af59bad5fc2f'
+            target='_blank'
+            rel='noreferrer'
+            style={{ borderWidth: '2px' }}
+            className='flex items-center justify-center p-2 border-white border-solid rounded-full'>
+            <SnowtraceLogoSvg />
           </a>
           <a
             href='https://t.me/PubFin'
