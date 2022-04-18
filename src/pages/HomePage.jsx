@@ -22,7 +22,7 @@ export const HomePage = () => {
 
       <SectionPadding>
         <section className='relative flex flex-col justify-between mx-auto -mt-60 space-y-16 xl:space-y-0 xl:space-x-16 xl:flex-row max-w-screen-2xl'>
-          <Link to='/vaults' className='w-full'>
+          {/* <Link to='/vaults' className='w-full'> */}
             <div
               className='flex flex-col justify-between w-full h-full px-8 py-6 shadow-xl rounded-3xl'
               style={{ background: 'linear-gradient(180deg, #0C0C61 0%, #05052D 200%)' }}>
@@ -32,18 +32,18 @@ export const HomePage = () => {
                 </svg>
               </div>
 
-              <h3 className='mt-4 text-xl font-bold leading-none text-center xl:text-3xl'>Stake PINT. Earn Yield.</h3>
+              <h3 className='mt-4 text-xl font-bold leading-none text-center xl:text-3xl'>Stake PINT.<br />Earn Rewards.</h3>
 
-              <p className='mt-2 text-xl'></p>
+              <p className='mt-2 mx-auto text-xl'>(coming soon)</p>
 
-              <div className='flex items-center justify-end mt-4 text-lg text-accent-green'>
-                <div>Stake PINT</div>
-                <svg xmlns='http://www.w3.org/2000/svg' className='w-6 h-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' />
-                </svg>
-              </div>
+              {/* <div className='flex items-center justify-end mt-4 text-lg text-accent-green'> */}
+              {/*   <div>Stake PINT</div> */}
+              {/*   <svg xmlns='http://www.w3.org/2000/svg' className='w-6 h-6 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'> */}
+              {/*     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M14 5l7 7m0 0l-7 7m7-7H3' /> */}
+              {/*   </svg> */}
+              {/* </div> */}
             </div>
-          </Link>
+          {/* </Link> */}
 
           {/* <a href='https://beta.wenrug.com' target='_blank' rel='noreferrer' className='w-full'> */}
             <div className='w-full'>
