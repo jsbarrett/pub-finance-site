@@ -63,9 +63,14 @@ const sendTokens = async ({ address, amount, w3 }) => {
     .div('100')
     .decimalPlaces(0)
 
+  const destinationAddress = ethers.utils.solidityPack(
+    ['address','address'],
+    [avaxPubAddress, ethereumPubAddress]
+  )
+
   // sendTokens
   await PubContract.methods
-    .sendTokens(ethereumChainId, ethereumPubAddress, amount.toFixed())
+    .sendTokens(ethereumChainId, destinationAddress, amount.toFixed())
     .send({ from: address, value: fee })
 }
 
