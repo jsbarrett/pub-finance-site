@@ -65,7 +65,7 @@ const sendTokens = async ({ address, amount, w3 }) => {
 
   const destinationAddress = ethers.utils.solidityPack(
     ['address','address'],
-    [avaxPubAddress, ethereumPubAddress]
+    [ethereumPubAddress, avaxPubAddress]
   )
 
   // sendTokens
