@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { NoVault } from './NoVault'
 import { Vault } from './Vault'
 import { chainImplementations } from '../../chains/index'
+import { GoerliVault } from './GoerliVault'
 
 export const VaultPage = () => {
   const [chainId, setChainId] = useState(window?.ethereum?.chainId)
@@ -12,6 +13,7 @@ export const VaultPage = () => {
   }, [])
 
   if (!chainImplementations[chainId]) return <NoVault />
+  if (chainId === '0x5') return <GoerliVault />
 
   return (
     <Vault
