@@ -40,14 +40,15 @@ const getAmountStaked = async () => {
 }
 
 const getUnclaimedRewards = async () => {
-  try {
-    return '1'
-  } catch (err) {
-    console.error(err)
-    alert('Sorry there was a problem retrieving the amount of your rewards')
+  return '1'
+  // try {
+  //   return '1'
+  // } catch (err) {
+  //   console.error(err)
+  //   alert('Sorry there was a problem retrieving the amount of your rewards')
 
-    return '0'
-  }
+  //   return '0'
+  // }
 }
 
 const stakePINT = async (amount) => {

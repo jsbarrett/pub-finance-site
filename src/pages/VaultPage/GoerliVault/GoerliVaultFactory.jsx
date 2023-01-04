@@ -14,7 +14,7 @@ export const GoerliVaultFactory = ({ backend }) => {
     backend.getAmountStaked().then(setAmountStaked)
     backend.getUnclaimedRewards().then(setUnclaimedRewards)
     backend.getPINTBalance().then(setPintBalance)
-  }, [])
+  }, [backend])
 
   // TODO: error handling
   const stakePint = async () => {
