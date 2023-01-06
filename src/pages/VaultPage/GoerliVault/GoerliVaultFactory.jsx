@@ -8,6 +8,7 @@ export const GoerliVaultFactory = ({ backend }) => {
   const [unclaimedRewards, setUnclaimedRewards] = useState('0')
   const [addStakeAmount, setAddStakeAmount] = useState('0')
   const [pintBalance, setPintBalance] = useState('0')
+  const [unstakeAmount, setUnstakeAmount] = useState('0')
 
   // TODO: error handling
   useEffect(() => {
@@ -26,17 +27,31 @@ export const GoerliVaultFactory = ({ backend }) => {
     }
   }
 
+  const unstakePint = async () => {
+    try {
+      await backend.unstakePINT(unstakeAmount)
+      setUnstakeAmount('0')
+
+      backend.getAmountStaked().then(setAmountStaked)
+    } catch (err) {
+      console.error(err)
+      alert('Sorry there was a problem unstaking your PINT')
+    }
+  }
+
   return (
     <GoerliVaultView
       amountStaked={amountStaked}
       unclaimedRewards={unclaimedRewards}
       stakePint={stakePint}
-      unstakePint={backend.unstakePINT}
+      unstakePint={unstakePint}
       claimRewards={backend.claimRewards}
       addStakeAmount={addStakeAmount}
       setAddStakeAmount={setAddStakeAmount}
       mintPINT={backend.mintPINT}
       pintBalance={pintBalance}
+      unstakeAmount={unstakeAmount}
+      setUnstakeAmount={setUnstakeAmount}
     />
   )
 }
@@ -51,6 +66,8 @@ export const GoerliVaultView = ({
   setAddStakeAmount,
   mintPINT,
   pintBalance,
+  unstakeAmount,
+  setUnstakeAmount,
 }) => {
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='relative text-white'>
@@ -85,11 +102,6 @@ export const GoerliVaultView = ({
                 <div className='opacity-80'>amount staked:</div>
                 <div className='flex justify-between'>
                   <div className='text-4xl'>{amountStaked} PINT</div>
-                  <button
-                    onClick={unstakePint}
-                    className='w-24 px-2 ml-4 text-gray-300 border border-gray-300 rounded'>
-                    unstake
-                  </button>
                 </div>
               </div>
 
@@ -104,6 +116,19 @@ export const GoerliVaultView = ({
                   onClick={stakePint}
                   className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
                   stake
+                </button>
+              </div>
+              <div className='flex justify-between mt-8'>
+                <input
+                  placeholder={'Add Stake'}
+                  className='px-2 py-2 text-xl bg-transparent border border-gray-300 border-solid rounded'
+                  value={unstakeAmount}
+                  onChange={evt => setUnstakeAmount(evt.target.value) }
+                />
+                <button
+                  onClick={unstakePint}
+                  className='w-24 px-2 ml-4 text-gray-300 border border-gray-300 rounded'>
+                  unstake
                 </button>
               </div>
 

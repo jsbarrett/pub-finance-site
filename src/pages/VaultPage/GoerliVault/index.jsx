@@ -69,14 +69,15 @@ const stakePINT = async (amount) => {
   }
 }
 
-const unstakePINT = async () => {
+const unstakePINT = async (amount) => {
+  if (amount === '' || amount === '0') return alert('please provide an amount to unstake')
+
   try {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
     const stakePINTContract = new ethers.Contract(STAKEPINT_CONTRACT_ADDRESS, STAKEPINT_ABI, signer)
 
-    const stakedPINT = await stakePINTContract.getAmountStaked(window.ethereum.selectedAddress)
-    await stakePINTContract.unstake(stakedPINT)
+    await stakePINTContract.unstake(convertDisplayValueToPINTForContract(amount))
   } catch (err) {
     console.error(err)
     alert('Sorry there was a problem with unstaking your PINT, please reach out to support to help address your issue.')
