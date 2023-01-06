@@ -112,7 +112,7 @@ export const GoerliVaultView = ({
               <div className='mt-16'>
                 <div className='opacity-80'>balance:</div>
                 <div className='flex justify-between'>
-                  <div className='text-4xl'>{pintBalance} PINT</div>
+                  <div onClick={maxStakeAmount} className='text-4xl'>{pintBalance} PINT</div>
                 </div>
               </div>
 
@@ -147,7 +147,7 @@ export const GoerliVaultView = ({
               <div className='mt-8'>
                 <div className='opacity-80'>amount staked:</div>
                 <div className='flex justify-between'>
-                  <div className='text-4xl'>{amountStaked} PINT</div>
+                  <div onClick={unstakeAll} className='text-4xl'>{amountStaked} PINT</div>
                 </div>
               </div>
 
