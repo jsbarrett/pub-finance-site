@@ -51,15 +51,27 @@ const getUnclaimedRewards = async () => {
   // }
 }
 
+const approveToStake = async (amount) => {
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+    const fakePINTContract = new ethers.Contract(FAKEPINT_ADDRESS, FAKEPINT_ABI, signer)
+
+    await (await fakePINTContract.approve(STAKEPINT_CONTRACT_ADDRESS, convertDisplayValueToPINTForContract(amount))).wait()
+  } catch (err) {
+    console.error(err)
+    alert('Sorry there was a problem with approving your PINT to stake, please reach out to support to help address your issue.')
+  }
+}
+
 const stakePINT = async (amount) => {
   try {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
     const stakePINTContract = new ethers.Contract(STAKEPINT_CONTRACT_ADDRESS, STAKEPINT_ABI, signer)
-    const fakePINTContract = new ethers.Contract(FAKEPINT_ADDRESS, FAKEPINT_ABI, signer)
 
     alert('first we must approve the transfer')
-    await (await fakePINTContract.approve(STAKEPINT_CONTRACT_ADDRESS, convertDisplayValueToPINTForContract(amount))).wait()
+    await approveToStake(amount)
 
     alert('now we can have the staking contract transfer the funds to be staked')
     await stakePINTContract.stake(convertDisplayValueToPINTForContract(amount))
@@ -108,11 +120,24 @@ const getPINTBalance = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const fakePINTContract = new ethers.Contract(FAKEPINT_ADDRESS, FAKEPINT_ABI, provider)
     const balance = await fakePINTContract.balanceOf(window.ethereum.selectedAddress)
-    console.log({ balance: balance.toString() })
     return convertPINTForDisplay(balance.toBigInt())
   } catch (err) {
     console.error(err)
     alert('Sorry there was a problem getting your PINT balance')
+    return '0'
+  }
+}
+
+const getAmountApproved = async () => {
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const fakePINTContract = new ethers.Contract(FAKEPINT_ADDRESS, FAKEPINT_ABI, provider)
+
+    const amount = await fakePINTContract.allowance(window.ethereum.selectedAddress, STAKEPINT_CONTRACT_ADDRESS)
+    return convertPINTForDisplay(amount.toBigInt())
+  } catch (err) {
+    console.error(err)
+    alert('Sorry there was a problem getting how much PINT you have approved to be staked')
     return '0'
   }
 }
@@ -125,6 +150,8 @@ const backend = {
   claimRewards,
   mintPINT,
   getPINTBalance,
+  getAmountApproved,
+  approveToStake,
 }
 
 // -----------------------------------------------------------------------------

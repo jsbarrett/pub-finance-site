@@ -9,12 +9,14 @@ export const GoerliVaultFactory = ({ backend }) => {
   const [addStakeAmount, setAddStakeAmount] = useState('0')
   const [pintBalance, setPintBalance] = useState('0')
   const [unstakeAmount, setUnstakeAmount] = useState('0')
+  const [amountApproved, setAmountApproved] = useState('0')
 
   // TODO: error handling
   useEffect(() => {
     backend.getAmountStaked().then(setAmountStaked)
     backend.getUnclaimedRewards().then(setUnclaimedRewards)
     backend.getPINTBalance().then(setPintBalance)
+    backend.getAmountApproved().then(setAmountApproved)
   }, [backend])
 
   // TODO: error handling
@@ -32,7 +34,7 @@ export const GoerliVaultFactory = ({ backend }) => {
       await backend.unstakePINT(unstakeAmount)
       setUnstakeAmount('0')
 
-      backend.getAmountStaked().then(setAmountStaked)
+      await backend.getAmountStaked().then(setAmountStaked)
     } catch (err) {
       console.error(err)
       alert('Sorry there was a problem unstaking your PINT')
@@ -44,7 +46,7 @@ export const GoerliVaultFactory = ({ backend }) => {
       await backend.unstakePINT(amountStaked)
       setUnstakeAmount('0')
 
-      backend.getAmountStaked().then(setAmountStaked)
+      await backend.getAmountStaked().then(setAmountStaked)
     } catch (err) {
       console.error(err)
       alert('Sorry there was a problem unstaking your PINT')
@@ -52,6 +54,17 @@ export const GoerliVaultFactory = ({ backend }) => {
   }
 
   const maxStakeAmount = () => setAddStakeAmount(pintBalance)
+
+  const approveToStake = async () => {
+    try {
+      await backend.approveToStake(addStakeAmount)
+
+      backend.getAmountStaked().then(setAmountStaked)
+      backend.getAmountApproved().then(setAmountApproved)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <GoerliVaultView
@@ -68,6 +81,8 @@ export const GoerliVaultFactory = ({ backend }) => {
       setUnstakeAmount={setUnstakeAmount}
       maxStakeAmount={maxStakeAmount}
       unstakeAll={unstakeAll}
+      amountApproved={amountApproved}
+      approveToStake={approveToStake}
     />
   )
 }
@@ -86,6 +101,8 @@ export const GoerliVaultView = ({
   setUnstakeAmount,
   maxStakeAmount,
   unstakeAll,
+  amountApproved,
+  approveToStake,
 }) => {
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='relative text-white'>
@@ -116,6 +133,13 @@ export const GoerliVaultView = ({
                 </div>
               </div>
 
+              <div className='mt-4 opacity-75'>
+                <div>approved for:</div>
+                <div className='flex justify-between'>
+                  <div className='text-xl'>{amountApproved} PINT</div>
+                </div>
+              </div>
+
               <div className='flex justify-between mt-8'>
                 <div className='flex'>
                   <input
@@ -130,11 +154,22 @@ export const GoerliVaultView = ({
                     max
                   </button>
                 </div>
+
+                {BigInt(amountApproved) === 0n && (
+                <button
+                  onClick={approveToStake}
+                  className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
+                  approve
+                </button>
+                )}
+
+                {BigInt(amountApproved) > 0n && (
                 <button
                   onClick={stakePint}
                   className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
                   stake
                 </button>
+                )}
 
               </div>
               <button
