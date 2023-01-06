@@ -39,6 +39,20 @@ export const GoerliVaultFactory = ({ backend }) => {
     }
   }
 
+  const unstakeAll = async () => {
+    try {
+      await backend.unstakePINT(amountStaked)
+      setUnstakeAmount('0')
+
+      backend.getAmountStaked().then(setAmountStaked)
+    } catch (err) {
+      console.error(err)
+      alert('Sorry there was a problem unstaking your PINT')
+    }
+  }
+
+  const maxStakeAmount = () => setAddStakeAmount(pintBalance)
+
   return (
     <GoerliVaultView
       amountStaked={amountStaked}
@@ -52,6 +66,8 @@ export const GoerliVaultFactory = ({ backend }) => {
       pintBalance={pintBalance}
       unstakeAmount={unstakeAmount}
       setUnstakeAmount={setUnstakeAmount}
+      maxStakeAmount={maxStakeAmount}
+      unstakeAll={unstakeAll}
     />
   )
 }
@@ -68,6 +84,8 @@ export const GoerliVaultView = ({
   pintBalance,
   unstakeAmount,
   setUnstakeAmount,
+  maxStakeAmount,
+  unstakeAll,
 }) => {
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='relative text-white'>
@@ -98,45 +116,63 @@ export const GoerliVaultView = ({
                 </div>
               </div>
 
-              <div className='mt-4'>
+              <div className='flex justify-between mt-8'>
+                <div className='flex'>
+                  <input
+                    placeholder={'Add Stake'}
+                    className='px-2 py-2 text-xl bg-transparent border border-gray-300 border-solid rounded'
+                    value={addStakeAmount}
+                    onChange={evt => setAddStakeAmount(evt.target.value) }
+                  />
+                  <button
+                    onClick={maxStakeAmount}
+                    className='px-4 ml-4 font-bold border rounded text-white border-white'>
+                    max
+                  </button>
+                </div>
+                <button
+                  onClick={stakePint}
+                  className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
+                  stake
+                </button>
+
+              </div>
+              <button
+                onClick={mintPINT}
+                className='mt-2 text-gray-400'>
+                (click here if you need to mint some goerli PINT)
+              </button>
+
+
+              <div className='mt-8'>
                 <div className='opacity-80'>amount staked:</div>
                 <div className='flex justify-between'>
                   <div className='text-4xl'>{amountStaked} PINT</div>
                 </div>
               </div>
 
-              <div className='flex justify-between mt-8'>
-                <input
-                  placeholder={'Add Stake'}
-                  className='px-2 py-2 text-xl bg-transparent border border-gray-300 border-solid rounded'
-                  value={addStakeAmount}
-                  onChange={evt => setAddStakeAmount(evt.target.value) }
-                />
-                <button
-                  onClick={stakePint}
-                  className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
-                  stake
-                </button>
-              </div>
-              <div className='flex justify-between mt-8'>
-                <input
-                  placeholder={'Add Stake'}
-                  className='px-2 py-2 text-xl bg-transparent border border-gray-300 border-solid rounded'
-                  value={unstakeAmount}
-                  onChange={evt => setUnstakeAmount(evt.target.value) }
-                />
+              <div className='flex justify-between mt-4'>
+                <div className='flex'>
+                  <input
+                    placeholder={'Add Stake'}
+                    className='px-2 py-2 text-xl bg-transparent border border-gray-300 border-solid rounded'
+                    value={unstakeAmount}
+                    onChange={evt => setUnstakeAmount(evt.target.value) }
+                  />
+
+                  <button
+                    onClick={unstakeAll}
+                    className='px-4 ml-4 font-bold border rounded text-gray-300 border-gray-300'>
+                    all
+                  </button>
+                </div>
+
                 <button
                   onClick={unstakePint}
                   className='w-24 px-2 ml-4 text-gray-300 border border-gray-300 rounded'>
                   unstake
                 </button>
               </div>
-
-              <button
-                onClick={mintPINT}
-                className='mt-2 text-gray-400'>
-                (click here if you need to mint some goerli PINT)
-              </button>
 
               <hr className='my-16 border' />
 
