@@ -7,7 +7,7 @@ import fakePINTArtifacts from './FakePINT.json'
 // CONSTANTS
 // -----------------------------------------------------------------------------
 
-const STAKEPINT_CONTRACT_ADDRESS = '0x9069E0447770E8F18cc97636269e8494CF108d19'
+const STAKEPINT_CONTRACT_ADDRESS = '0xcdf50e498Cd40cB146d4502B811095FbEfB4052F'
 const STAKEPINT_ABI = stakePINTArtifacts.abi
 const FAKEPINT_ADDRESS = '0x097E9EeFc58c9648bAc09050b8E12c7F1F522879'
 const FAKEPINT_ABI = fakePINTArtifacts.abi
@@ -16,7 +16,7 @@ const FAKEPINT_ABI = fakePINTArtifacts.abi
 // UTILS
 // -----------------------------------------------------------------------------
 
-const convertPINTForDisplay = x => (Number(x / (10n ** 16n)) / 100).toLocaleString()
+const convertPINTForDisplay = x => (Number(x / (10n ** 16n)) / 100).toString()
 const convertDisplayValueToPINTForContract = x => BigInt(x) * 10n ** 18n
 
 // -----------------------------------------------------------------------------
@@ -28,27 +28,32 @@ const getAmountStaked = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const stakePINTContract = new ethers.Contract(STAKEPINT_CONTRACT_ADDRESS, STAKEPINT_ABI, provider)
 
-    const stakedPINT = await stakePINTContract.getAmountStaked(window.ethereum.selectedAddress)
+    const userInfo = await stakePINTContract.users(window.ethereum.selectedAddress)
 
-    return convertPINTForDisplay(stakedPINT.toBigInt())
+    return convertPINTForDisplay(userInfo.amount.toBigInt())
   } catch (err) {
     console.error(err)
-    alert('Sorry there was a problem retrieving the amount of your staked PINT')
+    // alert('Sorry there was a problem retrieving the amount of your staked PINT')
 
     return '0'
   }
 }
 
 const getUnclaimedRewards = async () => {
-  return '1'
-  // try {
-  //   return '1'
-  // } catch (err) {
-  //   console.error(err)
-  //   alert('Sorry there was a problem retrieving the amount of your rewards')
+  try {
+    const url = `https://testing.wenrug.com/rewards/stakers/${window.ethereum.selectedAddress}`
+    const response = await fetch(url).then(x => x.text())
 
-  //   return '0'
-  // }
+    console.log({ response })
+
+    // TODO: check value is converted correctly
+    return response
+  } catch (err) {
+    console.error(err)
+    // alert('Sorry there was a problem retrieving the amount of your rewards')
+
+    return '0'
+  }
 }
 
 const approveToStake = async (amount) => {
@@ -70,10 +75,6 @@ const stakePINT = async (amount) => {
     const signer = provider.getSigner()
     const stakePINTContract = new ethers.Contract(STAKEPINT_CONTRACT_ADDRESS, STAKEPINT_ABI, signer)
 
-    alert('first we must approve the transfer')
-    await approveToStake(amount)
-
-    alert('now we can have the staking contract transfer the funds to be staked')
     await stakePINTContract.stake(convertDisplayValueToPINTForContract(amount))
   } catch (err) {
     console.error(err)
@@ -142,6 +143,33 @@ const getAmountApproved = async () => {
   }
 }
 
+const claimVePint = async () => {
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const stakePINTContract = new ethers.Contract(STAKEPINT_CONTRACT_ADDRESS, STAKEPINT_ABI, provider)
+
+    await stakePINTContract.claim()
+  } catch (err) {
+    console.error(err)
+    alert('Sorry there was a problem claiming your vePINT')
+    return '0'
+  }
+}
+
+const getUnclaimedVePint = async () => {
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const stakePINTContract = new ethers.Contract(STAKEPINT_CONTRACT_ADDRESS, STAKEPINT_ABI, provider)
+
+    const amount = await stakePINTContract.amountClaimable(window.ethereum.selectedAddress)
+    return convertPINTForDisplay(amount.toBigInt())
+  } catch (err) {
+    console.error(err)
+    // alert('Sorry there was a problem getting your unclaimed vePINT')
+    return '0'
+  }
+}
+
 const backend = {
   getAmountStaked,
   getUnclaimedRewards,
@@ -152,6 +180,8 @@ const backend = {
   getPINTBalance,
   getAmountApproved,
   approveToStake,
+  claimVePint,
+  getUnclaimedVePint,
 }
 
 // -----------------------------------------------------------------------------

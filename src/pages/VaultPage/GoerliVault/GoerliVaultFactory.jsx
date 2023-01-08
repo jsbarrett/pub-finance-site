@@ -10,6 +10,7 @@ export const GoerliVaultFactory = ({ backend }) => {
   const [pintBalance, setPintBalance] = useState('0')
   const [unstakeAmount, setUnstakeAmount] = useState('0')
   const [amountApproved, setAmountApproved] = useState('0')
+  const [unclaimedVePint, setUnclaimedVePint] = useState('0')
 
   // TODO: error handling
   useEffect(() => {
@@ -17,6 +18,8 @@ export const GoerliVaultFactory = ({ backend }) => {
     backend.getUnclaimedRewards().then(setUnclaimedRewards)
     backend.getPINTBalance().then(setPintBalance)
     backend.getAmountApproved().then(setAmountApproved)
+    backend.getUnclaimedRewards().then(setUnclaimedRewards)
+    backend.getUnclaimedVePint().then(setUnclaimedVePint)
   }, [backend])
 
   // TODO: error handling
@@ -66,6 +69,17 @@ export const GoerliVaultFactory = ({ backend }) => {
     }
   }
 
+  const claimVePint = async () => {
+    try {
+      await backend.claimVePint()
+
+      setUnclaimedVePint('0')
+    } catch (err) {
+      console.error(err)
+      alert('Sorry there was a problem claiming your vePINT')
+    }
+  }
+
   return (
     <GoerliVaultView
       amountStaked={amountStaked}
@@ -83,6 +97,8 @@ export const GoerliVaultFactory = ({ backend }) => {
       unstakeAll={unstakeAll}
       amountApproved={amountApproved}
       approveToStake={approveToStake}
+      unclaimedVePint={unclaimedVePint}
+      claimVePint={claimVePint}
     />
   )
 }
@@ -103,6 +119,8 @@ export const GoerliVaultView = ({
   unstakeAll,
   amountApproved,
   approveToStake,
+  unclaimedVePint,
+  claimVePint,
 }) => {
   return (
     <div style={{ backgroundColor: 'rgb(11, 19, 43)' }} className='relative text-white'>
@@ -155,7 +173,7 @@ export const GoerliVaultView = ({
                   </button>
                 </div>
 
-                {BigInt(amountApproved) === 0n && (
+                {BigInt(Number(amountApproved)) === 0n && (
                 <button
                   onClick={approveToStake}
                   className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
@@ -163,7 +181,7 @@ export const GoerliVaultView = ({
                 </button>
                 )}
 
-                {BigInt(amountApproved) > 0n && (
+                {BigInt(Number(amountApproved)) > 0n && (
                 <button
                   onClick={stakePint}
                   className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
@@ -211,15 +229,28 @@ export const GoerliVaultView = ({
 
               <hr className='my-16 border' />
 
+              <div className='opacity-80'>unclaimed vePINT:</div>
+              <div className='flex justify-between'>
+                {/* (not available to show from this page yet ... coming soon) */}
+                <div className='text-4xl text-accent-green'>{unclaimedVePint} vePINT</div>
+                <button
+                  onClick={claimVePint}
+                  className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
+                  claim
+                </button>
+              </div>
+
+              <hr className='my-16 border' />
+
               <div className='opacity-80'>unclaimed rewards:</div>
               <div className='flex justify-between'>
-                (not available to show from this page yet ... coming soon)
-                {/* <div className='text-4xl text-accent-green'>{unclaimedRewards} PINT</div> */}
-                {/* <button */}
-                {/*   onClick={claimRewards} */}
-                {/*   className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'> */}
-                {/*   claim */}
-                {/* </button> */}
+                {/* (not available to show from this page yet ... coming soon) */}
+                <div className='text-4xl text-accent-green'>{unclaimedRewards} PINT</div>
+                <button
+                  onClick={claimRewards}
+                  className='w-24 px-2 ml-4 font-bold border rounded text-accent-green border-accent-green'>
+                  claim
+                </button>
               </div>
 
             </div>
